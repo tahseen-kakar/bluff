@@ -63,4 +63,9 @@ Bluff is licensed under the GNU General Public License v3.0. See the LICENSE fil
 Built with ❤️ for poker and open source.
 Inspired by modern Rails development practices and community contributions.
 
-![Build Status](https://github.com/tahseen-kakar/bluff/actions/workflows/ci.yml/badge.svg)
+![Rails](https://img.shields.io/badge/Rails-8.0-red)
+![Ruby](https://img.shields.io/badge/Ruby-3.3.4-red)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
+![Languages](https://img.shields.io/github/languages/top/tahseen-kakar/bluff)
+![Last Commit](https://img.shields.io/github/last-commit/tahseen-kakar/bluff)
