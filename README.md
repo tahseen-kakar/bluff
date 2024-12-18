@@ -73,5 +73,4 @@ Inspired by modern Rails development practices and community contributions.
 
 
 ## **Have questions or need help?**
-- Open an [issue](https://github.com/tahseen-kakar/bluff/issues).  
-- Join the discussion in our [GitHub Discussions](https://github.com/tahseen-kakar/bluff/discussions).
+- Open an [issue](https://github.com/tahseen-kakar/bluff/issues).
