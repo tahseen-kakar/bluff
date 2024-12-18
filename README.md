@@ -3,16 +3,10 @@
 **Bluff** is an open-source Rails 8 application designed to simplify poker game management and tracking. With a sleek interface and modern features, Bluff helps you manage game sessions, track player stats, visualize trends, and more—all while remaining fully open source.
 
 ![Rails](https://img.shields.io/badge/Rails-8.0-red)
-![Ruby](https://img.shields.io/badge/Ruby-3.3.4-red)
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
 ![Languages](https://img.shields.io/github/languages/top/tahseen-kakar/bluff)
 ![Last Commit](https://img.shields.io/github/last-commit/tahseen-kakar/bluff)
-![Code Coverage](https://img.shields.io/codecov/c/github/tahseen-kakar/bluff)
-![Open Issues](https://img.shields.io/github/issues/tahseen-kakar/bluff)
-![Version](https://img.shields.io/github/v/release/tahseen-kakar/bluff)
-![Dependencies](https://img.shields.io/librariesio/github/tahseen-kakar/bluff)
-![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fyourapp.com)
 ![PWA Status](https://img.shields.io/badge/PWA-Ready-brightgreen)
 
 
