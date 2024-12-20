@@ -13,16 +13,16 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-slate-50 dark:bg-slate-900">
-    <main class="min-h-screen flex items-center justify-center p-4">
-      <div class="w-full max-w-[980px] mx-auto">
+  <body class="bg-primary-900 text-center px-4 font-display">
+    <main class="min-h-screen flex items-center justify-center">
+      <div class="w-full max-w-7xl mx-auto">
         <%= yield %>
       </div>
     </main>
