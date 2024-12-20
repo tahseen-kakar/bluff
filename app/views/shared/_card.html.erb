@@ -1,0 +1,39 @@
+<%
+# Default values
+title ||= nil
+description ||= nil
+icon_name ||= nil
+footer ||= nil
+%>
+
+<div class="flex flex-col items-center justify-center">
+  <div class="w-full max-w-md mx-auto">
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-2xl border border-primary-700/50 shadow-2xl overflow-hidden">
+      <div class="px-8 pt-8 pb-6">
+        <% if title.present? %>
+          <div class="text-center mb-8">
+            <% if icon_name.present? %>
+              <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-6 flex items-center justify-center">
+                <%= render "shared/icons/#{icon_name}", class: "w-8 h-8 text-secondary-400" %>
+              </div>
+            <% end %>
+            
+            <h1 class="text-3xl font-bold text-primary-50 font-mono"><%= title %></h1>
+            
+            <% if description.present? %>
+              <p class="text-primary-400 mt-2 font-mono"><%= description %></p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+
+      <% if footer.present? %>
+        <div class="px-8 py-4 text-center border-t border-primary-700/50">
+          <%= footer %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div> 
