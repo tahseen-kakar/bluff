@@ -13,8 +13,8 @@ footer ||= nil
         <% if title.present? %>
           <div class="text-center mb-8">
             <% if icon_name.present? %>
-              <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-6 flex items-center justify-center">
-                <%= render "shared/icons/#{icon_name}", class: "w-8 h-8 text-secondary-400" %>
+              <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-6 flex items-center justify-center text-secondary-400">
+                <%= tabler_icon(icon_name, size: 32, stroke_width: 2) %>
               </div>
             <% end %>
             
