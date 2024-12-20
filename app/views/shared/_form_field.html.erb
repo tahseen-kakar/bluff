@@ -1,0 +1,59 @@
+<%
+# Default values
+type ||= 'text'
+required ||= false
+autofocus ||= false
+error ||= nil
+hint ||= nil
+label_class ||= ''
+input_class ||= ''
+wrapper_class ||= ''
+
+# Base classes for different elements
+base_wrapper_classes = "space-y-1"
+base_label_classes = "block text-sm font-medium text-primary-300"
+base_input_classes = "block w-full rounded-lg border-primary-600 bg-primary-700 text-primary-200 placeholder-primary-500 
+                     focus:border-secondary-400 focus:ring focus:ring-secondary-400/20 focus:ring-offset-1 
+                     focus:ring-offset-primary-800 transition-colors duration-200 font-body"
+base_hint_classes = "mt-1 text-xs text-primary-400"
+base_error_classes = "mt-1 text-xs text-red-400"
+
+# Combine classes
+wrapper_classes = [base_wrapper_classes, wrapper_class].join(' ')
+label_classes = [base_label_classes, label_class].join(' ')
+input_classes = [base_input_classes, input_class].join(' ')
+%>
+
+<div class="<%= wrapper_classes %>">
+  <% if local_assigns[:label].present? %>
+    <%= form.label field, label, class: label_classes %>
+  <% end %>
+
+  <div class="relative">
+    <%= form.send(
+      type == 'text' ? 'text_field' : "#{type}_field",
+      field,
+      {
+        required: required,
+        autofocus: autofocus,
+        class: input_classes,
+        placeholder: local_assigns[:placeholder],
+        autocomplete: local_assigns[:autocomplete],
+        maxlength: local_assigns[:maxlength],
+        value: local_assigns[:value],
+        **local_assigns.except(
+          :label, :type, :required, :autofocus, :error, :hint,
+          :label_class, :input_class, :wrapper_class
+        )
+      }
+    ) %>
+  </div>
+
+  <% if hint.present? %>
+    <p class="<%= base_hint_classes %>"><%= hint %></p>
+  <% end %>
+
+  <% if error.present? %>
+    <p class="<%= base_error_classes %>"><%= error %></p>
+  <% end %>
+</div> 
