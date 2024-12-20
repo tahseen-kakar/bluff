@@ -19,11 +19,13 @@
 
     <div class="mt-16">
       <% if authenticated? %>
-        <%= link_to "Dashboard", dashboard_path, 
-            class: "group relative inline-flex items-center justify-center px-10 py-5 text-xl font-medium text-primary-900 bg-secondary-400 rounded-lg overflow-hidden transition-all duration-300 hover:bg-secondary-300" %>
+        <%= render 'shared/button', href: dashboard_path, size: 'lg' do %>
+          Dashboard
+        <% end %>
       <% else %>
-        <%= link_to "Sign In", new_session_path, 
-            class: "group relative inline-flex items-center justify-center px-10 py-5 text-xl font-medium text-primary-900 bg-secondary-400 rounded-lg overflow-hidden transition-all duration-300 hover:bg-secondary-300" %>
+        <%= render 'shared/button', href: new_session_path, size: 'lg' do %>
+          Sign In
+        <% end %>
       <% end %>
     </div>
 
