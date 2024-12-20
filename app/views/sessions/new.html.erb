@@ -5,7 +5,7 @@
     footer: link_to("Forgot your password?", new_password_path, 
         class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
   
-  <%= form_with url: session_url, class: "space-y-6" do |form| %>
+  <%= form_with url: session_path, class: "space-y-6" do |form| %>
     <% if alert = flash[:alert] %>
       <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
         <%= alert %>
@@ -20,8 +20,7 @@
         required: true,
         autofocus: true,
         autocomplete: 'username',
-        placeholder: 'you@example.com',
-        value: params[:email_address] %>
+        placeholder: 'you@example.com' %>
 
     <%= render 'shared/form_field',
         form: form,

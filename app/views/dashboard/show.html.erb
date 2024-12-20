@@ -1,0 +1,130 @@
+<div class="min-h-screen bg-primary-900">
+  <%# Sidebar %>
+  <div class="fixed inset-y-0 left-0 w-64 bg-primary-800/50 backdrop-blur-sm border-r border-primary-700/50">
+    <div class="flex flex-col h-full">
+      <%# Logo section %>
+      <div class="p-4 border-b border-primary-700/50">
+        <div class="flex items-center space-x-3">
+          <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
+          <span class="text-xl font-bold text-primary-50 font-mono">Bluff</span>
+        </div>
+      </div>
+
+      <%# Navigation %>
+      <nav class="flex-1 p-4 space-y-1">
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-primary-700/50 text-primary-50 font-mono">
+          <%= tabler_icon('dashboard', size: 20, class: 'text-secondary-400') %>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200 font-mono">
+          <%= tabler_icon('users', size: 20) %>
+          <span>Players</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200 font-mono">
+          <%= tabler_icon('clock-play', size: 20) %>
+          <span>Sessions</span>
+        </a>
+
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200 font-mono">
+          <%= tabler_icon('chart-line', size: 20) %>
+          <span>Statistics</span>
+        </a>
+      </nav>
+
+      <%# User menu %>
+      <div class="p-4 border-t border-primary-700/50">
+        <div class="flex items-center space-x-3 px-3 py-2 rounded-lg text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200 font-mono cursor-pointer">
+          <%= tabler_icon('user-circle', size: 20) %>
+          <span>Profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Main content %>
+  <div class="ml-64">
+    <%# Header %>
+    <header class="h-16 bg-primary-800/50 backdrop-blur-sm border-b border-primary-700/50">
+      <div class="h-full px-6 flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-50 font-mono">Dashboard</h1>
+        
+        <div class="flex items-center space-x-4">
+          <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+            <%= tabler_icon('bell', size: 20) %>
+          </button>
+          <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+            <%= tabler_icon('settings', size: 20) %>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <%# Page content %>
+    <main class="p-6">
+      <%# Stats cards %>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-primary-400 font-mono">Total Games</h3>
+            <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
+          </div>
+          <p class="text-2xl font-bold text-primary-50 font-mono mt-2">24</p>
+        </div>
+
+        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-primary-400 font-mono">Active Players</h3>
+            <%= tabler_icon('users', size: 20, class: 'text-secondary-400') %>
+          </div>
+          <p class="text-2xl font-bold text-primary-50 font-mono mt-2">8</p>
+        </div>
+
+        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-primary-400 font-mono">Total Hours</h3>
+            <%= tabler_icon('clock', size: 20, class: 'text-secondary-400') %>
+          </div>
+          <p class="text-2xl font-bold text-primary-50 font-mono mt-2">156</p>
+        </div>
+
+        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-primary-400 font-mono">Win Rate</h3>
+            <%= tabler_icon('chart-line-up', size: 20, class: 'text-secondary-400') %>
+          </div>
+          <p class="text-2xl font-bold text-primary-50 font-mono mt-2">62%</p>
+        </div>
+      </div>
+
+      <%# Recent activity %>
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-primary-50 font-mono">Recent Activity</h2>
+          <button class="text-secondary-400 hover:text-secondary-300 font-mono text-sm">View all</button>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center space-x-4 p-4 rounded-lg bg-primary-700/30">
+            <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
+            <div class="flex-1">
+              <h4 class="text-primary-50 font-mono">Friday Night Game</h4>
+              <p class="text-sm text-primary-400 font-mono">Dec 15, 2023 • 4 players</p>
+            </div>
+            <span class="text-green-400 font-mono">+$245</span>
+          </div>
+
+          <div class="flex items-center space-x-4 p-4 rounded-lg bg-primary-700/30">
+            <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
+            <div class="flex-1">
+              <h4 class="text-primary-50 font-mono">Weekend Tournament</h4>
+              <p class="text-sm text-primary-400 font-mono">Dec 10, 2023 • 8 players</p>
+            </div>
+            <span class="text-red-400 font-mono">-$120</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div> 
