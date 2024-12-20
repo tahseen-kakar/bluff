@@ -1,17 +1,57 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
-  <% end %>
+<div class="flex flex-col items-center justify-center">
+  <div class="w-full max-w-md mx-auto">
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-2xl border border-primary-700/50 shadow-2xl overflow-hidden">
+      <div class="px-8 pt-8 pb-6">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-6 flex items-center justify-center">
+            <svg class="w-8 h-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h1 class="text-3xl font-bold text-primary-50 font-mono">Reset Password</h1>
+          <p class="text-primary-400 mt-2 font-mono">Enter your email to receive reset instructions</p>
+        </div>
 
-  <h1 class="font-bold text-4xl">Forgot your password?</h1>
+        <%= form_with url: passwords_path, class: "space-y-6" do |form| %>
+          <% if alert = flash[:alert] %>
+            <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
+              <%= alert %>
+            </div>
+          <% end %>
 
-  <%= form_with url: passwords_path, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+          <% if notice = flash[:notice] %>
+            <div class="bg-green-900/20 text-green-400 text-sm rounded-lg p-4 font-mono">
+              <%= notice %>
+            </div>
+          <% end %>
+
+          <%= render 'shared/form_field',
+              form: form,
+              field: :email_address,
+              type: 'email',
+              label: 'Email',
+              required: true,
+              autofocus: true,
+              autocomplete: 'username',
+              placeholder: 'you@example.com',
+              value: params[:email_address] %>
+
+          <div class="pt-2">
+            <%= render 'shared/button',
+                type: 'submit',
+                variant: 'primary',
+                full_width: true,
+                class: "bg-secondary-400 hover:bg-secondary-300 text-primary-900 py-4 text-base font-mono" do %>
+              Send Reset Instructions
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="px-8 py-4 text-center border-t border-primary-700/50">
+        <%= link_to "Back to sign in", new_session_path, 
+            class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono" %>
+      </div>
     </div>
-
-    <div class="inline">
-      <%= form.submit "Email reset instructions", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-    </div>
-  <% end %>
+  </div>
 </div>
