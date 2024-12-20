@@ -36,5 +36,8 @@ module TheHapyPoker
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Use propshaft as the asset pipeline
+    config.asset_pipeline = :propshaft
   end
 end
