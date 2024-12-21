@@ -26,23 +26,16 @@
       <div class="min-h-screen bg-primary-900">
         <%# Page content %>
         <main class="max-w-6xl mx-auto px-4 py-6">
-          <%# Header %>
-          <%= render 'shared/header' %>
-
-          <%# Main content %>
+          <%# Header - only show for authenticated users %>
+          <%= render 'shared/header' unless current_page?(app_path) && !@table %>
+          
+          
+          
           <%= yield %>
         </main>
-
-        <%# Bottom Navigation %>
-        <%= render 'shared/bottom_nav' %>
       </div>
     <% else %>
-      <%# Unauthenticated layout %>
-      <main class="min-h-screen flex items-center justify-center px-4">
-        <div class="w-full">
-          <%= yield %>
-        </div>
-      </main>
+      <%= yield %>
     <% end %>
   </body>
 </html>
