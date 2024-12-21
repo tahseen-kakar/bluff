@@ -1,60 +1,42 @@
 <%
-# Default values
-type ||= 'text'
-required ||= false
-autofocus ||= false
-error ||= nil
-hint ||= nil
-label_class ||= ''
-input_class ||= ''
-wrapper_class ||= ''
-
-# Base classes for different elements
-base_wrapper_classes = "space-y-2"
-base_label_classes = "block text-base font-medium text-primary-200 font-mono"
-base_input_classes = "w-full bg-primary-700/50 text-primary-200 placeholder-primary-500 
-                     border-0 rounded-lg px-4 py-3.5
-                     focus:ring-1 focus:ring-secondary-400 focus:bg-primary-700/70
-                     transition-all duration-200 font-mono"
-base_hint_classes = "mt-1 text-xs text-primary-400"
-base_error_classes = "mt-1 text-xs text-red-400"
-
-# Combine classes
-wrapper_classes = [base_wrapper_classes, wrapper_class].join(' ')
-label_classes = [base_label_classes, label_class].join(' ')
-input_classes = [base_input_classes, input_class].join(' ')
+# Set default values for optional parameters
+errors = local_assigns.fetch(:errors, [])
+required = local_assigns.fetch(:required, false)
+autofocus = local_assigns.fetch(:autofocus, false)
+hint = local_assigns.fetch(:hint, '')
+placeholder = local_assigns.fetch(:placeholder, '')
+type = local_assigns.fetch(:type, 'text')
 %>
 
-<div class="<%= wrapper_classes %>">
-  <% if local_assigns[:label].present? %>
-    <%= form.label field, label, class: label_classes %>
+<div class="space-y-2 text-left">
+  <%= form.label field, 
+      class: "block text-sm font-mono text-primary-300 #{required ? 'required' : ''}" %>
+
+  <% if errors.any? %>
+    <div class="mt-1 text-xs text-red-400 font-mono">
+      <% errors.each do |error| %>
+        <div><%= error %></div>
+      <% end %>
+    </div>
   <% end %>
 
   <div class="relative">
     <%= form.send(
-      type == 'text' ? 'text_field' : "#{type}_field",
+      type == 'textarea' ? 'text_area' : 'text_field',
       field,
       {
+        class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
+                text-primary-50 font-mono placeholder:text-primary-600
+                focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                #{errors.any? ? 'ring-2 ring-red-400' : ''}",
+        placeholder: placeholder,
         required: required,
-        autofocus: autofocus,
-        class: input_classes,
-        placeholder: local_assigns[:placeholder],
-        autocomplete: local_assigns[:autocomplete],
-        maxlength: local_assigns[:maxlength],
-        value: local_assigns[:value],
-        **local_assigns.except(
-          :label, :type, :required, :autofocus, :error, :hint,
-          :label_class, :input_class, :wrapper_class
-        )
-      }
+        autofocus: autofocus
+      }.merge(type == 'textarea' ? { rows: 4 } : {})
     ) %>
   </div>
 
   <% if hint.present? %>
-    <p class="<%= base_hint_classes %>"><%= hint %></p>
-  <% end %>
-
-  <% if error.present? %>
-    <p class="<%= base_error_classes %>"><%= error %></p>
+    <p class="mt-1 text-xs text-primary-400 font-mono"><%= hint %></p>
   <% end %>
 </div> 

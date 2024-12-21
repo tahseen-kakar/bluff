@@ -1,5 +1,11 @@
+<%# Main container %>
 <div class="min-h-screen bg-primary-900">
-  <main class="max-w-4xl mx-auto px-4 py-8">
+  <%# Page content %>
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <%# Header %>
+    <%= render 'shared/header' %>
+
+    <%# Form %>
     <%= render 'shared/form_card',
         icon: 'table-plus',
         title: 'Create a Table',
@@ -34,4 +40,7 @@
       <% end %>
     <% end %>
   </main>
+
+  <%# Bottom Navigation %>
+  <%= render 'shared/bottom_nav' %>
 </div> 
