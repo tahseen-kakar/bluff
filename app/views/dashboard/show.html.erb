@@ -5,6 +5,17 @@
     <%# Header %>
     <%= render 'shared/header' %>
 
+    <%# Welcome message %>
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+        Welcome back, <%= Current.user.name %>!
+      </h1>
+      <p class="text-primary-400 font-mono">
+        <%= Time.current.hour < 12 ? "Good morning" : Time.current.hour < 18 ? "Good afternoon" : "Good evening" %>, 
+        ready to track some poker games?
+      </p>
+    </div>
+
     <% if Current.user.tables.exists? %>
       <%# Stats cards %>
       <div class="grid grid-cols-2 gap-4 mb-6">
