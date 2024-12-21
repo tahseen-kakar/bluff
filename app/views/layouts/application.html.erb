@@ -30,8 +30,10 @@
           <%= render 'shared/header' unless current_page?(app_path) && !@table %>
           
           
-          
           <%= yield %>
+
+          <%# Bottom navigation - only show when we have a current table %>
+          <%= render 'shared/bottom_nav' if @table %>
         </main>
       </div>
     <% else %>

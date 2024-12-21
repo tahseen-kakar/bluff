@@ -41,7 +41,10 @@ class TablesController < ApplicationController
 
   def switch
     session[:current_table_id] = @table.id
+    Current.table = @table
     redirect_to app_path, notice: "Switched to #{@table.name}"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to app_path, alert: "Table not found"
   end
 
   private
