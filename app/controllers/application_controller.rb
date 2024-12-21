@@ -10,7 +10,14 @@ class ApplicationController < ActionController::Base
   def set_current_request_details
     # Current.user is already set by Authentication concern
     if session[:current_table_id] && Current.session&.user
+      Rails.logger.info "Setting current table from session: #{session[:current_table_id]}"
       Current.table = Current.session.user.tables.find_by(id: session[:current_table_id])
+      if Current.table
+        Rails.logger.info "Current table set to: #{Current.table.name}"
+      else
+        Rails.logger.warn "Could not find table with id: #{session[:current_table_id]}"
+        session.delete(:current_table_id) # Clean up invalid table id
+      end
     end
   end
 end
