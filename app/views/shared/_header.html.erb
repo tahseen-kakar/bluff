@@ -26,7 +26,7 @@
                     class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
                            #{defined?(@table) && @table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
                            transition-colors duration-200 w-full text-left" do %>
-                  <%= tabler_icon('table', size: 16) %>
+                  <%= tabler_icon('picnic-table', size: 16) %>
                   <span class="font-mono truncate"><%= table.name %></span>
                 <% end %>
               <% end %>
@@ -37,7 +37,7 @@
             <%= link_to new_table_path,
                 class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
                        hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
-              <%= tabler_icon('table-plus', size: 16) %>
+              <%= tabler_icon('plus', size: 16) %>
               <span class="font-mono">New Table</span>
             <% end %>
           </div>
