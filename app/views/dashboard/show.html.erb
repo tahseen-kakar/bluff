@@ -1,26 +1,10 @@
 <%# Main container %>
 <div class="min-h-screen bg-primary-900">
-  <%# Header %>
-  <header class="fixed top-0 left-0 right-0 h-16 bg-primary-800/50 backdrop-blur-sm border-b border-primary-700/50 z-10">
-    <div class="h-full px-6 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
-        <span class="text-xl font-bold text-primary-50 font-mono">Bluff</span>
-      </div>
-      
-      <div class="flex items-center space-x-4">
-        <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
-          <%= tabler_icon('bell', size: 20) %>
-        </button>
-        <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
-          <%= tabler_icon('settings', size: 20) %>
-        </button>
-      </div>
-    </div>
-  </header>
-
   <%# Page content %>
-  <main class="pt-20 px-6 pb-24">
+  <main class="max-w-2xl mx-auto px-4 py-6">
+    <%# Header %>
+    <%= render 'shared/header' %>
+
     <%# Stats cards %>
     <div class="grid grid-cols-2 gap-4 mb-6">
       <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
