@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_21_112856) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_21_163842) do
+  create_table "game_formats", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.decimal "buy_in", precision: 10, scale: 2, null: false
+    t.json "denominations", default: [], null: false
+    t.integer "table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["table_id", "name"], name: "index_game_formats_on_table_id_and_name", unique: true
+    t.index ["table_id"], name: "index_game_formats_on_table_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -40,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_21_112856) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "game_formats", "tables"
   add_foreign_key "sessions", "users"
   add_foreign_key "tables", "users"
 end
