@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   get "app", to: "dashboard#show"
   scope "app" do
     resources :tables do
-      member do
-        post :switch
-      end
+      post :switch, on: :member
       resources :game_formats
       resources :players
       resources :sessions

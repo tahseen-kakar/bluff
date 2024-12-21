@@ -1,6 +1,6 @@
 class TablesController < ApplicationController
   before_action :authenticate
-  before_action :set_table, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_table, only: [ :show, :edit, :update, :destroy, :switch ]
 
   def index
     @tables = Current.user.tables.order(created_at: :desc)
@@ -37,6 +37,11 @@ class TablesController < ApplicationController
   def destroy
     @table.destroy
     redirect_to app_path, notice: "Table was successfully deleted."
+  end
+
+  def switch
+    session[:current_table_id] = @table.id
+    redirect_to app_path, notice: "Switched to #{@table.name}"
   end
 
   private
