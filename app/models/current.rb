@@ -3,6 +3,10 @@ class Current < ActiveSupport::CurrentAttributes
   attribute :user
   attribute :table
 
-  # If you want to keep the session delegation
-  # delegate :user, to: :session, allow_nil: true
+  # Delegate user to session
+  delegate :user, to: :session, allow_nil: true
+
+  def user
+    session&.user
+  end
 end

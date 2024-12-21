@@ -2,7 +2,7 @@
     title: 'Update Password',
     description: 'Enter your new password below',
     icon_name: 'key',
-    footer: link_to("Back to sign in", new_session_path, 
+    footer: link_to("Back to sign in", sign_in_path, 
         class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
   
   <%= form_with url: password_path(params[:token]), method: :put, class: "space-y-6" do |form| %>

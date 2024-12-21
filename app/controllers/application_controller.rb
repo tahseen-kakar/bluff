@@ -8,10 +8,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_current_request_details
-    Current.user = User.find_by(id: session[:user_id]) if session[:user_id]
-
-    if session[:current_table_id] && Current.user
-      Current.table = Current.user.tables.find_by(id: session[:current_table_id])
+    # Current.user is already set by Authentication concern
+    if session[:current_table_id] && Current.session&.user
+      Current.table = Current.session.user.tables.find_by(id: session[:current_table_id])
     end
   end
 end

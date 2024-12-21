@@ -16,15 +16,20 @@ class SessionsController < ApplicationController
         )
 
         set_current_session(session)
-        cookies.signed.permanent[:session_token] = { value: session.id, httponly: true }
+        cookies.signed[:session_token] = {
+          value: session.id,
+          httponly: true,
+          expires: 2.weeks.from_now,
+          secure: !Rails.env.development?
+        }
         redirect_to app_path
       else
         Rails.logger.info "Password authentication failed"
-        redirect_to new_session_path, alert: "Invalid email or password"
+        redirect_to sign_in_path, alert: "Invalid email or password"
       end
     else
       Rails.logger.info "User not found"
-      redirect_to new_session_path, alert: "Invalid email or password"
+      redirect_to sign_in_path, alert: "Invalid email or password"
     end
   end
 
