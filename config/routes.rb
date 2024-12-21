@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get "app", to: "dashboard#show"
 
   resources :tables
+  resources :game_formats
 end

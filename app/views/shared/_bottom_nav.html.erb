@@ -3,7 +3,7 @@
   <div class="flex items-center space-x-1">
     <%= link_to app_path, 
         class: "flex flex-col items-center px-4 py-2 rounded-full #{current_page?(app_path) ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
-      <%= tabler_icon('dashboard', size: 20) %>
+      <%= tabler_icon('chart-line', size: 20) %>
       <span class="text-xs mt-1 font-mono">Home</span>
     <% end %>
 
@@ -19,10 +19,10 @@
       <span class="text-xs mt-1 font-mono">Sessions</span>
     <% end %>
 
-    <%= link_to "#", 
-        class: "flex flex-col items-center px-4 py-2 rounded-full #{current_page?('/stats') ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
-      <%= tabler_icon('chart-line', size: 20) %>
-      <span class="text-xs mt-1 font-mono">Stats</span>
+    <%= link_to game_formats_path, 
+        class: "flex flex-col items-center px-4 py-2 rounded-full #{current_page?(game_formats_path) ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
+      <%= tabler_icon('clover', size: 20) %>
+      <span class="text-xs mt-1 font-mono">Formats</span>
     <% end %>
   </div>
 </nav> 
