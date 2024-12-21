@@ -5,21 +5,25 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if user = User.authenticate_by(email_address: params[:email_address], password: params[:password])
-      Rails.logger.info "User authenticated successfully: #{user.id}"
+    Rails.logger.info "Login attempt with: #{params[:email_address]}"
 
-      session = user.sessions.create!(
-        ip_address: request.ip,
-        user_agent: request.user_agent
-      )
-      Rails.logger.info "Session created: #{session.id}"
+    if user = User.find_by(email_address: params[:email_address])
+      if user.authenticate(params[:password])
+        Rails.logger.info "User authenticated: #{user.id}"
+        session = user.sessions.create!(
+          ip_address: request.ip,
+          user_agent: request.user_agent
+        )
 
-      cookies.signed.permanent[:session_token] = { value: session.id, httponly: true }
-      Rails.logger.info "About to redirect to: #{app_path}"
-
-      redirect_to app_path and return
-      Rails.logger.info "This line shouldn't be reached"
+        set_current_session(session)
+        cookies.signed.permanent[:session_token] = { value: session.id, httponly: true }
+        redirect_to app_path
+      else
+        Rails.logger.info "Password authentication failed"
+        redirect_to new_session_path, alert: "Invalid email or password"
+      end
     else
+      Rails.logger.info "User not found"
       redirect_to new_session_path, alert: "Invalid email or password"
     end
   end

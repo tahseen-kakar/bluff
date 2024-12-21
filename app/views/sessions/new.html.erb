@@ -5,41 +5,36 @@
     footer: link_to("Forgot your password?", new_password_path, 
         class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
   
-  <%= form_with url: session_path, class: "space-y-6" do |form| %>
+  <%= form_with url: session_path, method: :post, class: "space-y-6" do |form| %>
     <% if alert = flash[:alert] %>
       <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
         <%= alert %>
       </div>
     <% end %>
 
-    <%= render 'shared/form_field',
-        form: form,
-        field: :email_address,
-        type: 'email',
-        label: 'Email',
-        required: true,
-        autofocus: true,
-        autocomplete: 'username',
-        placeholder: 'you@example.com' %>
+    <div class="space-y-6">
+      <%= form.label :email_address, "Email", class: "block text-sm font-medium text-primary-300 font-mono" %>
+      <%= form.email_field :email_address,
+          required: true,
+          autofocus: true,
+          autocomplete: 'username',
+          placeholder: 'you@example.com',
+          class: "mt-1 block w-full rounded-lg border border-primary-700/50 bg-primary-800/50 text-primary-100 placeholder-primary-400 focus:border-secondary-400 focus:ring focus:ring-secondary-400/20 font-mono" %>
+    </div>
 
-    <%= render 'shared/form_field',
-        form: form,
-        field: :password,
-        type: 'password',
-        label: 'Password',
-        required: true,
-        autocomplete: 'current-password',
-        placeholder: '••••••••',
-        maxlength: 72 %>
+    <div class="space-y-6">
+      <%= form.label :password, "Password", class: "block text-sm font-medium text-primary-300 font-mono" %>
+      <%= form.password_field :password,
+          required: true,
+          autocomplete: 'current-password',
+          placeholder: '••••••••',
+          maxlength: 72,
+          class: "mt-1 block w-full rounded-lg border border-primary-700/50 bg-primary-800/50 text-primary-100 placeholder-primary-400 focus:border-secondary-400 focus:ring focus:ring-secondary-400/20 font-mono" %>
+    </div>
 
     <div class="pt-2">
-      <%= render 'shared/button',
-          type: 'submit',
-          variant: 'primary',
-          full_width: true,
-          class: "bg-secondary-400 hover:bg-secondary-300 text-primary-900 py-4 text-base font-mono" do %>
-        Sign in
-      <% end %>
+      <%= form.submit "Sign in",
+          class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 text-primary-900 py-4 text-base font-mono transition-colors duration-200" %>
     </div>
   <% end %>
 <% end %>
