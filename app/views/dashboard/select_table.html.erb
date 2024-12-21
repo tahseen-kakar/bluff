@@ -1,0 +1,32 @@
+<div class="max-w-xl mx-auto">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+      Select a Table
+    </h1>
+    <p class="text-primary-400 font-mono">
+      Choose which table you want to manage
+    </p>
+  </div>
+
+  <div class="space-y-4">
+    <% @tables.each do |table| %>
+      <%= button_to switch_table_path(table),
+          class: "w-full text-left bg-primary-800/50 backdrop-blur-sm rounded-xl border 
+                 border-primary-700/50 p-4 hover:bg-primary-700/50 transition-colors duration-200" do %>
+        <h3 class="text-primary-50 font-mono font-bold"><%= table.name %></h3>
+        <% if table.description.present? %>
+          <p class="text-primary-400 text-sm font-mono mt-1"><%= table.description %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mt-8 text-center">
+    <%= link_to new_table_path,
+        class: "inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
+                transition-colors duration-200" do %>
+      <%= tabler_icon('plus', size: 16) %>
+      <span class="text-sm font-mono">Create another table</span>
+    <% end %>
+  </div>
+</div> 
