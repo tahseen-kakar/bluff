@@ -6,10 +6,10 @@
   
   <div class="flex items-center space-x-2">
     <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
-      <%= tabler_icon('bell', size: 20) %>
-    </button>
-    <button class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
       <%= tabler_icon('settings', size: 20) %>
     </button>
+    <%= button_to session_path, method: :delete, class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
+      <%= tabler_icon('logout', size: 20) %>
+    <% end %>
   </div>
 </div> 
