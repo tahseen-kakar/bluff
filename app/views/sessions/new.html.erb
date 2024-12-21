@@ -12,39 +12,39 @@
       </div>
     <% end %>
 
-    <div class="space-y-2">
+    <div class="space-y-2 text-left">
       <%= form.label :email_address, "Email", 
-          class: "block text-base font-medium text-primary-200 font-mono" %>
+          class: "block text-sm font-mono text-primary-300" %>
       <%= form.email_field :email_address,
           required: true,
           autofocus: true,
           autocomplete: 'username',
           placeholder: 'you@example.com',
-          class: "w-full bg-primary-700/50 text-primary-200 placeholder-primary-500 
-                 border-0 rounded-lg px-4 py-3.5
-                 focus:ring-1 focus:ring-secondary-400 focus:bg-primary-700/70
-                 transition-all duration-200 font-mono" %>
+          class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
+                 text-primary-50 font-mono placeholder:text-primary-600
+                 focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                 focus:outline-none" %>
     </div>
 
-    <div class="space-y-2">
+    <div class="space-y-2 text-left">
       <%= form.label :password, "Password", 
-          class: "block text-base font-medium text-primary-200 font-mono" %>
+          class: "block text-sm font-mono text-primary-300" %>
       <%= form.password_field :password,
           required: true,
           autocomplete: 'current-password',
           placeholder: '••••••••',
           maxlength: 72,
-          class: "w-full bg-primary-700/50 text-primary-200 placeholder-primary-500 
-                 border-0 rounded-lg px-4 py-3.5
-                 focus:ring-1 focus:ring-secondary-400 focus:bg-primary-700/70
-                 transition-all duration-200 font-mono" %>
+          class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
+                 text-primary-50 font-mono placeholder:text-primary-600
+                 focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                 focus:outline-none" %>
     </div>
 
-    <div class="pt-4">
+    <div class="pt-2">
       <%= form.submit "Sign in",
           class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
                  text-primary-900 py-4 text-base font-bold font-mono 
-                 transition-all duration-200 hover:scale-[0.99] active:scale-[0.97]" %>
+                 transition-colors duration-200" %>
     </div>
   <% end %>
 <% end %>
