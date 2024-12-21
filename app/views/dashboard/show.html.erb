@@ -1,65 +1,53 @@
-<%# Main container %>
-<div class="min-h-screen bg-primary-900">
-  <%# Page content %>
-  <main class="max-w-6xl mx-auto px-4 py-6">
-    <%# Header %>
-    <%= render 'shared/header' %>
+<%# Welcome message %>
+<div class="mb-8">
+  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+    Welcome back, <%= Current.user.name %>!
+  </h1>
+  <p class="text-primary-400 font-mono">
+    <%= Time.current.hour < 12 ? "Good morning" : Time.current.hour < 18 ? "Good afternoon" : "Good evening" %>, 
+    ready to track some poker games?
+  </p>
+</div>
 
-    <%# Welcome message %>
-    <div class="mb-8">
-      <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
-        Welcome back, <%= Current.user.name %>!
-      </h1>
-      <p class="text-primary-400 font-mono">
-        <%= Time.current.hour < 12 ? "Good morning" : Time.current.hour < 18 ? "Good afternoon" : "Good evening" %>, 
-        ready to track some poker games?
-      </p>
+<% if Current.user.tables.exists? %>
+  <%# Stats cards %>
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-primary-400 font-mono text-sm">Total Games</h3>
+        <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
+      </div>
+      <p class="text-xl font-bold text-primary-50 font-mono mt-1">24</p>
     </div>
 
-    <% if Current.user.tables.exists? %>
-      <%# Stats cards %>
-      <div class="grid grid-cols-2 gap-4 mb-6">
-        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-primary-400 font-mono text-sm">Total Games</h3>
-            <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
-          </div>
-          <p class="text-xl font-bold text-primary-50 font-mono mt-1">24</p>
-        </div>
-
-        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-primary-400 font-mono text-sm">Active Players</h3>
-            <%= tabler_icon('users', size: 20, class: 'text-secondary-400') %>
-          </div>
-          <p class="text-xl font-bold text-primary-50 font-mono mt-1">8</p>
-        </div>
-
-        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-primary-400 font-mono text-sm">Total Hours</h3>
-            <%= tabler_icon('clock', size: 20, class: 'text-secondary-400') %>
-          </div>
-          <p class="text-xl font-bold text-primary-50 font-mono mt-1">156</p>
-        </div>
-
-        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-primary-400 font-mono text-sm">Win Rate</h3>
-            <%= tabler_icon('chart-line', size: 20, class: 'text-secondary-400') %>
-          </div>
-          <p class="text-xl font-bold text-primary-50 font-mono mt-1">62%</p>
-        </div>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-primary-400 font-mono text-sm">Active Players</h3>
+        <%= tabler_icon('users', size: 20, class: 'text-secondary-400') %>
       </div>
-    <% else %>
-      <%= render 'shared/empty_state',
-          path: new_table_path,
-          icon: 'picnic-table',
-          title: 'Create Your First Table',
-          description: 'Start by creating a table to organize your poker games and track player stats' %>
-    <% end %>
-  </main>
+      <p class="text-xl font-bold text-primary-50 font-mono mt-1">8</p>
+    </div>
 
-  <%# Bottom Navigation %>
-  <%= render 'shared/bottom_nav' %>
-</div> 
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-primary-400 font-mono text-sm">Total Hours</h3>
+        <%= tabler_icon('clock', size: 20, class: 'text-secondary-400') %>
+      </div>
+      <p class="text-xl font-bold text-primary-50 font-mono mt-1">156</p>
+    </div>
+
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-primary-400 font-mono text-sm">Win Rate</h3>
+        <%= tabler_icon('chart-line', size: 20, class: 'text-secondary-400') %>
+      </div>
+      <p class="text-xl font-bold text-primary-50 font-mono mt-1">62%</p>
+    </div>
+  </div>
+<% else %>
+  <%= render 'shared/empty_state',
+      path: new_table_path,
+      icon: 'picnic-table',
+      title: 'Create Your First Table',
+      description: 'Start by creating a table to organize your poker games and track player stats' %>
+<% end %> 

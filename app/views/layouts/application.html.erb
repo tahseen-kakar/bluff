@@ -20,11 +20,29 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-primary-900 text-center px-4 font-display">
-    <main class="min-h-screen flex items-center justify-center">
-      <div class="w-full">
-        <%= yield %>
+  <body class="bg-primary-900 text-center font-display">
+    <% if Current.user %>
+      <%# Authenticated layout %>
+      <div class="min-h-screen bg-primary-900">
+        <%# Page content %>
+        <main class="max-w-6xl mx-auto px-4 py-6">
+          <%# Header %>
+          <%= render 'shared/header' %>
+
+          <%# Main content %>
+          <%= yield %>
+        </main>
+
+        <%# Bottom Navigation %>
+        <%= render 'shared/bottom_nav' %>
       </div>
-    </main>
+    <% else %>
+      <%# Unauthenticated layout %>
+      <main class="min-h-screen flex items-center justify-center px-4">
+        <div class="w-full">
+          <%= yield %>
+        </div>
+      </main>
+    <% end %>
   </body>
 </html>

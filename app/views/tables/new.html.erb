@@ -1,46 +1,34 @@
-<%# Main container %>
-<div class="min-h-screen bg-primary-900">
-  <%# Page content %>
-  <main class="max-w-6xl mx-auto px-4 py-6">
-    <%# Header %>
-    <%= render 'shared/header' %>
+<%# Form %>
+<%= render 'shared/form_card',
+    icon: 'picnic-table',
+    title: 'Create a Table',
+    description: 'Tables help you organize your poker games and track player stats. You can create multiple tables for different groups or game types.' do %>
+  
+  <%= form_with model: @table, class: "space-y-6" do |form| %>
+    <div class="space-y-6">
+      <%= render 'shared/form_field',
+          form: form,
+          field: :name,
+          label: 'Table Name',
+          required: true,
+          autofocus: true,
+          placeholder: 'e.g., Friday Night Poker',
+          hint: 'Give your table a memorable name' %>
 
-    <%# Form %>
-    <%= render 'shared/form_card',
-        icon: 'picnic-table',
-        title: 'Create a Table',
-        description: 'Tables help you organize your poker games and track player stats. You can create multiple tables for different groups or game types.' do %>
-      
-      <%= form_with model: @table, class: "space-y-6" do |form| %>
-        <div class="space-y-6">
-          <%= render 'shared/form_field',
-              form: form,
-              field: :name,
-              label: 'Table Name',
-              required: true,
-              autofocus: true,
-              placeholder: 'e.g., Friday Night Poker',
-              hint: 'Give your table a memorable name' %>
+      <%= render 'shared/form_field',
+          form: form,
+          field: :description,
+          label: 'Description',
+          type: 'textarea',
+          placeholder: 'Describe what kind of games you play here...',
+          hint: 'Optional: Add details about stakes, rules, or regular players' %>
 
-          <%= render 'shared/form_field',
-              form: form,
-              field: :description,
-              label: 'Description',
-              type: 'textarea',
-              placeholder: 'Describe what kind of games you play here...',
-              hint: 'Optional: Add details about stakes, rules, or regular players' %>
-
-          <div class="pt-2">
-            <%= form.submit "Create Table",
-                class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
-                       text-primary-900 py-4 text-base font-bold font-mono 
-                       transition-colors duration-200" %>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </main>
-
-  <%# Bottom Navigation %>
-  <%= render 'shared/bottom_nav' %>
-</div> 
+      <div class="pt-2">
+        <%= form.submit "Create Table",
+            class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
+                   text-primary-900 py-4 text-base font-bold font-mono 
+                   transition-colors duration-200" %>
+      </div>
+    </div>
+  <% end %>
+<% end %> 
