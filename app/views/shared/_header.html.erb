@@ -1,7 +1,49 @@
 <div class="flex items-center justify-between mb-8">
   <div class="flex items-center space-x-3">
-    <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
-    <span class="text-xl font-bold text-primary-50 font-mono">Bluff</span>
+    <%# Logo links to dashboard %>
+    <%= link_to app_path, class: "flex items-center space-x-3" do %>
+      <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
+      <span class="text-xl font-bold text-primary-50 font-mono">Bluff</span>
+    <% end %>
+
+    <%# Table switcher dropdown - Only show if we have tables AND we're not on new table page %>
+    <% if Current.user.tables.exists? && !current_page?(new_table_path) %>
+      <div class="relative" data-controller="dropdown">
+        <button data-action="click->dropdown#toggle" 
+                class="flex items-center space-x-2 p-2 text-primary-400 hover:text-primary-50 
+                       rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+          <%= tabler_icon('chevron-down', size: 16) %>
+        </button>
+
+        <div data-dropdown-target="menu"
+             class="hidden absolute left-0 mt-2 w-64 rounded-lg bg-primary-800/95 backdrop-blur-sm 
+                    border border-primary-700/50 shadow-lg py-1 z-50">
+          <div class="px-3 py-2">
+            <p class="text-xs text-primary-400 font-mono mb-2">Your Tables</p>
+            <div class="space-y-1">
+              <% Current.user.tables.each do |table| %>
+                <%= link_to table_path(table), 
+                    class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
+                           #{defined?(@table) && @table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
+                           transition-colors duration-200 w-full text-left" do %>
+                  <%= tabler_icon('table', size: 16) %>
+                  <span class="font-mono truncate"><%= table.name %></span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="border-t border-primary-700/50 mt-1 pt-1">
+            <%= link_to new_table_path,
+                class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
+                       hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+              <%= tabler_icon('table-plus', size: 16) %>
+              <span class="font-mono">New Table</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
   
   <div class="relative" data-controller="dropdown">
