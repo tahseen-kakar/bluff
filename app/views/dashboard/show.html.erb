@@ -1,7 +1,7 @@
 <%# Main container %>
 <div class="min-h-screen bg-primary-900">
   <%# Page content %>
-  <main class="max-w-2xl mx-auto px-4 py-6">
+  <main class="max-w-6xl mx-auto px-4 py-6">
     <%# Header %>
     <%= render 'shared/header' %>
 
@@ -37,34 +37,6 @@
           <%= tabler_icon('chart-line', size: 20, class: 'text-secondary-400') %>
         </div>
         <p class="text-xl font-bold text-primary-50 font-mono mt-1">62%</p>
-      </div>
-    </div>
-
-    <%# Recent activity %>
-    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-bold text-primary-50 font-mono">Recent Activity</h2>
-        <button class="text-secondary-400 hover:text-secondary-300 font-mono text-sm">View all</button>
-      </div>
-
-      <div class="space-y-3">
-        <div class="flex items-center space-x-4 p-3 rounded-lg bg-primary-700/30">
-          <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
-          <div class="flex-1">
-            <h4 class="text-primary-50 font-mono text-sm">Friday Night Game</h4>
-            <p class="text-xs text-primary-400 font-mono">Dec 15, 2023 • 4 players</p>
-          </div>
-          <span class="text-green-400 font-mono text-sm">+$245</span>
-        </div>
-
-        <div class="flex items-center space-x-4 p-3 rounded-lg bg-primary-700/30">
-          <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
-          <div class="flex-1">
-            <h4 class="text-primary-50 font-mono text-sm">Weekend Tournament</h4>
-            <p class="text-xs text-primary-400 font-mono">Dec 10, 2023 • 8 players</p>
-          </div>
-          <span class="text-red-400 font-mono text-sm">-$120</span>
-        </div>
       </div>
     </div>
   </main>
