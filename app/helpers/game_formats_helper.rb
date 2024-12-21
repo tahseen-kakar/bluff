@@ -1,0 +1,2 @@
+module GameFormatsHelper
+end
