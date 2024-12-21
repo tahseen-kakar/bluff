@@ -1,6 +1,7 @@
 class Table < ApplicationRecord
   belongs_to :user
   has_many :game_formats, dependent: :destroy
+  has_many :players, dependent: :destroy
 
   # Validations
   validates :name, presence: true,

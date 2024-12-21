@@ -7,7 +7,7 @@
     <% end %>
 
     <%# Current table name %>
-    <% if @table %>
+    <% if @table && Current.session&.user %>
       <div class="relative" data-controller="dropdown">
         <button data-action="click->dropdown#toggle" 
                 class="flex items-center space-x-2 px-3 py-1.5 text-primary-50 
@@ -22,14 +22,21 @@
           <div class="px-3 py-2">
             <p class="text-xs text-primary-400 font-mono mb-2">Switch Table</p>
             <div class="space-y-1">
-              <% Current.user.tables.each do |table| %>
-                <%= button_to switch_table_path(table), 
-                    class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
-                           #{@table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
-                           transition-colors duration-200 w-full text-left" do %>
-                  <%= tabler_icon('picnic-table', size: 16) %>
-                  <span class="font-mono truncate"><%= table.name %></span>
+              <% tables = Current.session.user.tables.to_a %>
+              <% if tables.any? %>
+                <% tables.each do |table| %>
+                  <% if table.id.present? %>
+                    <%= button_to switch_table_path(id: table.id), 
+                        class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
+                               #{@table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
+                               transition-colors duration-200 w-full text-left" do %>
+                      <%= tabler_icon('picnic-table', size: 16) %>
+                      <span class="font-mono truncate"><%= table.name %></span>
+                    <% end %>
+                  <% end %>
                 <% end %>
+              <% else %>
+                <p class="text-sm text-primary-400 px-3 py-2">No tables yet</p>
               <% end %>
             </div>
           </div>

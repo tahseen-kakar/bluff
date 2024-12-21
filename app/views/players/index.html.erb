@@ -1,0 +1,57 @@
+<div class="mb-8">
+  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+    Players for <%= @table.name %>
+  </h1>
+  <p class="text-primary-400 font-mono">
+    Manage your poker players and track their performance
+  </p>
+</div>
+
+<% if @players.exists? %>
+  <div class="space-y-4">
+    <% @players.each do |player| %>
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-primary-50 font-mono font-bold"><%= player.name %></h3>
+            <% if player.email.present? %>
+              <p class="text-primary-400 text-sm font-mono mt-1"><%= player.email %></p>
+            <% end %>
+            <% if player.notes.present? %>
+              <p class="text-secondary-400 text-sm font-mono mt-2"><%= player.notes %></p>
+            <% end %>
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <%= link_to edit_table_player_path(@table, player),
+                class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
+              <%= tabler_icon('edit', size: 20) %>
+            <% end %>
+
+            <%= button_to table_player_path(@table, player),
+                method: :delete,
+                class: "p-2 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200",
+                form: { data: { turbo_confirm: 'Are you sure?' } } do %>
+              <%= tabler_icon('trash', size: 20) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <%= render 'shared/empty_state',
+      icon: 'users',
+      title: 'Add Your First Player',
+      description: 'Start tracking players for this table',
+      path: new_table_player_path(@table) %>
+<% end %>
+
+<% unless current_page?(new_table_player_path(@table)) %>
+  <%= link_to new_table_player_path(@table),
+      class: "fixed bottom-24 right-6 p-4 rounded-full bg-secondary-400 hover:bg-secondary-300 
+              text-primary-900 shadow-lg shadow-primary-900/50 transition-all duration-200 
+              hover:scale-[0.97] active:scale-[0.95]" do %>
+    <%= tabler_icon('plus', size: 24) %>
+  <% end %>
+<% end %> 
