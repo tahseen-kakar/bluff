@@ -42,12 +42,3 @@
       description: 'Define the game types and buy-in structures for this table',
       path: new_table_game_format_path(@table) %>
 <% end %>
-
-<% unless current_page?(new_table_game_format_path(@table)) %>
-  <%= link_to new_table_game_format_path(@table),
-      class: "fixed bottom-24 right-6 p-4 rounded-full bg-secondary-400 hover:bg-secondary-300 
-              text-primary-900 shadow-lg shadow-primary-900/50 transition-all duration-200 
-              hover:scale-[0.97] active:scale-[0.95]" do %>
-    <%= tabler_icon('plus', size: 24) %>
-  <% end %>
-<% end %>
