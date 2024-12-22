@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_22_142736) do
     t.index ["table_id", "name"], name: "index_game_formats_on_table_id_and_name", unique: true
     t.index ["table_id"], name: "index_game_formats_on_table_id"
   end
-
+# emoji field is used as players avatar. while creating player, we can set it to default emoji
   create_table "players", force: :cascade do |t|
     t.string "name", null: false
     t.text "notes"
