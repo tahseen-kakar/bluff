@@ -12,14 +12,23 @@
     <% @players.each do |player| %>
       <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
         <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-primary-50 font-mono font-bold"><%= player.name %></h3>
-            <% if player.email.present? %>
-              <p class="text-primary-400 text-sm font-mono mt-1"><%= player.email %></p>
-            <% end %>
-            <% if player.notes.present? %>
-              <p class="text-secondary-400 text-sm font-mono mt-2"><%= player.notes %></p>
-            <% end %>
+          <div class="flex items-center space-x-4">
+            <%# Avatar %>
+            <div class="flex items-center justify-center w-12 h-12 text-2xl 
+                        bg-primary-800/50 rounded-lg border border-primary-700/50">
+              <%= player.emoji %>
+            </div>
+
+            <%# Player Info %>
+            <div>
+              <h3 class="text-primary-50 font-mono font-bold"><%= player.name %></h3>
+              <% if player.notes.present? %>
+                <p class="text-primary-400 text-sm font-mono mt-1"><%= player.notes %></p>
+              <% end %>
+              <p class="text-secondary-400 text-sm font-mono mt-2">
+                Wallet: $<%= number_with_precision(player.wallet_balance, precision: 2) %>
+              </p>
+            </div>
           </div>
           
           <div class="flex items-center space-x-2">

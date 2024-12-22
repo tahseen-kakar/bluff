@@ -1,0 +1,65 @@
+<%# Form %>
+<%= render 'shared/form_card',
+    icon: 'user-edit',
+    title: 'Edit Player',
+    description: 'Update player details and wallet balance' do %>
+  
+  <%= form_with model: [@table, @player], class: "space-y-6" do |form| %>
+    <div class="space-y-6">
+      <%= render 'shared/form_field',
+          form: form,
+          field: :name,
+          label: 'Player Name',
+          required: true,
+          autofocus: true,
+          placeholder: 'e.g., John Smith',
+          hint: 'Enter the player\'s name' %>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :notes,
+          label: 'Notes',
+          type: 'textarea',
+          placeholder: 'Any notes about this player...',
+          hint: 'Optional: Add any notes about playing style, preferences, etc.' %>
+
+      <%# Emoji Selection %>
+      <div class="space-y-2">
+        <label class="block text-sm font-mono text-primary-300">Avatar</label>
+        <div class="grid grid-cols-8 gap-2">
+          <% Player::VALID_EMOJIS.each do |emoji| %>
+            <label class="cursor-pointer">
+              <%= form.radio_button :emoji, emoji, 
+                  class: "hidden peer" %>
+              <div class="flex items-center justify-center p-2 text-2xl 
+                          bg-primary-800/50 rounded-lg border border-primary-700/50
+                          peer-checked:border-secondary-400 peer-checked:bg-primary-700/50
+                          hover:border-primary-600 transition-colors duration-200">
+                <%= emoji %>
+              </div>
+            </label>
+          <% end %>
+        </div>
+        <p class="mt-1 text-xs text-primary-400 font-mono">Choose an avatar for this player</p>
+      </div>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :wallet_balance,
+          type: 'number',
+          label: 'Wallet Balance',
+          required: true,
+          placeholder: '0.00',
+          step: '0.01',
+          min: '0',
+          hint: 'Update the player\'s wallet balance' %>
+
+      <div class="pt-2">
+        <%= form.submit "Update Player",
+            class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
+                   text-primary-900 py-4 text-base font-bold font-mono 
+                   transition-colors duration-200" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
