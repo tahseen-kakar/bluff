@@ -26,9 +26,8 @@
       <div class="min-h-screen bg-primary-900">
         <%# Page content %>
         <main class="max-w-6xl mx-auto px-4 py-6">
-          <%# Header - only show for authenticated users %>
-          <%= render 'shared/header' unless current_page?(app_path) && !@table %>
-          
+          <%# Header - show for all authenticated pages %>
+          <%= render 'shared/header' %>
           
           <%= yield %>
 
