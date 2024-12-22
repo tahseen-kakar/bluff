@@ -1,50 +1,52 @@
-<%= render 'shared/card',
-    title: 'Welcome Back',
-    description: 'Sign in to manage your poker games',
-    icon_name: 'key',
-    footer: link_to("Forgot your password?", new_password_path, 
-        class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
-  
-  <%= form_with url: sign_in_path, method: :post, class: "space-y-6" do |form| %>
-    <% if alert = flash[:alert] %>
-      <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
-        <%= alert %>
+<div class="min-h-screen flex items-center justify-center">
+  <%= render 'shared/card',
+      title: 'Welcome Back',
+      description: 'Sign in to manage your poker games',
+      icon_name: 'key',
+      footer: link_to("Forgot your password?", new_password_path, 
+          class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
+    
+    <%= form_with url: sign_in_path, method: :post, class: "space-y-6" do |form| %>
+      <% if alert = flash[:alert] %>
+        <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <div class="space-y-2 text-left">
+        <%= form.label :email_address, "Email", 
+            class: "block text-sm font-mono text-primary-300" %>
+        <%= form.email_field :email_address,
+            required: true,
+            autofocus: true,
+            autocomplete: 'username',
+            placeholder: 'you@example.com',
+            class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
+                   text-primary-50 font-mono placeholder:text-primary-600
+                   focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                   focus:outline-none" %>
+      </div>
+
+      <div class="space-y-2 text-left">
+        <%= form.label :password, "Password", 
+            class: "block text-sm font-mono text-primary-300" %>
+        <%= form.password_field :password,
+            required: true,
+            autocomplete: 'current-password',
+            placeholder: '••••••••',
+            maxlength: 72,
+            class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
+                   text-primary-50 font-mono placeholder:text-primary-600
+                   focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                   focus:outline-none" %>
+      </div>
+
+      <div class="pt-2">
+        <%= form.submit "Sign in",
+            class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
+                   text-primary-900 py-4 text-base font-bold font-mono 
+                   transition-colors duration-200" %>
       </div>
     <% end %>
-
-    <div class="space-y-2 text-left">
-      <%= form.label :email_address, "Email", 
-          class: "block text-sm font-mono text-primary-300" %>
-      <%= form.email_field :email_address,
-          required: true,
-          autofocus: true,
-          autocomplete: 'username',
-          placeholder: 'you@example.com',
-          class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
-                 text-primary-50 font-mono placeholder:text-primary-600
-                 focus:ring-2 focus:ring-inset focus:ring-secondary-400 
-                 focus:outline-none" %>
-    </div>
-
-    <div class="space-y-2 text-left">
-      <%= form.label :password, "Password", 
-          class: "block text-sm font-mono text-primary-300" %>
-      <%= form.password_field :password,
-          required: true,
-          autocomplete: 'current-password',
-          placeholder: '••••••••',
-          maxlength: 72,
-          class: "block w-full rounded-lg border-0 bg-primary-800/50 py-4 px-4 
-                 text-primary-50 font-mono placeholder:text-primary-600
-                 focus:ring-2 focus:ring-inset focus:ring-secondary-400 
-                 focus:outline-none" %>
-    </div>
-
-    <div class="pt-2">
-      <%= form.submit "Sign in",
-          class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
-                 text-primary-900 py-4 text-base font-bold font-mono 
-                 transition-colors duration-200" %>
-    </div>
   <% end %>
-<% end %>
+</div>

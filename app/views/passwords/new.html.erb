@@ -1,42 +1,44 @@
-<%= render 'shared/card',
-    title: 'Reset Password',
-    description: 'Enter your email to receive reset instructions',
-    icon_name: 'mail',
-    footer: link_to("Back to sign in", sign_in_path, 
-        class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
-  
-  <%= form_with url: passwords_path, class: "space-y-6" do |form| %>
-    <% if alert = flash[:alert] %>
-      <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
-        <%= alert %>
-      </div>
-    <% end %>
-
-    <% if notice = flash[:notice] %>
-      <div class="bg-green-900/20 text-green-400 text-sm rounded-lg p-4 font-mono">
-        <%= notice %>
-      </div>
-    <% end %>
-
-    <%= render 'shared/form_field',
-        form: form,
-        field: :email_address,
-        type: 'email',
-        label: 'Email',
-        required: true,
-        autofocus: true,
-        autocomplete: 'username',
-        placeholder: 'you@example.com',
-        value: params[:email_address] %>
-
-    <div class="pt-2">
-      <%= render 'shared/button',
-          type: 'submit',
-          variant: 'primary',
-          full_width: true,
-          class: "bg-secondary-400 hover:bg-secondary-300 text-primary-900 py-4 text-base font-mono" do %>
-        Send Reset Instructions
+<div class="min-h-screen flex items-center justify-center">
+  <%= render 'shared/card',
+      title: 'Reset Password',
+      description: 'Enter your email to receive reset instructions',
+      icon_name: 'mail',
+      footer: link_to("Back to sign in", sign_in_path, 
+          class: "text-secondary-400 hover:text-secondary-300 text-sm font-medium transition-colors duration-200 font-mono") do %>
+    
+    <%= form_with url: passwords_path, class: "space-y-6" do |form| %>
+      <% if alert = flash[:alert] %>
+        <div class="bg-red-900/20 text-red-400 text-sm rounded-lg p-4 font-mono">
+          <%= alert %>
+        </div>
       <% end %>
-    </div>
+
+      <% if notice = flash[:notice] %>
+        <div class="bg-green-900/20 text-green-400 text-sm rounded-lg p-4 font-mono">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :email_address,
+          type: 'email',
+          label: 'Email',
+          required: true,
+          autofocus: true,
+          autocomplete: 'username',
+          placeholder: 'you@example.com',
+          value: params[:email_address] %>
+
+      <div class="pt-2">
+        <%= render 'shared/button',
+            type: 'submit',
+            variant: 'primary',
+            full_width: true,
+            class: "bg-secondary-400 hover:bg-secondary-300 text-primary-900 py-4 text-base font-mono" do %>
+          Send Reset Instructions
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
