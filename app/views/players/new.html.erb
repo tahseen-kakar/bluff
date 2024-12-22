@@ -24,9 +24,10 @@
           hint: 'Optional: Add any notes about playing style, preferences, etc.' %>
 
       <%# Emoji Selection %>
-      <div class="space-y-2">
+      <div class="space-y-2 text-left">
         <label class="block text-sm font-mono text-primary-300">Avatar</label>
-        <div class="grid grid-cols-8 gap-2">
+        <p class="mt-1 text-xs text-primary-400 font-mono">Choose an avatar for this player</p>
+        <div class="grid grid-cols-8 gap-2 mt-2">
           <% Player::VALID_EMOJIS.each do |emoji| %>
             <label class="cursor-pointer">
               <%= form.radio_button :emoji, emoji, 
@@ -41,7 +42,6 @@
             </label>
           <% end %>
         </div>
-        <p class="mt-1 text-xs text-primary-400 font-mono">Choose an avatar for this player</p>
       </div>
 
       <%= render 'shared/form_field',
