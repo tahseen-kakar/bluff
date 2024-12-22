@@ -23,26 +23,33 @@
             <div>
               <h3 class="text-primary-50 font-mono font-bold"><%= player.name %></h3>
               <% if player.notes.present? %>
-                <p class="text-primary-400 text-sm font-mono mt-1"><%= player.notes %></p>
+                <p class="text-primary-400 text-sm font-mono mt-1 text-left"><%= player.notes %></p>
               <% end %>
-              <p class="text-secondary-400 text-sm font-mono mt-2">
-                Wallet: $<%= number_with_precision(player.wallet_balance, precision: 2) %>
-              </p>
             </div>
           </div>
           
-          <div class="flex items-center space-x-2">
-            <%= link_to edit_table_player_path(@table, player),
-                class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
-              <%= tabler_icon('edit', size: 20) %>
-            <% end %>
+          <div class="flex items-center space-x-4">
+            <%# Wallet Amount %>
+            <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
+              <span class="text-secondary-400 font-mono font-medium">
+                $<%= number_with_precision(player.wallet_balance, precision: 2) %>
+              </span>
+            </div>
 
-            <%= button_to table_player_path(@table, player),
-                method: :delete,
-                class: "p-2 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200",
-                form: { data: { turbo_confirm: 'Are you sure?' } } do %>
-              <%= tabler_icon('trash', size: 20) %>
-            <% end %>
+            <%# Actions %>
+            <div class="flex items-center space-x-2">
+              <%= link_to edit_table_player_path(@table, player),
+                  class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
+                <%= tabler_icon('edit', size: 20) %>
+              <% end %>
+
+              <%= button_to table_player_path(@table, player),
+                  method: :delete,
+                  class: "p-2 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200",
+                  form: { data: { turbo_confirm: 'Are you sure?' } } do %>
+                <%= tabler_icon('trash', size: 20) %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
