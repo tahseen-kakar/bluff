@@ -36,7 +36,29 @@
         </main>
       </div>
     <% else %>
-      <%= yield %>
+      <%# Unauthenticated layout %>
+      <div class="min-h-screen bg-primary-900">
+        <main class="max-w-6xl mx-auto px-4 py-6">
+          <%# Logo header for unauthenticated pages %>
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center space-x-3">
+              <%= link_to root_path, class: "flex items-center space-x-3" do %>
+                <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
+                <span class="text-xl font-bold text-primary-50 font-mono">Bluff</span>
+              <% end %>
+            </div>
+
+            <% unless current_page?(sign_in_path) %>
+              <%= link_to "Sign in",
+                  sign_in_path,
+                  class: "px-4 py-2 text-primary-50 rounded-lg bg-primary-700/30 
+                          hover:bg-primary-700/50 transition-colors duration-200 font-mono" %>
+            <% end %>
+          </div>
+
+          <%= yield %>
+        </main>
+      </div>
     <% end %>
   </body>
 </html>
