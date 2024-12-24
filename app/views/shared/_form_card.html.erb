@@ -1,7 +1,7 @@
 <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 overflow-hidden">
-  <div class="grid grid-cols-3">
+  <div class="grid grid-cols-1 lg:grid-cols-3">
     <%# Left side - Icon and description %>
-    <div class="p-8 bg-primary-800/50 border-r border-primary-700/50">
+    <div class="p-8 bg-primary-800/50 lg:border-r border-primary-700/50">
       <div class="flex flex-col items-start text-left">
         <%= tabler_icon(icon, size: 48, class: 'text-secondary-400 mb-4') %>
         <h1 class="text-xl font-bold text-primary-50 font-mono mb-2">
@@ -14,7 +14,7 @@
     </div>
 
     <%# Right side - Form %>
-    <div class="col-span-2 p-8">
+    <div class="col-span-1 lg:col-span-2 p-8">
       <%= yield %>
     </div>
   </div>
