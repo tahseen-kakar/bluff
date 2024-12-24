@@ -11,27 +11,38 @@
   <div class="space-y-4">
     <% @game_formats.each do |format| %>
       <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-primary-50 font-mono font-bold"><%= format.name %></h3>
-            <p class="text-primary-400 text-sm font-mono mt-1"><%= format.description %></p>
-            <p class="text-secondary-400 text-sm font-mono mt-2">Buy-in: $<%= number_with_precision(format.buy_in, precision: 2) %></p>
-            
-            <%# Chip Denominations %>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <% format.denominations.each do |denomination| %>
-                <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
-                  <div class="w-4 h-4 rounded-full border border-primary-600"
-                       style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
-                  <span class="text-xs font-mono text-primary-300">
-                    $<%= number_with_precision(denomination['value'], precision: 2) %>
-                  </span>
-                </div>
-              <% end %>
+        <div class="flex items-start justify-between">
+          <%# Left side: Name, Description %>
+          <div class="flex-1 min-w-0 pr-4">
+            <div class="flex items-center space-x-4">
+              <h3 class="text-primary-50 font-mono font-bold"><%= format.name %></h3>
+              <span class="text-secondary-400 text-sm font-mono">
+                $<%= number_with_precision(format.buy_in, precision: 2) %>
+              </span>
             </div>
+            <% if format.description.present? %>
+              <p class="text-primary-400 text-sm font-mono mt-1 truncate">
+                <%= format.description.split(' ').take(5).join(' ') %>
+                <% if format.description.split(' ').length > 5 %>
+                  <span class="text-primary-500">...</span>
+                <% end %>
+              </p>
+            <% end %>
           </div>
-          
+
+          <%# Right side: Actions with Denominations %>
           <div class="flex items-center space-x-2">
+            <%# Chip Denominations %>
+            <% format.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
+              <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
+                <div class="w-4 h-4 rounded-full border border-primary-600"
+                     style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
+                <span class="text-xs font-mono text-primary-300">
+                  $<%= number_with_precision(denomination['value'], precision: 2) %>
+                </span>
+              </div>
+            <% end %>
+
             <%= link_to edit_table_game_format_path(@table, format),
                 class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
               <%= tabler_icon('edit', size: 20) %>
