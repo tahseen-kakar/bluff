@@ -31,7 +31,7 @@
           <div class="flex items-center space-x-4">
             <%# Wallet Amount %>
             <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
-              <span class="text-secondary-400 font-mono font-medium">
+              <span class="<%= player.wallet_balance.negative? ? 'text-red-400' : 'text-secondary-400' %> font-mono font-medium">
                 $<%= number_with_precision(player.wallet_balance, precision: 2) %>
               </span>
             </div>
@@ -53,6 +53,15 @@
           </div>
         </div>
       </div>
+    <% end %>
+  </div>
+
+  <div class="mt-8 text-center">
+    <%= link_to new_table_player_path(@table),
+        class: "inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
+                transition-colors duration-200" do %>
+      <%= tabler_icon('plus', size: 16) %>
+      <span class="text-sm font-mono">Add another player</span>
     <% end %>
   </div>
 <% else %>

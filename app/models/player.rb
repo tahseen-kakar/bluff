@@ -16,7 +16,7 @@ class Player < ApplicationRecord
   validates :emoji, presence: true,
                    inclusion: { in: VALID_EMOJIS }
   validates :wallet_balance, presence: true,
-                           numericality: { greater_than_or_equal_to: 0 }
+                           numericality: true # Allow any number, including negatives
 
   # Normalize attributes
   normalizes :name, with: ->(name) { name.strip }
