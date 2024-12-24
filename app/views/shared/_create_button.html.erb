@@ -1,0 +1,9 @@
+<%# Create Button %>
+<div class="mt-8 text-center">
+  <%= link_to path,
+      class: "inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
+              transition-colors duration-200" do %>
+    <%= tabler_icon('plus', size: 16) %>
+    <span class="text-sm font-mono"><%= text %></span>
+  <% end %>
+</div> 

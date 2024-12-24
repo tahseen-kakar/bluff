@@ -60,14 +60,9 @@
     <% end %>
   </div>
 
-  <div class="mt-8 text-center">
-    <%= link_to new_table_game_format_path(@table),
-        class: "inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
-                transition-colors duration-200" do %>
-      <%= tabler_icon('plus', size: 16) %>
-      <span class="text-sm font-mono">Add another format</span>
-    <% end %>
-  </div>
+  <%= render 'shared/create_button',
+      path: new_table_game_format_path(@table),
+      text: 'Add another format' %>
 <% else %>
   <%= render 'shared/empty_state',
       icon: 'cards',
