@@ -22,7 +22,7 @@
               <% format.denominations.each do |denomination| %>
                 <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
                   <div class="w-4 h-4 rounded-full border border-primary-600"
-                       style="background-color: <%= denomination['color'] %>"></div>
+                       style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
                   <span class="text-xs font-mono text-primary-300">
                     $<%= number_with_precision(denomination['value'], precision: 2) %>
                   </span>
