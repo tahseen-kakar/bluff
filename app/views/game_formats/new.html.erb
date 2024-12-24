@@ -5,6 +5,17 @@
     description: 'Define a new game type with buy-in amount and chip denominations' do %>
   
   <%= form_with model: [@table, @game_format], class: "space-y-6" do |form| %>
+    <%# Show any base errors %>
+    <% if @game_format.errors.any? %>
+      <div class="rounded-lg bg-red-400/10 p-4 text-red-400 text-sm font-mono">
+        <ul class="list-disc list-inside space-y-1">
+          <% @game_format.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="space-y-6">
       <%= render 'shared/form_field',
           form: form,

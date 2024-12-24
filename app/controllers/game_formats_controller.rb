@@ -19,6 +19,7 @@ class GameFormatsController < ApplicationController
     if @game_format.save
       redirect_to table_game_formats_path(@table), notice: "Game format was successfully created."
     else
+      Rails.logger.warn "Game format validation failed: #{@game_format.errors.full_messages}"
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,6 +33,7 @@ class GameFormatsController < ApplicationController
     if @game_format.update(game_format_params)
       redirect_to table_game_formats_path(@table), notice: "Game format was successfully updated."
     else
+      Rails.logger.warn "Game format validation failed: #{@game_format.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -64,6 +66,16 @@ class GameFormatsController < ApplicationController
   end
 
   def game_format_params
-    params.require(:game_format).permit(:name, :description, :buy_in, denominations: [])
+    # Convert the flat array of alternating color/value pairs into an array of hashes
+    raw_params = params.require(:game_format).permit(:name, :description, :buy_in, denominations: [])
+
+    # Process denominations to pair color and value
+    if raw_params[:denominations].present?
+      colors = raw_params[:denominations].values_at(* raw_params[:denominations].each_index.select(&:even?))
+      values = raw_params[:denominations].values_at(* raw_params[:denominations].each_index.select(&:odd?))
+      raw_params[:denominations] = colors.zip(values).map { |color, value| { "color" => color, "value" => value } }
+    end
+
+    raw_params
   end
 end
