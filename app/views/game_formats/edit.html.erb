@@ -2,3 +2,151 @@
   <h1 class="font-bold text-4xl">GameFormats#edit</h1>
   <p>Find me in app/views/game_formats/edit.html.erb</p>
 </div>
+
+<%# Form %>
+<%= render 'shared/form_card',
+    icon: 'cards',
+    title: 'Edit Game Format',
+    description: 'Update game type settings and chip denominations' do %>
+  
+  <%= form_with model: [@table, @game_format], class: "space-y-6" do |form| %>
+    <div class="space-y-6">
+      <%= render 'shared/form_field',
+          form: form,
+          field: :name,
+          label: 'Format Name',
+          required: true,
+          autofocus: true,
+          placeholder: 'e.g., Rookie Table',
+          hint: 'Give your game format a memorable name' %>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :description,
+          label: 'Description',
+          type: 'textarea',
+          placeholder: 'Describe the game format...',
+          hint: 'Optional: Add details about game rules, limits, etc.' %>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :buy_in,
+          type: 'number',
+          label: 'Buy-in Amount',
+          required: true,
+          placeholder: '2000.00',
+          step: '0.01',
+          min: '0',
+          hint: 'Set the buy-in amount for this game format' %>
+
+      <%# Chip Denominations %>
+      <div class="space-y-2 text-left" data-controller="chip-denominations">
+        <label class="block text-sm font-mono text-primary-300">Chip Denominations</label>
+        <p class="mt-1 text-xs text-primary-400 font-mono">Define the chip values and colors for this game format</p>
+        
+        <template data-chip-denominations-target="template">
+          <div class="flex items-center space-x-4 mt-2" data-chip-denominations-target="denomination">
+            <%# Value field %>
+            <div class="flex-1">
+              <input type="number" 
+                     name="game_format[denominations][]"
+                     class="block w-full rounded-lg border-0 bg-primary-800/50 py-2 px-3
+                            text-primary-50 font-mono placeholder:text-primary-600
+                            focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                            focus:outline-none"
+                     placeholder="Chip Value"
+                     step="0.01"
+                     min="0"
+                     required>
+            </div>
+
+            <%# Color picker %>
+            <div class="flex-1">
+              <select name="game_format[denominations][]"
+                      class="block w-full rounded-lg border-0 bg-primary-800/50 py-2 px-3
+                             text-primary-50 font-mono placeholder:text-primary-600
+                             focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                             focus:outline-none"
+                      required>
+                <option value="">Select Color</option>
+                <option value="white">White</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="black">Black</option>
+              </select>
+            </div>
+
+            <%# Remove button %>
+            <button type="button" 
+                    data-action="click->chip-denominations#removeDenomination"
+                    class="p-1 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+              <%= tabler_icon('trash', size: 16) %>
+            </button>
+          </div>
+        </template>
+
+        <div data-chip-denominations-target="container">
+          <%# Existing denominations %>
+          <% @game_format.denominations.each do |denomination| %>
+            <div class="flex items-center space-x-4 mt-2" data-chip-denominations-target="denomination">
+              <%# Value field %>
+              <div class="flex-1">
+                <input type="number" 
+                       name="game_format[denominations][]"
+                       value="<%= denomination['value'] %>"
+                       class="block w-full rounded-lg border-0 bg-primary-800/50 py-2 px-3
+                              text-primary-50 font-mono placeholder:text-primary-600
+                              focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                              focus:outline-none"
+                       placeholder="Chip Value"
+                       step="0.01"
+                       min="0"
+                       required>
+              </div>
+
+              <%# Color picker %>
+              <div class="flex-1">
+                <select name="game_format[denominations][]"
+                        class="block w-full rounded-lg border-0 bg-primary-800/50 py-2 px-3
+                               text-primary-50 font-mono placeholder:text-primary-600
+                               focus:ring-2 focus:ring-inset focus:ring-secondary-400 
+                               focus:outline-none"
+                        required>
+                  <option value="">Select Color</option>
+                  <option value="white" <%= 'selected' if denomination['color'] == 'white' %>>White</option>
+                  <option value="red" <%= 'selected' if denomination['color'] == 'red' %>>Red</option>
+                  <option value="blue" <%= 'selected' if denomination['color'] == 'blue' %>>Blue</option>
+                  <option value="green" <%= 'selected' if denomination['color'] == 'green' %>>Green</option>
+                  <option value="black" <%= 'selected' if denomination['color'] == 'black' %>>Black</option>
+                </select>
+              </div>
+
+              <%# Remove button %>
+              <button type="button" 
+                      data-action="click->chip-denominations#removeDenomination"
+                      class="p-1 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+                <%= tabler_icon('trash', size: 16) %>
+              </button>
+            </div>
+          <% end %>
+        </div>
+
+        <button type="button"
+                data-action="click->chip-denominations#addDenomination"
+                class="mt-4 inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
+                       transition-colors duration-200">
+          <%= tabler_icon('plus', size: 16) %>
+          <span class="text-sm font-mono">Add Chip Denomination</span>
+        </button>
+      </div>
+
+      <div class="pt-2">
+        <%= form.submit "Update Format",
+            class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
+                   text-primary-900 py-4 text-base font-bold font-mono 
+                   transition-colors duration-200" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -15,7 +15,20 @@
           <div>
             <h3 class="text-primary-50 font-mono font-bold"><%= format.name %></h3>
             <p class="text-primary-400 text-sm font-mono mt-1"><%= format.description %></p>
-            <p class="text-secondary-400 text-sm font-mono mt-2">Buy-in: $<%= format.buy_in %></p>
+            <p class="text-secondary-400 text-sm font-mono mt-2">Buy-in: $<%= number_with_precision(format.buy_in, precision: 2) %></p>
+            
+            <%# Chip Denominations %>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <% format.denominations.each do |denomination| %>
+                <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
+                  <div class="w-4 h-4 rounded-full border border-primary-600"
+                       style="background-color: <%= denomination['color'] %>"></div>
+                  <span class="text-xs font-mono text-primary-300">
+                    $<%= number_with_precision(denomination['value'], precision: 2) %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
           </div>
           
           <div class="flex items-center space-x-2">
@@ -33,6 +46,15 @@
           </div>
         </div>
       </div>
+    <% end %>
+  </div>
+
+  <div class="mt-8 text-center">
+    <%= link_to new_table_game_format_path(@table),
+        class: "inline-flex items-center space-x-2 text-secondary-400 hover:text-secondary-300 
+                transition-colors duration-200" do %>
+      <%= tabler_icon('plus', size: 16) %>
+      <span class="text-sm font-mono">Add another format</span>
     <% end %>
   </div>
 <% else %>
