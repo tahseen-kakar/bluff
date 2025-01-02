@@ -13,9 +13,40 @@
       <%# Header with Name and Buy-in %>
       <div class="flex items-center justify-between mb-3">
         <h3 class="text-primary-50 font-mono font-bold truncate mr-3"><%= format.name %></h3>
-        <span class="text-secondary-400 text-sm font-mono whitespace-nowrap">
-          $<%= number_with_precision(format.buy_in, precision: 2) %>
-        </span>
+        <div class="flex items-center space-x-3">
+          <span class="text-secondary-400 text-sm font-mono whitespace-nowrap">
+            $<%= number_with_precision(format.buy_in, precision: 2) %>
+          </span>
+
+          <%# Actions Dropdown %>
+          <div class="relative" data-controller="dropdown">
+            <button type="button" 
+                    data-action="dropdown#toggle click@window->dropdown#hide"
+                    class="p-1.5 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
+              <%= tabler_icon('dots-vertical', size: 20) %>
+            </button>
+
+            <%# Dropdown Menu %>
+            <div data-dropdown-target="menu"
+                 class="absolute right-0 mt-1 w-48 rounded-lg bg-primary-800/95 backdrop-blur-sm 
+                        border border-primary-700/50 shadow-lg shadow-primary-900/50 
+                        divide-y divide-primary-700/50 hidden z-10">
+              <%= link_to edit_table_game_format_path(@table, format),
+                  class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200" do %>
+                <%= tabler_icon('edit', size: 18) %>
+                <span class="text-sm font-mono">Edit Format</span>
+              <% end %>
+
+              <%= button_to table_game_format_path(@table, format),
+                  method: :delete,
+                  form: { data: { turbo_confirm: 'Are you sure?' } },
+                  class: "w-full flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-red-400 hover:bg-primary-700/30 transition-colors duration-200" do %>
+                <%= tabler_icon('trash', size: 18) %>
+                <span class="text-sm font-mono">Delete Format</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
 
       <%# Chip Denominations %>
