@@ -1,5 +1,3 @@
-
-
 <%# Stats and content here %>
 <div class="mb-8">
   <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
@@ -8,6 +6,40 @@
   <p class="text-primary-400 font-mono">
     Track your poker games and player stats
   </p>
+</div>
+
+<%# Stats cards %>
+<div class="grid grid-cols-3 gap-4 mb-6">
+  <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-primary-400 font-mono text-sm">Game Sessions</h3>
+      <%= tabler_icon('clock-play', size: 20, class: 'text-secondary-400') %>
+    </div>
+    <p class="text-xl font-bold text-primary-50 font-mono mt-1 text-left">
+      <%= @table.game_formats.count %>
+    </p>
+  </div>
+
+  <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-primary-400 font-mono text-sm">Total Players</h3>
+      <%= tabler_icon('users', size: 20, class: 'text-secondary-400') %>
+    </div>
+    <p class="text-xl font-bold text-primary-50 font-mono mt-1 text-left">
+      <%= @table.players.count %>
+    </p>
+  </div>
+
+  <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+    <div class="flex items-center justify-between">
+      <h3 class="text-primary-400 font-mono text-sm">Game Formats</h3>
+      <%= tabler_icon('cards', size: 20, class: 'text-secondary-400') %>
+    </div>
+    <p class="text-xl font-bold text-primary-50 font-mono mt-1 text-left">
+      <%= @table.game_formats.count %>
+    </p>
+  </div>
+  
 </div>
 
 <%# Rest of your dashboard content %>
