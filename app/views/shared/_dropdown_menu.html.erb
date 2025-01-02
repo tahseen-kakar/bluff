@@ -1,0 +1,20 @@
+<%# Dropdown Menu Container %>
+<div class="relative" data-controller="dropdown">
+  <%# Trigger Button %>
+  <button type="button" 
+          data-action="dropdown#toggle click@window->dropdown#hide"
+          class="<%= local_assigns[:button_class] || 'p-1.5 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200' %>">
+    <%= tabler_icon(icon, size: local_assigns[:icon_size] || 20) %>
+    <% if local_assigns[:button_text].present? %>
+      <span class="<%= local_assigns[:button_text_class] %>"><%= button_text %></span>
+    <% end %>
+  </button>
+
+  <%# Dropdown Content %>
+  <div data-dropdown-target="menu"
+       class="absolute <%= local_assigns[:position] || 'right-0' %> mt-1 w-48 rounded-lg bg-primary-800/95 backdrop-blur-sm 
+              border border-primary-700/50 shadow-lg shadow-primary-900/50 
+              divide-y divide-primary-700/50 hidden z-10">
+    <%= yield %>
+  </div>
+</div> 

@@ -9,47 +9,41 @@
     <%# Current table name or status %>
     <% if Current.session&.user %>
       <% if @table %>
-        <div class="relative" data-controller="dropdown">
-          <button data-action="click->dropdown#toggle" 
-                  class="flex items-center space-x-2 px-3 py-1.5 text-primary-50 
-                         rounded-lg bg-primary-700/30 hover:bg-primary-700/50 transition-colors duration-200">
-            <span class="font-mono text-sm truncate max-w-[12rem]"><%= @table.name %></span>
-            <%= tabler_icon('chevron-down', size: 16) %>
-          </button>
-
-          <div data-dropdown-target="menu"
-               class="hidden absolute left-0 mt-2 w-64 rounded-lg bg-primary-800/95 backdrop-blur-sm 
-                      border border-primary-700/50 shadow-lg py-1 z-50">
-            <div class="px-3 py-2">
-              <p class="text-xs text-primary-400 font-mono mb-2">Switch Table</p>
-              <div class="space-y-1">
-                <% tables = Current.session.user.tables.to_a %>
-                <% if tables.any? %>
-                  <% tables.each do |table| %>
-                    <% if table.id.present? %>
-                      <%= button_to switch_table_path(id: table.id), 
-                          class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
-                                 #{@table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
-                                 transition-colors duration-200 w-full text-left" do %>
-                        <%= tabler_icon('picnic-table', size: 16) %>
-                        <span class="font-mono truncate"><%= table.name %></span>
-                      <% end %>
+        <%= render 'shared/dropdown_menu',
+            icon: 'chevron-down',
+            icon_size: 16,
+            button_class: "flex items-center space-x-2 px-3 py-1.5 text-primary-50 rounded-lg bg-primary-700/30 hover:bg-primary-700/50 transition-colors duration-200",
+            button_text: @table.name,
+            button_text_class: "font-mono text-sm truncate max-w-[12rem]" do %>
+          <div class="px-3 py-2">
+            <p class="text-xs text-primary-400 font-mono mb-2">Switch Table</p>
+            <div class="space-y-1">
+              <% tables = Current.session.user.tables.to_a %>
+              <% if tables.any? %>
+                <% tables.each do |table| %>
+                  <% if table.id.present? %>
+                    <%= button_to switch_table_path(id: table.id), 
+                        class: "flex items-center space-x-2 px-3 py-2 rounded-md text-sm text-primary-300 
+                               #{@table == table ? 'bg-primary-700/50 text-primary-50' : 'hover:bg-primary-700/30 hover:text-primary-50'} 
+                               transition-colors duration-200 w-full text-left" do %>
+                      <%= tabler_icon('picnic-table', size: 16) %>
+                      <span class="font-mono truncate"><%= table.name %></span>
                     <% end %>
                   <% end %>
                 <% end %>
-              </div>
-            </div>
-
-            <div class="border-t border-primary-700/50 mt-1 pt-1">
-              <%= link_to new_table_path,
-                  class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                         hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
-                <%= tabler_icon('plus', size: 16) %>
-                <span class="font-mono">New Table</span>
               <% end %>
             </div>
           </div>
-        </div>
+
+          <div class="border-t border-primary-700/50 mt-1 pt-1">
+            <%= link_to new_table_path,
+                class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
+                       hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+              <%= tabler_icon('plus', size: 16) %>
+              <span class="font-mono">New Table</span>
+            <% end %>
+          </div>
+        <% end %>
       <% elsif !current_page?(new_table_path) %>
         <%# Show create table button when no table is selected and not on new table page %>
         <%= link_to new_table_path,
@@ -64,30 +58,21 @@
   
   <%# Settings dropdown - Show when user is authenticated %>
   <% if Current.session&.user %>
-    <div class="relative" data-controller="dropdown">
-      <button data-action="click->dropdown#toggle" 
-              class="p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200">
-        <%= tabler_icon('settings', size: 20) %>
-      </button>
+    <%= render 'shared/dropdown_menu', icon: 'settings' do %>
+      <%= link_to "#", 
+          class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
+                 hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+        <%= tabler_icon('settings', size: 18) %>
+        <span class="font-mono">Settings</span>
+      <% end %>
 
-      <div data-dropdown-target="menu"
-           class="hidden absolute right-0 mt-2 w-48 rounded-lg bg-primary-800/95 backdrop-blur-sm 
-                  border border-primary-700/50 shadow-lg py-1 z-50">
-        <%= link_to "#", 
-            class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                   hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
-          <%= tabler_icon('settings', size: 18) %>
-          <span class="font-mono">Settings</span>
-        <% end %>
-
-        <%= button_to sign_out_path, 
-            method: :delete,
-            class: "w-full flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                   hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
-          <%= tabler_icon('logout', size: 18) %>
-          <span class="font-mono">Sign out</span>
-        <% end %>
-      </div>
-    </div>
+      <%= button_to sign_out_path, 
+          method: :delete,
+          class: "w-full flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
+                 hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+        <%= tabler_icon('logout', size: 18) %>
+        <span class="font-mono">Sign out</span>
+      <% end %>
+    <% end %>
   <% end %>
 </div> 
