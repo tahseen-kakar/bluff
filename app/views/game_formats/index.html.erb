@@ -18,15 +18,8 @@
         </span>
       </div>
 
-      <%# Description %>
-      <% if format.description.present? %>
-        <p class="text-primary-400 text-sm font-mono mb-4 line-clamp-2 text-left">
-          <%= format.description %>
-        </p>
-      <% end %>
-
       <%# Chip Denominations %>
-      <div class="flex flex-wrap gap-2 mb-4">
+      <div class="flex flex-wrap gap-2 mb-3">
         <% format.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
           <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
             <div class="w-3 h-3 rounded-full border border-primary-600"
@@ -38,20 +31,12 @@
         <% end %>
       </div>
 
-      <%# Actions %>
-      <div class="flex items-center justify-end space-x-2 border-t border-primary-700/50 pt-4 mt-auto">
-        <%= link_to edit_table_game_format_path(@table, format),
-            class: "p-2 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200" do %>
-          <%= tabler_icon('edit', size: 20) %>
-        <% end %>
-
-        <%= button_to table_game_format_path(@table, format),
-            method: :delete,
-            class: "p-2 text-primary-400 hover:text-red-400 rounded-lg hover:bg-primary-700/30 transition-colors duration-200",
-            form: { data: { turbo_confirm: 'Are you sure?' } } do %>
-          <%= tabler_icon('trash', size: 20) %>
-        <% end %>
-      </div>
+      <%# Description %>
+      <% if format.description.present? %>
+        <p class="text-primary-400 text-sm font-mono line-clamp-2 text-left">
+          <%= format.description %>
+        </p>
+      <% end %>
     </div>
   <% end %>
 
