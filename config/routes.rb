@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   # Password reset
   resource :password, param: :token
 
+  # Settings
+  get "settings", to: "settings#show"
+  patch "settings/password", to: "settings#update_password"
+
   # Main app routes
   get "app", to: "dashboard#show"
 

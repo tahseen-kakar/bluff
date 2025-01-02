@@ -1,0 +1,67 @@
+<div class="mb-8">
+  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+    Settings
+  </h1>
+  <p class="text-primary-400 font-mono">
+    Manage your account settings and preferences
+  </p>
+</div>
+
+<%# Password Change Form %>
+<%= render 'shared/form_card',
+    icon: 'key',
+    title: 'Change Password',
+    description: 'Update your account password' do %>
+  
+  <%= form_with model: Current.user, url: settings_password_path, method: :patch, class: "space-y-6" do |form| %>
+    <%# Show any errors %>
+    <% if Current.user.errors.any? %>
+      <div class="rounded-lg bg-red-400/10 p-4 text-red-400 text-sm font-mono">
+        <ul class="list-disc list-inside space-y-1">
+          <% Current.user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%# Show success message %>
+    <% if notice = flash[:notice] %>
+      <div class="rounded-lg bg-green-400/10 p-4 text-green-400 text-sm font-mono">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <div class="space-y-6">
+      <%= render 'shared/form_field',
+          form: form,
+          field: :password,
+          type: 'password',
+          label: 'New Password',
+          required: true,
+          autofocus: true,
+          autocomplete: 'new-password',
+          placeholder: '••••••••',
+          maxlength: 72,
+          hint: 'Enter your new password' %>
+
+      <%= render 'shared/form_field',
+          form: form,
+          field: :password_confirmation,
+          type: 'password',
+          label: 'Confirm Password',
+          required: true,
+          autocomplete: 'new-password',
+          placeholder: '••••••••',
+          maxlength: 72,
+          hint: 'Confirm your new password' %>
+
+      <div class="pt-2">
+        <%= form.submit "Update Password",
+            class: "w-full rounded-lg bg-secondary-400 hover:bg-secondary-300 
+                   text-primary-900 py-4 text-base font-bold font-mono 
+                   transition-colors duration-200" %>
+      </div>
+    </div>
+  <% end %>
+<% end %> 
