@@ -4,10 +4,10 @@
   <button type="button" 
           data-action="dropdown#toggle click@window->dropdown#hide"
           class="<%= local_assigns[:button_class] || 'p-1.5 text-primary-400 hover:text-primary-50 rounded-lg hover:bg-primary-700/30 transition-colors duration-200' %>">
-    <%= tabler_icon(icon, size: local_assigns[:icon_size] || 20) %>
     <% if local_assigns[:button_text].present? %>
       <span class="<%= local_assigns[:button_text_class] %>"><%= button_text %></span>
     <% end %>
+    <%= tabler_icon(icon, size: local_assigns[:icon_size] || 20) %>
   </button>
 
   <%# Dropdown Content %>
