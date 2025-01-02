@@ -37,10 +37,9 @@
 
           <div class="border-t border-primary-700/50 mt-1 pt-1">
             <%= link_to new_table_path,
-                class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                       hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+                class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200" do %>
               <%= tabler_icon('plus', size: 16) %>
-              <span class="font-mono">New Table</span>
+              <span class="text-sm font-mono">New Table</span>
             <% end %>
           </div>
         <% end %>
@@ -60,18 +59,16 @@
   <% if Current.session&.user %>
     <%= render 'shared/dropdown_menu', icon: 'settings' do %>
       <%= link_to "#", 
-          class: "flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                 hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+          class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200" do %>
         <%= tabler_icon('settings', size: 18) %>
-        <span class="font-mono">Settings</span>
+        <span class="text-sm font-mono">Settings</span>
       <% end %>
 
       <%= button_to sign_out_path, 
           method: :delete,
-          class: "w-full flex items-center space-x-2 px-4 py-2 text-sm text-primary-300 
-                 hover:bg-primary-700/50 hover:text-primary-50 transition-colors duration-200" do %>
+          class: "w-full flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-red-400 hover:bg-primary-700/30 transition-colors duration-200" do %>
         <%= tabler_icon('logout', size: 18) %>
-        <span class="font-mono">Sign out</span>
+        <span class="text-sm font-mono">Sign out</span>
       <% end %>
     <% end %>
   <% end %>
