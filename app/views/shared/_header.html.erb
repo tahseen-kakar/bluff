@@ -36,9 +36,10 @@
           </div>
 
           <div class="border-t border-primary-700/50 mt-1 pt-1">
-            <%= link_to new_table_path do %>
+            <%= link_to new_table_path, class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50
+      hover:bg-primary-700/30 transition-colors duration-200" do %>
               <%= tabler_icon('plus', size: 16) %>
-              <span>New Table</span>
+              <span class="font-mono text-sm">New Table</span>
             <% end %>
           </div>
         <% end %>
