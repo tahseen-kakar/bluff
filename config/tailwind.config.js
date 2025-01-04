@@ -2,10 +2,12 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
-    './app/views/**/*.erb',
+    './public/*.html',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
+    './app/views/**/*.{erb,haml,html,slim}'
   ],
+
   theme: {
     fontFamily: {
       display: ['IBM Plex Mono', 'Menlo', 'monospace'],
@@ -40,5 +42,10 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }
