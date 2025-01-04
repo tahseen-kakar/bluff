@@ -1,10 +1,45 @@
-<%= link_to path, class: "block mt-8 rounded-xl border-2 border-dashed border-primary-700/50 
-        hover:border-primary-700 transition-colors duration-200 group" do %>
-  <div class="flex flex-col items-center justify-center py-12 px-6">
-    <%= tabler_icon(icon, size: 48, class: 'text-primary-700/50 group-hover:text-primary-700 mb-4 transition-colors duration-200') %>
-    <h3 class="text-lg font-bold text-primary-300 font-mono mb-2"><%= title %></h3>
-    <p class="text-primary-400 font-mono text-center">
-      <%= description %>
-    </p>
-  </div>
+<%#
+  Locals:
+  - icon: String (required) - Tabler icon name
+  - title: String (required) - Title text
+  - description: String (required) - Description text
+  - path: String (required) - Link path
+  - action: String (optional) - Action button text
+  - compact: Boolean (optional) - Whether to use compact layout
+%>
+
+<% if local_assigns[:compact] %>
+  <%= link_to path, class: "block rounded-xl border-2 border-dashed border-primary-700/50 
+          hover:border-primary-700 transition-colors duration-200 group" do %>
+    <div class="flex items-center p-4">
+      <%# Left - Icon %>
+      <div class="flex-shrink-0">
+        <%= tabler_icon(icon, size: 32, class: 'text-primary-700/50 group-hover:text-primary-700 transition-colors duration-200') %>
+      </div>
+
+      <%# Middle - Text %>
+      <div class="flex-grow ml-4 mr-3">
+        <h3 class="text-primary-300 group-hover:text-primary-50 font-mono font-bold mb-0.5 transition-colors duration-200">
+          <%= title %>
+        </h3>
+        <p class="text-primary-400 font-mono text-sm">
+          <%= description %>
+        </p>
+      </div>
+
+      <%# Right - Arrow %>
+      <%= tabler_icon('chevron-right', size: 20, class: 'text-primary-700/50 group-hover:text-primary-700 transition-colors duration-200') %>
+    </div>
+  <% end %>
+<% else %>
+  <%= link_to path, class: "block mt-8 rounded-xl border-2 border-dashed border-primary-700/50 
+          hover:border-primary-700 transition-colors duration-200 group" do %>
+    <div class="flex flex-col items-center justify-center py-12 px-6">
+      <%= tabler_icon(icon, size: 48, class: 'text-primary-700/50 group-hover:text-primary-700 mb-4 transition-colors duration-200') %>
+      <h3 class="text-lg font-bold text-primary-300 font-mono mb-2"><%= title %></h3>
+      <p class="text-primary-400 font-mono text-center">
+        <%= description %>
+      </p>
+    </div>
+  <% end %>
 <% end %> 
