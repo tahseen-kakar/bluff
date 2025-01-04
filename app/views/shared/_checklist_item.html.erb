@@ -14,17 +14,14 @@
     <div class="flex items-center p-4 <%= 'opacity-50' if local_assigns[:disabled] %>">
       <%# Left - Icon %>
       <div class="flex-shrink-0">
-        <%= tabler_icon(completed ? 'check' : icon, size: 32, class: completed ? 'text-green-500' : 'text-primary-700/50') %>
+        <%= tabler_icon(completed ? 'check' : icon, size: 24, class: completed ? 'text-secondary-400' : 'text-primary-700/50') %>
       </div>
 
       <%# Middle - Text %>
       <div class="flex-grow ml-4 mr-3">
-        <h3 class="font-mono font-medium mb-0.5 text-left text-primary-300">
+        <h3 class="font-mono mb-0.5 text-left text-primary-300">
           <%= title %>
         </h3>
-        <p class="text-primary-400 font-mono text-sm text-left">
-          <%= description %>
-        </p>
       </div>
     </div>
   </div>
