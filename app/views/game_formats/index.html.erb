@@ -1,11 +1,7 @@
-<div class="mb-8">
-  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
-    Game Formats for <%= @table.name %>
-  </h1>
-  <p class="text-primary-400 font-mono">
-    Manage your poker game variations and buy-in structures
-  </p>
-</div>
+<%= render "shared/page_header",
+    title: "Game Formats",
+    context: @table.name,
+    description: "Manage your poker game variations and buy-in structures" %>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   <% @game_formats.each do |format| %>

@@ -1,11 +1,7 @@
-<div class="mb-8">
-  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
-    Players for <%= @table.name %>
-  </h1>
-  <p class="text-primary-400 font-mono">
-    Manage your poker players and track their performance
-  </p>
-</div>
+<%= render "shared/page_header",
+    title: "Players",
+    context: @table.name,
+    description: "Manage your poker players and track their performance" %>
 
 <% if @players.exists? %>
   <div class="space-y-4">
