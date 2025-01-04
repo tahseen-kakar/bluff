@@ -14,16 +14,16 @@
         <span class="text-xs mt-1 font-mono">Players</span>
       <% end %>
 
-      <%= link_to table_game_sessions_path(@table), 
-          class: "flex flex-col items-center px-4 py-2 rounded-full #{controller_name == 'game_sessions' ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
-        <%= tabler_icon('clock-play', size: 20) %>
-        <span class="text-xs mt-1 font-mono">Sessions</span>
-      <% end %>
-
       <%= link_to table_game_formats_path(@table), 
           class: "flex flex-col items-center px-4 py-2 rounded-full #{controller_name == 'game_formats' ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
         <%= tabler_icon('cards', size: 20) %>
         <span class="text-xs mt-1 font-mono">Formats</span>
+      <% end %>
+
+      <%= link_to table_game_sessions_path(@table), 
+          class: "flex flex-col items-center px-4 py-2 rounded-full #{controller_name == 'game_sessions' ? 'bg-primary-700/70 text-secondary-400' : 'text-primary-400 hover:text-primary-50'} transition-colors duration-200" do %>
+        <%= tabler_icon('clock-play', size: 20) %>
+        <span class="text-xs mt-1 font-mono">Sessions</span>
       <% end %>
     </div>
   </nav>
