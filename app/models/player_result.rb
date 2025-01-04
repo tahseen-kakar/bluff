@@ -15,8 +15,8 @@ class PlayerResult < ApplicationRecord
   belongs_to :game_session
   belongs_to :player
 
-  validates :chip_counts, presence: true
-  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :chip_counts, presence: true, if: -> { game_session.recording_chips? }
+  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { game_session.recording_chips? }
 
   before_validation :calculate_total_amount
 

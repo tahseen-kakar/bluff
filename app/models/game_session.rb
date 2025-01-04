@@ -17,8 +17,14 @@ class GameSession < ApplicationRecord
   has_many :player_results, dependent: :destroy
   has_many :players, through: :player_results
 
-  validates :total_chips, presence: true
-  validate :validate_total_chips
+  validates :total_chips, presence: true, if: :recording_chips?
+  validate :validate_total_chips, if: :recording_chips?
+
+  attr_accessor :recording_chips
+
+  def recording_chips?
+    recording_chips.present?
+  end
 
   def expected_total_chips
     game_format.buy_in * player_results.count

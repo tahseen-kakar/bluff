@@ -13,11 +13,14 @@
 
 class GameSessionsController < ApplicationController
   before_action :set_table
-  before_action :set_game_session, only: [ :show, :record_chips ]
+  before_action :set_game_session, only: [ :show ]
 
   def index
-    @game_sessions = @table.game_sessions.includes(:game_format, player_results: :player)
-                          .order(created_at: :desc)
+    @game_sessions = @table.game_sessions.order(created_at: :desc)
+  end
+
+  def show
+    @player_results = @game_session.player_results.includes(:player)
   end
 
   def select_format
@@ -29,39 +32,55 @@ class GameSessionsController < ApplicationController
     @available_players = @table.players
   end
 
+  def record_chips
+    @game_session = @table.game_sessions.build(game_format_id: params[:game_format_id])
+    @player_results = params[:player_ids].map do |player_id|
+      @game_session.player_results.build(player_id: player_id)
+    end
+  end
+
   def create
-    @game_session = @table.game_sessions.build(game_session_params)
+    @game_session = @table.game_sessions.new
 
     if params[:player_ids].present?
+      # Coming from select_players step
+      @game_session.game_format_id = params[:game_format_id]
+
+      # Build player results
       params[:player_ids].each do |player_id|
         @game_session.player_results.build(player_id: player_id)
       end
 
       if @game_session.save
-        redirect_to record_chips_table_game_session_path(@table, @game_session)
+        # Redirect to record chips with the same params
+        redirect_to record_chips_table_game_sessions_path(
+          @table,
+          game_format_id: @game_session.game_format_id,
+          player_ids: params[:player_ids]
+        )
       else
+        Rails.logger.error "Failed to save game session: #{@game_session.errors.full_messages.join(', ')}"
         @available_players = @table.players
         render :select_players, status: :unprocessable_entity
       end
-    else
-      @available_players = @table.players
-      flash.now[:error] = "Please select at least one player"
-      render :select_players, status: :unprocessable_entity
+    elsif params[:player_results].present?
+      # Coming from record_chips step
+      @game_session.recording_chips = true
+      @game_session.assign_attributes(game_session_params)
+
+      if @game_session.save
+        redirect_to table_game_sessions_path(@table), notice: "Session was successfully created."
+      else
+        Rails.logger.error "Failed to save game session with chips: #{@game_session.errors.full_messages.join(', ')}"
+        render :record_chips, status: :unprocessable_entity
+      end
     end
-  end
-
-  def record_chips
-    @player_results = @game_session.player_results.includes(:player)
-  end
-
-  def show
-    @player_results = @game_session.player_results.includes(:player)
   end
 
   private
 
   def set_table
-    @table = Current.session.user.tables.find(params[:table_id])
+    @table = Current.user.tables.find(params[:table_id])
   end
 
   def set_game_session
@@ -69,6 +88,10 @@ class GameSessionsController < ApplicationController
   end
 
   def game_session_params
-    params.permit(:game_format_id)
+    params.permit(
+      :game_format_id,
+      player_ids: [],
+      player_results_attributes: [ :player_id, :chip_counts ]
+    )
   end
 end
