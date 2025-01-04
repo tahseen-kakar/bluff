@@ -1,15 +1,11 @@
-<%# Header with New Session button %>
-<div class="flex items-center justify-between mb-8">
-  <div>
-    <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">Game Sessions</h1>
-    <p class="text-primary-400 font-mono">Track and review your poker sessions</p>
-  </div>
-
-  <%= link_to select_format_table_game_sessions_path(@table), 
-      class: "btn btn-primary" do %>
-    <%= tabler_icon('plus', size: 20) %>
-    <span>New Session</span>
-  <% end %>
+<%# Header %>
+<div class="mb-8">
+  <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">
+    Game Sessions for <%= @table.name %>
+  </h1>
+  <p class="text-primary-400 font-mono">
+    Track and review your poker sessions
+  </p>
 </div>
 
 <%# Sessions list %>
@@ -48,6 +44,10 @@
         <% end %>
       </div>
     <% end %>
+
+    <%= render 'shared/create_button',
+        path: select_format_table_game_sessions_path(@table),
+        text: 'Record new session' %>
   <% else %>
     <%= render "shared/empty_state",
       icon: "clock-play",
