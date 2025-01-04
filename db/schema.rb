@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_22_142736) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_04_152759) do
   create_table "game_formats", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -22,7 +22,29 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_22_142736) do
     t.index ["table_id", "name"], name: "index_game_formats_on_table_id_and_name", unique: true
     t.index ["table_id"], name: "index_game_formats_on_table_id"
   end
-# emoji field is used as players avatar. while creating player, we can set it to default emoji
+
+  create_table "game_sessions", force: :cascade do |t|
+    t.integer "table_id", null: false
+    t.integer "game_format_id", null: false
+    t.integer "total_chips"
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_format_id"], name: "index_game_sessions_on_game_format_id"
+    t.index ["table_id"], name: "index_game_sessions_on_table_id"
+  end
+
+  create_table "player_results", force: :cascade do |t|
+    t.integer "game_session_id", null: false
+    t.integer "player_id", null: false
+    t.json "chip_counts"
+    t.integer "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_player_results_on_game_session_id"
+    t.index ["player_id"], name: "index_player_results_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name", null: false
     t.text "notes"
@@ -65,6 +87,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_22_142736) do
   end
 
   add_foreign_key "game_formats", "tables"
+  add_foreign_key "game_sessions", "game_formats"
+  add_foreign_key "game_sessions", "tables"
+  add_foreign_key "player_results", "game_sessions"
+  add_foreign_key "player_results", "players"
   add_foreign_key "players", "tables"
   add_foreign_key "sessions", "users"
   add_foreign_key "tables", "users"

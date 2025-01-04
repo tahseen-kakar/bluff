@@ -26,6 +26,12 @@ Rails.application.routes.draw do
   scope "app/:table_id", as: "table" do
     resources :game_formats
     resources :players
-    resources :sessions, as: :game_sessions # Renamed to avoid conflict with auth sessions
+    resources :game_sessions do
+      collection do
+        get :select_format
+        get :select_players
+        get :record_chips
+      end
+    end
   end
 end
