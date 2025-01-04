@@ -8,27 +8,6 @@
   </p>
 </div>
 
-<%# Stats cards %>
-<div class="grid grid-cols-3 gap-4 mb-6">
-  <%= render 'shared/stat_card',
-    title: 'Sessions',
-    count: @table.game_sessions.count,
-    icon: 'clock-play',
-    path: table_game_sessions_path(@table) %>
-
-  <%= render 'shared/stat_card',
-    title: 'Total Players',
-    count: @table.players.count,
-    icon: 'users',
-    path: table_players_path(@table) %>
-
-  <%= render 'shared/stat_card',
-    title: 'Formats',
-    count: @table.game_formats.count,
-    icon: 'cards',
-    path: table_game_formats_path(@table) %>
-</div>
-
 <%# Setup checklist %>
 <% has_players = @table.players.exists? %>
 <% has_formats = @table.game_formats.exists? %>
@@ -70,6 +49,27 @@
       <% end %>
     </div>
   <% end %>
+<% else %>
+  <%# Stats cards - only shown when setup is complete %>
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <%= render 'shared/stat_card',
+      title: 'Sessions',
+      count: @table.game_sessions.count,
+      icon: 'clock-play',
+      path: table_game_sessions_path(@table) %>
+
+    <%= render 'shared/stat_card',
+      title: 'Total Players',
+      count: @table.players.count,
+      icon: 'users',
+      path: table_players_path(@table) %>
+
+    <%= render 'shared/stat_card',
+      title: 'Formats',
+      count: @table.game_formats.count,
+      icon: 'cards',
+      path: table_game_formats_path(@table) %>
+  </div>
 <% end %>
 
 <%= render 'shared/bottom_nav' %> 
