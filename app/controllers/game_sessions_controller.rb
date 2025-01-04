@@ -13,6 +13,7 @@
 
 class GameSessionsController < ApplicationController
   before_action :set_table
+  before_action :set_game_session, only: [ :show, :record_chips ]
 
   def index
     @game_sessions = @table.game_sessions.includes(:game_format, player_results: :player)
@@ -28,8 +29,32 @@ class GameSessionsController < ApplicationController
     @available_players = @table.players
   end
 
+  def create
+    @game_session = @table.game_sessions.build(game_session_params)
+
+    if params[:player_ids].present?
+      params[:player_ids].each do |player_id|
+        @game_session.player_results.build(player_id: player_id)
+      end
+
+      if @game_session.save
+        redirect_to record_chips_table_game_session_path(@table, @game_session)
+      else
+        @available_players = @table.players
+        render :select_players, status: :unprocessable_entity
+      end
+    else
+      @available_players = @table.players
+      flash.now[:error] = "Please select at least one player"
+      render :select_players, status: :unprocessable_entity
+    end
+  end
+
   def record_chips
-    @game_session = @table.game_sessions.find(params[:id])
+    @player_results = @game_session.player_results.includes(:player)
+  end
+
+  def show
     @player_results = @game_session.player_results.includes(:player)
   end
 
@@ -37,5 +62,13 @@ class GameSessionsController < ApplicationController
 
   def set_table
     @table = Current.session.user.tables.find(params[:table_id])
+  end
+
+  def set_game_session
+    @game_session = @table.game_sessions.find(params[:id])
+  end
+
+  def game_session_params
+    params.permit(:game_format_id)
   end
 end

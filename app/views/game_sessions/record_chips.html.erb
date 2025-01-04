@@ -1,4 +1,81 @@
-<div>
-  <h1 class="font-bold text-4xl">GameSessions#record_chips</h1>
-  <p>Find me in app/views/game_sessions/record_chips.html.erb</p>
-</div>
+<%= render "shared/form_card",
+    icon: "coins",
+    title: "Record Chips",
+    description: "Count and record the chips for each player. The total must match the expected amount based on the buy-in and number of players.",
+    current_step: 3,
+    total_steps: 3 do %>
+
+  <%= form_with model: [@table, @game_session], class: "space-y-6", data: { controller: "chips-form",
+      chips_form_expected_total_value: @game_session.expected_total_chips } do %>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% @player_results.each do |result| %>
+        <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+          <%# Player Header %>
+          <div class="flex items-center space-x-3 mb-4">
+            <span class="text-2xl"><%= result.player.emoji %></span>
+            <h3 class="text-primary-50 font-mono font-bold"><%= result.player.name %></h3>
+          </div>
+
+          <%# Chip Counts %>
+          <div class="space-y-3">
+            <% @game_session.game_format.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
+              <div class="flex items-center space-x-3">
+                <div class="w-4 h-4 rounded-full border border-primary-600 flex-shrink-0"
+                     style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
+                
+                <div class="flex-grow">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-mono text-primary-300">
+                      $<%= number_with_precision(denomination['value'], precision: 2) %>
+                    </span>
+                    <%= number_field_tag "player_results[#{result.id}][chip_counts][#{denomination['value']}]",
+                        nil, min: 0, step: 1,
+                        class: "w-20 bg-primary-800/50 border border-primary-700/50 rounded-lg px-3 py-1 
+                               text-right font-mono text-primary-50 focus:border-primary-600 focus:ring-0
+                               [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+                        data: { 
+                          chips_form_target: "input",
+                          value: denomination['value'].to_f,
+                          action: "input->chips-form#updateTotals"
+                        } %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <%# Total %>
+            <div class="flex items-center justify-between pt-3 border-t border-primary-700/50">
+              <span class="font-mono text-primary-300">Total</span>
+              <span class="font-mono text-primary-50"
+                    data-chips-form-target="playerTotal"
+                    data-player-id="<%= result.id %>">
+                $0.00
+              </span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-between items-center mt-6">
+      <div class="flex items-center space-x-6">
+        <%= link_to "Back", select_players_table_game_sessions_path(@table, game_format_id: @game_session.game_format_id),
+            class: "px-4 py-2 rounded-lg font-mono text-primary-400 hover:text-primary-50 hover:bg-primary-800/50" %>
+        
+        <div>
+          <span class="font-mono text-primary-400">Grand Total:</span>
+          <span class="ml-2 font-mono text-primary-50" data-chips-form-target="grandTotal">$0.00</span>
+          <span class="ml-2 font-mono text-primary-400">/ $<%= number_with_precision(@game_session.expected_total_chips, precision: 2) %></span>
+        </div>
+      </div>
+      
+      <%= button_tag type: :submit,
+          class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
+                 hover:bg-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200",
+          data: { chips_form_target: "submit" } do %>
+        Complete Session
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

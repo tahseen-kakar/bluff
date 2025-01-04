@@ -1,4 +1,22 @@
+<%#
+  Locals:
+  - icon: String (required) - Tabler icon name
+  - title: String (required) - Card title
+  - description: String (required) - Card description
+  - current_step: Integer (optional) - Current step number for wizards
+  - total_steps: Integer (optional) - Total number of steps for wizards
+%>
+
 <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 overflow-hidden">
+  <%# Progress bar for wizards %>
+  <% if local_assigns[:current_step].present? && local_assigns[:total_steps].present? %>
+    <div class="flex">
+      <% total_steps.times do |i| %>
+        <div class="h-1 flex-1 <%= i < current_step ? 'bg-secondary-400' : 'bg-primary-700/50' %>"></div>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="grid grid-cols-1 lg:grid-cols-3">
     <%# Left side - Icon and description %>
     <div class="p-8 bg-primary-800/50 lg:border-r border-primary-700/50">
@@ -6,6 +24,11 @@
         <%= tabler_icon(icon, size: 48, class: 'text-secondary-400 mb-4') %>
         <h1 class="text-xl font-bold text-primary-50 font-mono mb-2">
           <%= title %>
+          <% if local_assigns[:current_step].present? && local_assigns[:total_steps].present? %>
+            <span class="text-sm font-normal text-primary-400">
+              Step <%= current_step %> of <%= total_steps %>
+            </span>
+          <% end %>
         </h1>
         <p class="text-primary-400 font-mono text-sm">
           <%= description %>
