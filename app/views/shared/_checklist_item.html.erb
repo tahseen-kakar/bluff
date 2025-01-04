@@ -11,7 +11,7 @@
 
 <% if local_assigns[:disabled] || completed %>
   <div class="block rounded-xl border-2 border-dashed border-primary-700/30 group">
-    <div class="flex items-center p-4 <%= 'opacity-50' if disabled %>">
+    <div class="flex items-center p-4 <%= 'opacity-50' if local_assigns[:disabled] %>">
       <%# Left - Icon %>
       <div class="flex-shrink-0">
         <%= tabler_icon(completed ? 'check' : icon, size: 32, class: completed ? 'text-green-500' : 'text-primary-700/50') %>
