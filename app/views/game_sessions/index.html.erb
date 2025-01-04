@@ -1,0 +1,60 @@
+<%# Header with New Session button %>
+<div class="flex items-center justify-between mb-8">
+  <div>
+    <h1 class="text-2xl font-bold text-primary-50 font-mono mb-2">Game Sessions</h1>
+    <p class="text-primary-400 font-mono">Track and review your poker sessions</p>
+  </div>
+
+  <%= link_to select_format_table_game_sessions_path(@table), 
+      class: "btn btn-primary" do %>
+    <%= tabler_icon('plus', size: 20) %>
+    <span>New Session</span>
+  <% end %>
+</div>
+
+<%# Sessions list %>
+<div class="space-y-4">
+  <% if @game_sessions.any? %>
+    <% @game_sessions.each do |session| %>
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-3">
+            <%= tabler_icon('clock-play', size: 20, class: 'text-secondary-400') %>
+            <h3 class="text-primary-50 font-mono">
+              <%= session.game_format.name %>
+            </h3>
+          </div>
+          <span class="text-primary-400 font-mono text-sm">
+            <%= session.created_at.strftime("%b %d, %Y") %>
+          </span>
+        </div>
+
+        <%# Player results %>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <% session.player_results.each do |result| %>
+            <div class="flex items-center space-x-2 text-sm">
+              <span class="text-lg"><%= result.player.emoji %></span>
+              <span class="text-primary-400 font-mono truncate"><%= result.player.name %></span>
+              <span class="text-primary-50 font-mono"><%= result.total_amount %></span>
+            </div>
+          <% end %>
+        </div>
+
+        <% if session.remarks.present? %>
+          <p class="mt-3 text-sm text-primary-400 font-mono">
+            <%= tabler_icon('message-circle', size: 16, class: 'inline-block mr-1') %>
+            <%= session.remarks %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render "shared/empty_state",
+      icon: "clock-play",
+      title: "No sessions yet",
+      description: "Record your first poker session to start tracking results.",
+      path: select_format_table_game_sessions_path(@table) %>
+  <% end %>
+</div>
+
+<%= render 'shared/bottom_nav' %> 
