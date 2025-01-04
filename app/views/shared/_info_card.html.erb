@@ -1,0 +1,18 @@
+<%#
+  Locals:
+  - icon: String (required) - Tabler icon name
+  - title: String (required) - Card title
+  - description: String (required) - Card description
+  - class_name: String (optional) - Additional CSS classes
+%>
+
+<div class="<%= class_name %> bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+  <div class="flex items-center space-x-3 mb-3">
+    <%= tabler_icon(icon, size: 20, class: 'text-secondary-400') %>
+    <h3 class="text-primary-50 font-mono"><%= title %></h3>
+  </div>
+  <p class="text-primary-400 font-mono text-sm">
+    <%= description %>
+  </p>
+  <%= yield if block_given? %>
+</div> 
