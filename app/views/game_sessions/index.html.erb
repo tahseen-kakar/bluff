@@ -37,45 +37,11 @@
         path: select_format_table_game_sessions_path(@table),
         text: 'Record new session' %>
   <% else %>
-    <% has_players = @table.players.exists? %>
-    <% has_formats = @table.game_formats.exists? %>
-
-    <% if !has_players || !has_formats %>
-      <%= render "shared/info_card",
-          icon: "list-check",
-          title: "Complete Setup Checklist",
-          description: "Before recording your first session, please complete the following setup steps:",
-          class_name: "mb-4" do %>
-        
-        <div class="space-y-3 mt-4">
-          <% if !has_players %>
-            <%= render "shared/empty_state",
-                icon: "users",
-                title: "Add Players",
-                description: "Add the players who will participate in your poker games.",
-                path: new_table_player_path(@table),
-                compact: true %>
-          <% end %>
-
-          <% if !has_formats %>
-            <%= render "shared/empty_state",
-                icon: "cards",
-                title: "Create Game Format",
-                description: "Set up your game format with buy-in amount and chip denominations.",
-                path: new_table_game_format_path(@table),
-                compact: true %>
-          <% end %>
-        </div>
-      <% end %>
-    <% else %>
-      <%# Ready to create sessions %>
-      <%= render "shared/empty_state",
-          icon: "clock-play",
-          title: "Ready to Record Sessions",
-          description: "You've completed the setup! Start tracking your poker sessions to analyze player performance.",
-          path: select_format_table_game_sessions_path(@table),
-          compact: true %>
-    <% end %>
+    <%= render "shared/empty_state",
+        icon: "clock-play",
+        title: "No sessions recorded",
+        description: "Record your first poker session to start tracking results.",
+        path: select_format_table_game_sessions_path(@table) %>
   <% end %>
 </div>
 
