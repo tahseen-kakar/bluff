@@ -12,8 +12,9 @@
 <div class="grid grid-cols-3 gap-4 mb-6">
   <%= render 'shared/stat_card',
     title: 'Sessions',
-    count: @table.game_formats.count,
-    icon: 'clock-play' %>
+    count: @table.game_sessions.count,
+    icon: 'clock-play',
+    path: table_game_sessions_path(@table) %>
 
   <%= render 'shared/stat_card',
     title: 'Total Players',
