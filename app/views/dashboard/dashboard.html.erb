@@ -35,7 +35,8 @@
           description: "Set up your game format with buy-in amount and chip denominations.",
           path: new_table_game_format_path(@table),
           completed: has_formats,
-          current: has_players && !has_formats %>
+          current: has_players && !has_formats,
+          disabled: !has_players %>
 
       <%= render "shared/checklist_item",
           icon: "clock-play",
@@ -43,7 +44,8 @@
           description: "Start tracking your first poker session.",
           path: select_format_table_game_sessions_path(@table),
           completed: has_sessions,
-          current: has_players && has_formats && !has_sessions %>
+          current: has_players && has_formats && !has_sessions,
+          disabled: !has_players || !has_formats %>
     </div>
   <% end %>
 <% else %>

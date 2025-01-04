@@ -6,39 +6,61 @@
   - path: String (required) - Link path
   - completed: Boolean (optional) - Whether the item is completed
   - current: Boolean (optional) - Whether this is the current step
+  - disabled: Boolean (optional) - Whether the item is disabled/not clickable yet
 %>
 
-<%= link_to path, class: "block rounded-xl border-2 border-dashed 
-    #{completed ? 'border-green-500/50 hover:border-green-500' : current ? 'border-secondary-400/50 hover:border-secondary-400' : 'border-primary-700/50 hover:border-primary-700'}
-    transition-colors duration-200 group" do %>
-  <div class="flex items-center p-4">
-    <%# Left - Icon and Status %>
-    <div class="flex-shrink-0 relative">
-      <%= tabler_icon(icon, size: 32, 
+<% if local_assigns[:disabled] %>
+  <div class="block rounded-xl border-2 border-dashed border-primary-700/30 group">
+    <div class="flex items-center p-4 opacity-50">
+      <%# Left - Icon %>
+      <div class="flex-shrink-0">
+        <%= tabler_icon(icon, size: 32, class: 'text-primary-700/50') %>
+      </div>
+
+      <%# Middle - Text %>
+      <div class="flex-grow ml-4">
+        <h3 class="font-mono font-bold mb-0.5 text-left text-primary-300">
+          <%= title %>
+        </h3>
+        <p class="text-primary-400 font-mono text-sm text-left">
+          <%= description %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <%= link_to path, class: "block rounded-xl border-2 border-dashed 
+      #{completed ? 'border-green-500/50 hover:border-green-500' : current ? 'border-secondary-400/50 hover:border-secondary-400' : 'border-primary-700/50 hover:border-primary-700'}
+      transition-colors duration-200 group" do %>
+    <div class="flex items-center p-4">
+      <%# Left - Icon and Status %>
+      <div class="flex-shrink-0 relative">
+        <%= tabler_icon(icon, size: 32, 
+            class: "#{completed ? 'text-green-500' : current ? 'text-secondary-400' : 'text-primary-700/50 group-hover:text-primary-700'} 
+                    transition-colors duration-200") %>
+        
+        <% if completed %>
+          <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+            <%= tabler_icon('check', size: 12, class: 'text-primary-900') %>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Middle - Text %>
+      <div class="flex-grow ml-4 mr-3">
+        <h3 class="font-mono font-bold mb-0.5 transition-colors duration-200 text-left
+            #{completed ? 'text-green-500' : current ? 'text-secondary-400' : 'text-primary-300 group-hover:text-primary-50'}">
+          <%= title %>
+        </h3>
+        <p class="text-primary-400 font-mono text-sm text-left">
+          <%= description %>
+        </p>
+      </div>
+
+      <%# Right - Arrow %>
+      <%= tabler_icon('chevron-right', size: 20, 
           class: "#{completed ? 'text-green-500' : current ? 'text-secondary-400' : 'text-primary-700/50 group-hover:text-primary-700'} 
                   transition-colors duration-200") %>
-      
-      <% if completed %>
-        <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-          <%= tabler_icon('check', size: 12, class: 'text-primary-900') %>
-        </div>
-      <% end %>
     </div>
-
-    <%# Middle - Text %>
-    <div class="flex-grow ml-4 mr-3">
-      <h3 class="font-mono font-bold mb-0.5 transition-colors duration-200 text-left
-          #{completed ? 'text-green-500' : current ? 'text-secondary-400' : 'text-primary-300 group-hover:text-primary-50'}">
-        <%= title %>
-      </h3>
-      <p class="text-primary-400 font-mono text-sm text-left">
-        <%= description %>
-      </p>
-    </div>
-
-    <%# Right - Arrow %>
-    <%= tabler_icon('chevron-right', size: 20, 
-        class: "#{completed ? 'text-green-500' : current ? 'text-secondary-400' : 'text-primary-700/50 group-hover:text-primary-700'} 
-                transition-colors duration-200") %>
-  </div>
+  <% end %>
 <% end %> 
