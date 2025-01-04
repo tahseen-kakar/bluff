@@ -1,0 +1,72 @@
+<%= form_with model: [@table, game_format], class: "space-y-6" do |f| %>
+  <%# Name field %>
+  <div>
+    <%= f.label :name, class: "block font-mono text-primary-300 mb-2" %>
+    <%= f.text_field :name, 
+        class: "w-full bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-2
+                font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400",
+        placeholder: "e.g., Friday Night $1/$2" %>
+  </div>
+
+  <%# Buy-in field %>
+  <div>
+    <%= f.label :buy_in, class: "block font-mono text-primary-300 mb-2" %>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <span class="text-primary-400 font-mono">$</span>
+      </div>
+      <%= f.number_field :buy_in,
+          class: "w-full bg-primary-800/50 border-primary-700/50 rounded-lg pl-8 pr-3 py-2
+                  font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
+                  [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
+          step: "0.01",
+          placeholder: "0.00" %>
+    </div>
+  </div>
+
+  <%# Description field %>
+  <div>
+    <%= f.label :description, class: "block font-mono text-primary-300 mb-2" %>
+    <%= f.text_area :description,
+        class: "w-full bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-2
+                font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400",
+        rows: 3,
+        placeholder: "Optional description of this game format" %>
+  </div>
+
+  <%# Chip denominations %>
+  <div>
+    <h3 class="font-mono text-primary-300 mb-4">Chip Denominations</h3>
+    
+    <div class="space-y-3" data-controller="nested-form">
+      <template data-nested-form-target="template">
+        <%= f.fields_for :denominations, GameFormat::Denomination.new, child_index: 'NEW_RECORD' do |denomination| %>
+          <%= render "denomination_fields", f: denomination %>
+        <% end %>
+      </template>
+
+      <%= f.fields_for :denominations do |denomination| %>
+        <%= render "denomination_fields", f: denomination %>
+      <% end %>
+
+      <button type="button" data-action="nested-form#add"
+          class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg font-mono text-primary-400 
+                 hover:text-primary-50 hover:bg-primary-800/50">
+        <%= tabler_icon('plus', size: 20) %>
+        <span>Add Denomination</span>
+      </button>
+    </div>
+  </div>
+
+  <%# Submit button %>
+  <div class="flex justify-between items-center pt-6 border-t border-primary-700/50">
+    <%= link_to "Cancel", table_game_formats_path(@table),
+        class: "px-4 py-2 rounded-lg font-mono text-primary-400 hover:text-primary-50 hover:bg-primary-800/50" %>
+    
+    <%= f.button type: :submit,
+        class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
+                hover:bg-secondary-300 transition-colors duration-200" do %>
+      <%= game_format.persisted? ? "Update Format" : "Create Format" %>
+    <% end %>
+  </div>
+<% end %> 

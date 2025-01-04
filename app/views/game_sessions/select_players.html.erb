@@ -12,11 +12,11 @@
       <% @available_players.each do |player| %>
         <div class="relative">
           <%= check_box_tag "player_ids[]", player.id, false,
-              class: "peer absolute opacity-0",
+              class: "peer absolute top-4 left-4 h-4 w-4 rounded border-primary-700/50 text-secondary-400 focus:ring-secondary-400 focus:ring-offset-0 focus:ring-offset-transparent bg-primary-800/50",
               id: dom_id(player, :select) %>
           
           <label for="<%= dom_id(player, :select) %>"
-              class="block bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4 
+              class="block bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4 pl-12
                      cursor-pointer peer-checked:border-secondary-400 peer-checked:ring-1 peer-checked:ring-secondary-400
                      hover:border-primary-600/50 transition-colors duration-200">
             <div class="flex items-center space-x-4">

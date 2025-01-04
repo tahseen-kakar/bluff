@@ -31,8 +31,8 @@
                     </span>
                     <%= number_field_tag "player_results[#{result.id}][chip_counts][#{denomination['value']}]",
                         nil, min: 0, step: 1,
-                        class: "w-20 bg-primary-800/50 border border-primary-700/50 rounded-lg px-3 py-1 
-                               text-right font-mono text-primary-50 focus:border-primary-600 focus:ring-0
+                        class: "w-20 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-1 
+                               text-right font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
                                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                         data: { 
                           chips_form_target: "input",
