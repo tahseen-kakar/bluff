@@ -36,7 +36,7 @@ export default class extends Controller {
     this.grandTotalTarget.textContent = `$${grandTotal.toFixed(2)}`
     
     // Enable/disable submit button based on total match
-    const isValid = grandTotal === this.expectedTotalValue
+    const isValid = Math.abs(grandTotal - this.expectedTotalValue) < 0.01
     this.submitTarget.disabled = !isValid
     
     // Update visual feedback

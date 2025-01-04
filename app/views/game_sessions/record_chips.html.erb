@@ -29,7 +29,7 @@
                     <span class="text-sm font-mono text-primary-300">
                       $<%= number_with_precision(denomination['value'], precision: 2) %>
                     </span>
-                    <%= number_field_tag "player_results[#{result.id}][chip_counts][#{denomination['value']}]",
+                    <%= number_field_tag "player_results[#{result.id}][chip_counts][#{denomination['color']}]",
                         nil, min: 0, step: 1,
                         class: "w-20 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-1 
                                text-right font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
@@ -37,6 +37,7 @@
                         data: { 
                           chips_form_target: "input",
                           value: denomination['value'].to_f,
+                          color: denomination['color'],
                           action: "input->chips-form#updateTotals"
                         } %>
                   </div>

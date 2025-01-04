@@ -27,7 +27,7 @@ class PlayerResult < ApplicationRecord
       denomination = game_session.game_format.denominations.find { |d| d["color"] == color }
       next 0 unless denomination
 
-      count.to_i * denomination["value"].to_i
+      count.to_i * denomination["value"].to_f
     end
   end
 end
