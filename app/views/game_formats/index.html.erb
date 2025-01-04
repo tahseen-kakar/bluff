@@ -3,71 +3,80 @@
     context: @table.name,
     description: "Manage your poker game variations and buy-in structures" %>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  <% @game_formats.each do |format| %>
-    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-      <%# Header with Name and Buy-in %>
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="text-primary-50 font-mono font-bold truncate mr-3"><%= format.name %></h3>
-        <div class="flex items-center space-x-3">
-          <span class="text-secondary-400 text-sm font-mono whitespace-nowrap">
-            $<%= number_with_precision(format.buy_in, precision: 2) %>
-          </span>
+<% if @game_formats.exists? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% @game_formats.each do |format| %>
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
+        <%# Header with Name and Buy-in %>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-primary-50 font-mono font-bold truncate mr-3"><%= format.name %></h3>
+          <div class="flex items-center space-x-3">
+            <span class="text-secondary-400 text-sm font-mono whitespace-nowrap">
+              $<%= number_with_precision(format.buy_in, precision: 2) %>
+            </span>
 
-          <%# Actions Dropdown %>
-          <%= render 'shared/dropdown_menu', icon: 'dots-vertical' do %>
-            <%= link_to edit_table_game_format_path(@table, format),
-                class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200" do %>
-              <%= tabler_icon('edit', size: 18) %>
-              <span class="text-sm font-mono">Edit Format</span>
-            <% end %>
+            <%# Actions Dropdown %>
+            <%= render 'shared/dropdown_menu', icon: 'dots-vertical' do %>
+              <%= link_to edit_table_game_format_path(@table, format),
+                  class: "flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-primary-50 hover:bg-primary-700/30 transition-colors duration-200" do %>
+                <%= tabler_icon('edit', size: 18) %>
+                <span class="text-sm font-mono">Edit Format</span>
+              <% end %>
 
-            <%= button_to table_game_format_path(@table, format),
-                method: :delete,
-                form: { data: { turbo_confirm: 'Are you sure?' } },
-                class: "w-full flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-red-400 hover:bg-primary-700/30 transition-colors duration-200" do %>
-              <%= tabler_icon('trash', size: 18) %>
-              <span class="text-sm font-mono">Delete Format</span>
+              <%= button_to table_game_format_path(@table, format),
+                  method: :delete,
+                  form: { data: { turbo_confirm: 'Are you sure?' } },
+                  class: "w-full flex items-center space-x-3 px-4 py-3 text-primary-400 hover:text-red-400 hover:bg-primary-700/30 transition-colors duration-200" do %>
+                <%= tabler_icon('trash', size: 18) %>
+                <span class="text-sm font-mono">Delete Format</span>
+              <% end %>
             <% end %>
+          </div>
+        </div>
+
+        <%# Chip Denominations %>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <% format.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
+            <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
+              <div class="w-3 h-3 rounded-full border border-primary-600"
+                   style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
+              <span class="text-xs font-mono text-primary-300">
+                $<%= number_with_precision(denomination['value'], precision: 2) %>
+              </span>
+            </div>
           <% end %>
         </div>
-      </div>
 
-      <%# Chip Denominations %>
-      <div class="flex flex-wrap gap-2 mb-3">
-        <% format.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
-          <div class="inline-flex items-center space-x-2 px-2 py-1 rounded-lg bg-primary-700/30">
-            <div class="w-3 h-3 rounded-full border border-primary-600"
-                 style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
-            <span class="text-xs font-mono text-primary-300">
-              $<%= number_with_precision(denomination['value'], precision: 2) %>
-            </span>
-          </div>
+        <%# Description %>
+        <% if format.description.present? %>
+          <p class="text-primary-400 text-sm font-mono line-clamp-2 text-left">
+            <%= format.description %>
+          </p>
         <% end %>
       </div>
+    <% end %>
 
-      <%# Description %>
-      <% if format.description.present? %>
-        <p class="text-primary-400 text-sm font-mono line-clamp-2 text-left">
-          <%= format.description %>
-        </p>
+    <%# Empty State Card %>
+    <div class="aspect-[4/3]">
+      <%= link_to new_table_game_format_path(@table), 
+          class: "h-full block rounded-xl border-2 border-dashed border-primary-700/50 
+                  hover:border-primary-700 transition-colors duration-200 group" do %>
+        <div class="flex flex-col items-center justify-center h-full p-6">
+          <%= tabler_icon('plus', size: 48, 
+              class: 'text-primary-700/50 group-hover:text-primary-700 mb-4 transition-colors duration-200') %>
+          <h3 class="text-lg font-bold text-primary-300 font-mono mb-2">Add Another Format</h3>
+          <p class="text-primary-400 font-mono text-center text-sm">
+            Create a new game format for this table
+          </p>
+        </div>
       <% end %>
     </div>
-  <% end %>
-
-  <%# Empty State Card %>
-  <div class="aspect-[4/3]">
-    <%= link_to new_table_game_format_path(@table), 
-        class: "h-full block rounded-xl border-2 border-dashed border-primary-700/50 
-                hover:border-primary-700 transition-colors duration-200 group" do %>
-      <div class="flex flex-col items-center justify-center h-full p-6">
-        <%= tabler_icon('plus', size: 48, 
-            class: 'text-primary-700/50 group-hover:text-primary-700 mb-4 transition-colors duration-200') %>
-        <h3 class="text-lg font-bold text-primary-300 font-mono mb-2">Add New Format</h3>
-        <p class="text-primary-400 font-mono text-center text-sm">
-          Create a new game format for this table
-        </p>
-      </div>
-    <% end %>
   </div>
-</div>
+<% else %>
+  <%= render "shared/empty_state",
+      icon: "cards",
+      title: "Add Your First Game Format",
+      description: "Create your first game format to start tracking poker sessions.",
+      path: new_table_game_format_path(@table),
+      action: "Create first format" %>
+<% end %>
