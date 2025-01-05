@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = [
     "playerCard",
     "playerCheckbox",
+    "playerHeader",
     "expandButton",
     "chipInputs",
     "chipInput",
@@ -19,11 +20,28 @@ export default class extends Controller {
     this.updateFormat()
   }
 
+  // Prevent checkbox clicks from triggering header click
+  stopPropagation(event) {
+    event.stopPropagation()
+  }
+
+  handleHeaderClick(event) {
+    const header = event.currentTarget
+    const card = header.closest('[data-session-form-target="playerCard"]')
+    const checkbox = card.querySelector('[data-session-form-target="playerCheckbox"]')
+    
+    // Only handle click if player is selected
+    if (checkbox.checked) {
+      this.toggleExpand(card)
+    }
+  }
+
   togglePlayer(event) {
     const checkbox = event.target
     const card = checkbox.closest('[data-session-form-target="playerCard"]')
     const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
     const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
+    const header = card.querySelector('[data-session-form-target="playerHeader"]')
 
     // Toggle selection visual state
     card.classList.toggle('border-secondary-400', checkbox.checked)
@@ -31,28 +49,32 @@ export default class extends Controller {
     // Show/hide expand button
     expandButton.classList.toggle('hidden', !checkbox.checked)
     
+    // Update cursor style
+    header.classList.toggle('cursor-pointer', checkbox.checked)
+    
     // If unchecking, collapse and clear inputs
     if (!checkbox.checked) {
       chipInputs.classList.add('hidden')
       chipInputs.querySelectorAll('input[type="number"]').forEach(input => {
         input.value = ''
       })
+      // Reset arrow rotation
+      expandButton.querySelector('svg').style.transform = ''
     }
 
     this.updateFormat()
   }
 
-  toggleExpand(event) {
-    const button = event.currentTarget
-    const card = button.closest('[data-session-form-target="playerCard"]')
+  toggleExpand(card) {
     const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
+    const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
     
     // Toggle expand/collapse
     const isExpanded = !chipInputs.classList.contains('hidden')
     chipInputs.classList.toggle('hidden')
     
     // Rotate arrow icon
-    button.querySelector('svg').style.transform = isExpanded ? '' : 'rotate(90deg)'
+    expandButton.querySelector('svg').style.transform = isExpanded ? '' : 'rotate(90deg)'
   }
 
   updateFormat() {

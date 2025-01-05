@@ -24,26 +24,26 @@
       <div class="bg-primary-800/50 backdrop-blur-sm rounded-lg border border-primary-700/50 overflow-hidden"
            data-session-form-target="playerCard">
         <%# Player Header %>
-        <div class="flex items-center p-3">
+        <div class="flex items-center p-3"
+             data-session-form-target="playerHeader"
+             data-action="click->session-form#handleHeaderClick">
           <div class="flex-grow flex items-center space-x-3">
             <%= check_box_tag "player_ids[]", player.id, false,
                 class: "rounded border-primary-700/50 bg-primary-800/50 text-secondary-400 
                        focus:ring-secondary-400 focus:ring-offset-0 focus:ring-1",
                 data: { 
                   session_form_target: "playerCheckbox",
-                  action: "change->session-form#togglePlayer"
+                  action: "change->session-form#togglePlayer click->session-form#stopPropagation"
                 } %>
             <span class="text-2xl"><%= player.emoji %></span>
             <h3 class="text-primary-50 font-mono font-medium"><%= player.name %></h3>
           </div>
           
           <%# Expand arrow (only shown when selected) %>
-          <button type="button"
-                  class="hidden text-primary-400 hover:text-primary-50"
-                  data-session-form-target="expandButton"
-                  data-action="click->session-form#toggleExpand">
+          <div class="hidden text-primary-400"
+               data-session-form-target="expandButton">
             <%= tabler_icon('chevron-right', size: 20) %>
-          </button>
+          </div>
         </div>
 
         <%# Chip Inputs (initially hidden) %>
