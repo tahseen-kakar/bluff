@@ -8,18 +8,15 @@
 
 <%= form_with model: [@table, @game_session], class: "space-y-6", data: { controller: "session-form" } do %>
   <%# Game Format Selection %>
-  <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
-    <div class="flex items-center space-x-3 mb-4">
-      <%= tabler_icon "cards", size: 20, class: "text-secondary-400" %>
-      <h3 class="text-primary-50 font-mono">Game Format</h3>
-    </div>
-
+  <%= render "shared/info_card",
+      icon: "cards",
+      title: "Game Format" do %>
     <%= select_tag :game_format_id,
         options_from_collection_for_select(@game_formats, :id, :name),
         class: "w-full bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-2 
                font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400",
         data: { action: "change->session-form#updateFormat" } %>
-  </div>
+  <% end %>
 
   <%# Players Selection %>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
