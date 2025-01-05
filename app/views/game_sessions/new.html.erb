@@ -23,9 +23,10 @@
     <% @available_players.each do |player| %>
       <div class="rounded-xl border-2 border-dashed border-primary-700/30 overflow-hidden transition-colors duration-200"
            data-session-form-target="playerCard">
-        <%# Player Header %>
+        <%# Player Row %>
         <div class="flex items-center p-4">
-          <div class="flex-grow flex items-center space-x-4">
+          <%# Left side: Checkbox, Emoji, Name %>
+          <div class="flex items-center space-x-4">
             <%= check_box_tag "player_ids[]", player.id, false,
                 class: "rounded border-primary-700/50 bg-primary-800/50 text-secondary-400 
                        focus:ring-secondary-400 focus:ring-offset-0 focus:ring-1",
@@ -34,27 +35,28 @@
                   action: "change->session-form#togglePlayer"
                 } %>
             <span class="text-2xl"><%= player.emoji %></span>
-            <div class="flex items-center space-x-3">
-              <h3 class="text-primary-300 font-mono font-medium group-hover:text-primary-50 transition-colors duration-200">
-                <%= player.name %>
-              </h3>
-              <%# Total chip (only shown when selected) %>
-              <div class="hidden items-center bg-primary-800/50 rounded-full px-3 py-1"
-                   data-session-form-target="playerTotalChip">
-                <div class="flex items-center space-x-2">
-                  <span class="text-primary-400">$</span>
-                  <span class="font-mono text-primary-50" data-session-form-target="playerTotal" data-player-id="<%= player.id %>">0.00</span>
-                </div>
+            <h3 class="text-primary-300 font-mono font-medium transition-colors duration-200">
+              <%= player.name %>
+            </h3>
+          </div>
+
+          <%# Right side: Total and Chip Inputs %>
+          <div class="flex items-center space-x-4 ml-auto">
+            <%# Total chip (only shown when selected) %>
+            <div class="hidden items-center bg-primary-800/50 rounded-full px-3 py-1"
+                 data-session-form-target="playerTotalChip">
+              <div class="flex items-center space-x-2">
+                <span class="text-primary-400">$</span>
+                <span class="font-mono text-primary-50" data-session-form-target="playerTotal" data-player-id="<%= player.id %>">0.00</span>
               </div>
             </div>
-          </div>
-        </div>
 
-        <%# Chip Inputs (initially hidden) %>
-        <div class="hidden border-t border-primary-700/30"
-             data-session-form-target="chipInputs">
-          <div class="p-4 space-y-3">
-            <%# Chip inputs will be dynamically updated by JavaScript %>
+            <%# Chip Inputs (initially hidden) %>
+            <div class="hidden" data-session-form-target="chipInputs">
+              <div>
+                <%# Chip inputs will be dynamically updated by JavaScript %>
+              </div>
+            </div>
           </div>
         </div>
       </div>

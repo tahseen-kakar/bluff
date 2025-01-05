@@ -91,19 +91,19 @@ export default class extends Controller {
     const denominations = format.denominations.sort((a, b) => b.value - a.value)
     
     return `
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2">
         ${denominations.map(denomination => `
           <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
-              <span class="w-3 h-3 rounded-full" style="background-color: ${denomination.color}"></span>
-              <span class="font-mono text-primary-400 text-sm ml-2">$${denomination.value}</span>
+              <span class="w-2 h-2 rounded-full" style="background-color: ${denomination.color}"></span>
+              <span class="font-mono text-primary-400 text-xs ml-1.5">$${denomination.value}</span>
             </div>
             <input type="number"
                    name="player_results[${playerId}][chip_counts][${denomination.color}]"
                    min="0"
                    step="1"
                    placeholder="×0"
-                   class="w-32 bg-primary-800/50 border-primary-700/50 rounded-lg pl-16 pr-2 py-1.5
+                   class="w-24 bg-primary-800/50 border-primary-700/50 rounded-lg pl-12 pr-2 py-1
                           font-mono text-primary-50 text-right placeholder:text-primary-700/30
                           focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
                           [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
