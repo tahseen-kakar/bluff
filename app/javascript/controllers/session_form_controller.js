@@ -10,6 +10,7 @@ export default class extends Controller {
     "chipInputs",
     "chipInput",
     "playerTotal",
+    "playerTotalChip",
     "grandTotal",
     "expectedTotal",
     "submit"
@@ -42,16 +43,21 @@ export default class extends Controller {
     const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
     const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
     const header = card.querySelector('[data-session-form-target="playerHeader"]')
+    const totalChip = card.querySelector('[data-session-form-target="playerTotalChip"]')
 
     // Toggle selection visual state
     if (checkbox.checked) {
       card.classList.remove('border-dashed', 'border-primary-700/30')
       card.classList.add('border-secondary-400/70')
       header.classList.add('cursor-pointer')
+      totalChip.classList.remove('hidden')
+      totalChip.classList.add('flex')
     } else {
       card.classList.remove('border-secondary-400/70')
       card.classList.add('border-dashed', 'border-primary-700/30')
       header.classList.remove('cursor-pointer')
+      totalChip.classList.remove('flex')
+      totalChip.classList.add('hidden')
     }
     
     // Show/hide expand button
@@ -127,18 +133,6 @@ export default class extends Controller {
                data-action="input->session-form#updateTotals">
       </div>
     `).join('')
-
-    // Add player total
-    html += `
-      <div class="mt-4 pt-4 border-t border-primary-700/50">
-        <span class="font-mono text-primary-400">Total:</span>
-        <span class="ml-2 font-mono text-primary-50"
-              data-session-form-target="playerTotal"
-              data-player-id="${playerId}">
-          $0.00
-        </span>
-      </div>
-    `
 
     return html
   }
