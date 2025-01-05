@@ -44,13 +44,18 @@ export default class extends Controller {
     const header = card.querySelector('[data-session-form-target="playerHeader"]')
 
     // Toggle selection visual state
-    card.classList.toggle('border-secondary-400', checkbox.checked)
+    if (checkbox.checked) {
+      card.classList.remove('border-dashed', 'border-primary-700/30')
+      card.classList.add('border-secondary-400/70')
+      header.classList.add('cursor-pointer')
+    } else {
+      card.classList.remove('border-secondary-400/70')
+      card.classList.add('border-dashed', 'border-primary-700/30')
+      header.classList.remove('cursor-pointer')
+    }
     
     // Show/hide expand button
     expandButton.classList.toggle('hidden', !checkbox.checked)
-    
-    // Update cursor style
-    header.classList.toggle('cursor-pointer', checkbox.checked)
     
     // If unchecking, collapse and clear inputs
     if (!checkbox.checked) {
