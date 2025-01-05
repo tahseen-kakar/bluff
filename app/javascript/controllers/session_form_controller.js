@@ -114,27 +114,29 @@ export default class extends Controller {
   generateChipInputsHtml(format, playerId) {
     const denominations = format.denominations.sort((a, b) => b.value - a.value)
     
-    let html = denominations.map(denomination => `
-      <div class="flex items-center space-x-3">
-        <div class="w-24">
-          <div class="flex items-center space-x-2">
-            <span class="w-4 h-4 rounded-full" style="background-color: ${denomination.color}"></span>
-            <span class="font-mono text-primary-400">$${denomination.value}</span>
+    return `
+      <div class="flex items-center space-x-4">
+        ${denominations.map(denomination => `
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+              <span class="w-3 h-3 rounded-full" style="background-color: ${denomination.color}"></span>
+              <span class="font-mono text-primary-400 text-sm ml-2">$${denomination.value}</span>
+            </div>
+            <input type="number"
+                   name="player_results[${playerId}][chip_counts][${denomination.color}]"
+                   min="0"
+                   step="1"
+                   placeholder="×0"
+                   class="w-32 bg-primary-800/50 border-primary-700/50 rounded-lg pl-16 pr-2 py-1.5
+                          font-mono text-primary-50 text-right placeholder:text-primary-700/30
+                          focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400"
+                   data-session-form-target="chipInput"
+                   data-value="${denomination.value}"
+                   data-action="input->session-form#updateTotals">
           </div>
-        </div>
-        <input type="number"
-               name="player_results[${playerId}][chip_counts][${denomination.color}]"
-               min="0"
-               step="1"
-               class="w-24 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-2 
-                      font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400"
-               data-session-form-target="chipInput"
-               data-value="${denomination.value}"
-               data-action="input->session-form#updateTotals">
+        `).join('')}
       </div>
-    `).join('')
-
-    return html
+    `
   }
 
   updateTotals() {
@@ -157,7 +159,7 @@ export default class extends Controller {
     // Update player totals
     this.playerTotalTargets.forEach(element => {
       const playerId = element.dataset.playerId
-      element.textContent = `$${playerTotals[playerId]?.toFixed(2) || "0.00"}`
+      element.textContent = playerTotals[playerId]?.toFixed(2) || "0.00"
     })
 
     // Update grand total and validate
