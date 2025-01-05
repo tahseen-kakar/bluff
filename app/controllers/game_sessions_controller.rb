@@ -41,12 +41,15 @@ class GameSessionsController < ApplicationController
 
   def create
     @game_session = @table.game_sessions.new(game_format_id: params[:game_format_id])
+    @game_session.recording_chips = true
 
     # Build player results with chip counts
     params[:player_results]&.each do |player_id, data|
+      next if data[:chip_counts].values.all?(&:blank?) # Skip if all chip counts are blank
+
       @game_session.player_results.build(
         player_id: player_id,
-        chip_counts: data[:chip_counts]
+        chip_counts: data[:chip_counts].reject { |_, v| v.blank? } # Remove blank values
       )
     end
 

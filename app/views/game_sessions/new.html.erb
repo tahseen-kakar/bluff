@@ -3,6 +3,9 @@
     context: @table.name,
     description: "Record a new poker session" %>
 
+<%# Pass game formats data to JavaScript %>
+<%= content_tag :div, "", id: "game_formats_data", data: { formats: @game_formats_json }, style: "display: none;" %>
+
 <%= form_with model: [@table, @game_session], class: "space-y-6", data: { controller: "session-form" } do %>
   <%# Game Format Selection %>
   <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
@@ -35,40 +38,7 @@
 
         <%# Chip Counts (initially hidden) %>
         <div class="hidden mt-4 space-y-3" data-session-form-target="chipInputs">
-          <% @game_formats.first.denominations.sort_by { |d| -d['value'].to_f }.each do |denomination| %>
-            <div class="flex items-center space-x-3">
-              <div class="w-4 h-4 rounded-full border border-primary-600 flex-shrink-0"
-                   style="background-color: <%= GameFormat::VALID_COLORS[denomination['color']] %>"></div>
-              
-              <div class="flex-grow">
-                <div class="flex items-center justify-between">
-                  <span class="text-sm font-mono text-primary-300">
-                    $<%= number_with_precision(denomination['value'], precision: 2) %>
-                  </span>
-                  <%= number_field_tag "player_results[#{player.id}][chip_counts][#{denomination['color']}]",
-                      nil, min: 0, step: 1,
-                      class: "w-20 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-1 
-                             text-right font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
-                             [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
-                      data: { 
-                        session_form_target: "chipInput",
-                        value: denomination['value'].to_f,
-                        action: "input->session-form#updateTotals"
-                      } %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
-          <%# Player Total %>
-          <div class="flex items-center justify-between pt-3 border-t border-primary-700/50">
-            <span class="font-mono text-primary-300">Total</span>
-            <span class="font-mono text-primary-50"
-                  data-session-form-target="playerTotal"
-                  data-player-id="<%= player.id %>">
-              $0.00
-            </span>
-          </div>
+          <%# Chip inputs will be dynamically updated by JavaScript %>
         </div>
       </div>
     <% end %>

@@ -14,6 +14,7 @@ export default class extends Controller {
   ]
 
   connect() {
+    this.formats = JSON.parse(document.getElementById('game_formats_data').dataset.formats)
     this.updateFormat()
   }
 
@@ -34,19 +35,73 @@ export default class extends Controller {
       })
     }
 
-    this.updateTotals()
+    this.updateFormat()
   }
 
   updateFormat() {
     const formatId = document.getElementById('game_format_id').value
-    const format = this.getGameFormat(formatId)
+    const format = this.formats.find(f => f.id === parseInt(formatId))
     
     if (!format) return
 
+    // Update expected total
     const expectedTotal = format.buy_in * this.playerCheckboxTargets.filter(cb => cb.checked).length
     this.expectedTotalTarget.textContent = `/ $${expectedTotal.toFixed(2)}`
     
+    // Update chip inputs for each selected player
+    this.chipInputsTargets.forEach(chipInputs => {
+      const playerId = chipInputs.closest('[data-session-form-target="playerCard"]')
+                                .querySelector('[data-session-form-target="playerCheckbox"]').value
+      
+      // Generate chip inputs HTML
+      const html = this.generateChipInputsHtml(format, playerId)
+      chipInputs.innerHTML = html
+    })
+    
     this.updateTotals()
+  }
+
+  generateChipInputsHtml(format, playerId) {
+    const denominations = format.denominations.sort((a, b) => b.value - a.value)
+    
+    let html = denominations.map(denomination => `
+      <div class="flex items-center space-x-3">
+        <div class="w-4 h-4 rounded-full border border-primary-600 flex-shrink-0"
+             style="background-color: ${this.getColorCode(denomination.color)}"></div>
+        
+        <div class="flex-grow">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-mono text-primary-300">
+              $${parseFloat(denomination.value).toFixed(2)}
+            </span>
+            <input type="number"
+                   name="player_results[${playerId}][chip_counts][${denomination.color}]"
+                   min="0"
+                   step="1"
+                   class="w-20 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-1 
+                          text-right font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
+                          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                   data-session-form-target="chipInput"
+                   data-value="${denomination.value}"
+                   data-action="input->session-form#updateTotals">
+          </div>
+        </div>
+      </div>
+    `).join('')
+
+    // Add player total
+    html += `
+      <div class="flex items-center justify-between pt-3 border-t border-primary-700/50">
+        <span class="font-mono text-primary-300">Total</span>
+        <span class="font-mono text-primary-50"
+              data-session-form-target="playerTotal"
+              data-player-id="${playerId}">
+          $0.00
+        </span>
+      </div>
+    `
+
+    return html
   }
 
   updateTotals() {
@@ -77,7 +132,7 @@ export default class extends Controller {
     
     // Enable/disable submit button based on total match
     const formatId = document.getElementById('game_format_id').value
-    const format = this.getGameFormat(formatId)
+    const format = this.formats.find(f => f.id === parseInt(formatId))
     const expectedTotal = format ? format.buy_in * this.playerCheckboxTargets.filter(cb => cb.checked).length : 0
     
     const isValid = Math.abs(grandTotal - expectedTotal) < 0.01 && this.playerCheckboxTargets.some(cb => cb.checked)
@@ -88,8 +143,14 @@ export default class extends Controller {
     this.grandTotalTarget.classList.toggle("text-primary-50", isValid)
   }
 
-  getGameFormat(id) {
-    const formats = JSON.parse(document.getElementById('game_formats_data').textContent)
-    return formats.find(f => f.id === parseInt(id))
+  getColorCode(color) {
+    const colors = {
+      white: '#FFFFFF',
+      red: '#EF4444',
+      blue: '#3B82F6',
+      green: '#10B981',
+      black: '#1F2937'
+    }
+    return colors[color] || '#FFFFFF'
   }
 } 
