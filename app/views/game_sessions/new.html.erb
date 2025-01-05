@@ -6,7 +6,7 @@
 <%# Pass game formats data to JavaScript %>
 <%= content_tag :div, "", id: "game_formats_data", data: { formats: @game_formats_json }, style: "display: none;" %>
 
-<%= form_with model: [@table, @game_session], class: "space-y-6", data: { controller: "session-form" } do %>
+<%= form_with model: [@table, @game_session], class: "pb-32", data: { controller: "session-form" } do %>
   <%# Game Format Selection %>
   <%= render "shared/info_card",
       icon: "cards",
@@ -18,47 +18,67 @@
         data: { action: "change->session-form#updateFormat" } %>
   <% end %>
 
-  <%# Players Selection %>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <%# Players Accordion %>
+  <div class="mt-6 space-y-2">
     <% @available_players.each do |player| %>
-      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4 cursor-pointer"
-           data-session-form-target="playerCard"
-           data-action="click->session-form#togglePlayer">
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-lg border border-primary-700/50 overflow-hidden"
+           data-session-form-target="playerCard">
         <%# Player Header %>
-        <div class="flex items-center space-x-3">
-          <span class="text-2xl"><%= player.emoji %></span>
-          <h3 class="text-primary-50 font-mono font-medium"><%= player.name %></h3>
-          <%= check_box_tag "player_ids[]", player.id, false,
-              class: "hidden",
-              data: { session_form_target: "playerCheckbox" } %>
+        <div class="flex items-center p-3">
+          <div class="flex-grow flex items-center space-x-3">
+            <%= check_box_tag "player_ids[]", player.id, false,
+                class: "rounded border-primary-700/50 bg-primary-800/50 text-secondary-400 
+                       focus:ring-secondary-400 focus:ring-offset-0 focus:ring-1",
+                data: { 
+                  session_form_target: "playerCheckbox",
+                  action: "change->session-form#togglePlayer"
+                } %>
+            <span class="text-2xl"><%= player.emoji %></span>
+            <h3 class="text-primary-50 font-mono font-medium"><%= player.name %></h3>
+          </div>
+          
+          <%# Expand arrow (only shown when selected) %>
+          <button type="button"
+                  class="hidden text-primary-400 hover:text-primary-50"
+                  data-session-form-target="expandButton"
+                  data-action="click->session-form#toggleExpand">
+            <%= tabler_icon('chevron-right', size: 20) %>
+          </button>
         </div>
 
-        <%# Chip Counts (initially hidden) %>
-        <div class="hidden mt-4 space-y-3" data-session-form-target="chipInputs">
-          <%# Chip inputs will be dynamically updated by JavaScript %>
+        <%# Chip Inputs (initially hidden) %>
+        <div class="hidden border-t border-primary-700/50"
+             data-session-form-target="chipInputs">
+          <div class="p-4 space-y-3">
+            <%# Chip inputs will be dynamically updated by JavaScript %>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 
-  <%# Grand Total %>
-  <div class="flex justify-between items-center mt-6">
-    <div>
-      <span class="font-mono text-primary-400">Grand Total:</span>
-      <span class="ml-2 font-mono text-primary-50" data-session-form-target="grandTotal">$0.00</span>
-      <span class="ml-2 font-mono text-primary-400" data-session-form-target="expectedTotal"></span>
-    </div>
+  <%# Sticky Bottom Bar %>
+  <div class="fixed bottom-0 left-0 right-0 bg-primary-900/95 backdrop-blur-sm border-t border-primary-800">
+    <div class="max-w-screen-xl mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <span class="font-mono text-primary-400">Grand Total:</span>
+          <span class="ml-2 font-mono text-primary-50" data-session-form-target="grandTotal">$0.00</span>
+          <span class="ml-2 font-mono text-primary-400" data-session-form-target="expectedTotal"></span>
+        </div>
 
-    <div class="flex items-center space-x-3">
-      <%= link_to "Cancel", table_game_sessions_path(@table),
-          class: "px-4 py-2 rounded-lg font-mono text-primary-400 hover:text-primary-50 hover:bg-primary-800/50" %>
-      
-      <%= button_tag type: :submit,
-          class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
-                 hover:bg-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200",
-          data: { session_form_target: "submit" } do %>
-        Complete Session
-      <% end %>
+        <div class="flex items-center space-x-3">
+          <%= link_to "Cancel", table_game_sessions_path(@table),
+              class: "px-4 py-2 rounded-lg font-mono text-primary-400 hover:text-primary-50 hover:bg-primary-800/50" %>
+          
+          <%= button_tag type: :submit,
+              class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
+                     hover:bg-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200",
+              data: { session_form_target: "submit" } do %>
+            Complete Session
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %> 

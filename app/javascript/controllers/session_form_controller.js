@@ -5,6 +5,7 @@ export default class extends Controller {
   static targets = [
     "playerCard",
     "playerCheckbox",
+    "expandButton",
     "chipInputs",
     "chipInput",
     "playerTotal",
@@ -19,23 +20,39 @@ export default class extends Controller {
   }
 
   togglePlayer(event) {
-    const card = event.currentTarget
-    const checkbox = card.querySelector('[data-session-form-target="playerCheckbox"]')
+    const checkbox = event.target
+    const card = checkbox.closest('[data-session-form-target="playerCard"]')
+    const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
     const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
 
-    // Toggle selection
-    checkbox.checked = !checkbox.checked
+    // Toggle selection visual state
     card.classList.toggle('border-secondary-400', checkbox.checked)
-    chipInputs.classList.toggle('hidden', !checkbox.checked)
-
-    // Clear inputs if unselected
+    
+    // Show/hide expand button
+    expandButton.classList.toggle('hidden', !checkbox.checked)
+    
+    // If unchecking, collapse and clear inputs
     if (!checkbox.checked) {
+      chipInputs.classList.add('hidden')
       chipInputs.querySelectorAll('input[type="number"]').forEach(input => {
         input.value = ''
       })
     }
 
     this.updateFormat()
+  }
+
+  toggleExpand(event) {
+    const button = event.currentTarget
+    const card = button.closest('[data-session-form-target="playerCard"]')
+    const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
+    
+    // Toggle expand/collapse
+    const isExpanded = !chipInputs.classList.contains('hidden')
+    chipInputs.classList.toggle('hidden')
+    
+    // Rotate arrow icon
+    button.querySelector('svg').style.transform = isExpanded ? '' : 'rotate(90deg)'
   }
 
   updateFormat() {
@@ -46,7 +63,7 @@ export default class extends Controller {
 
     // Update expected total
     const expectedTotal = format.buy_in * this.playerCheckboxTargets.filter(cb => cb.checked).length
-    this.expectedTotalTarget.textContent = `/ $${expectedTotal.toFixed(2)}`
+    this.expectedTotalTarget.textContent = `(Expected: $${expectedTotal.toFixed(2)})`
     
     // Update chip inputs for each selected player
     this.chipInputsTargets.forEach(chipInputs => {
@@ -55,7 +72,7 @@ export default class extends Controller {
       
       // Generate chip inputs HTML
       const html = this.generateChipInputsHtml(format, playerId)
-      chipInputs.innerHTML = html
+      chipInputs.querySelector('div').innerHTML = html
     })
     
     this.updateTotals()
@@ -66,34 +83,29 @@ export default class extends Controller {
     
     let html = denominations.map(denomination => `
       <div class="flex items-center space-x-3">
-        <div class="w-4 h-4 rounded-full border border-primary-600 flex-shrink-0"
-             style="background-color: ${this.getColorCode(denomination.color)}"></div>
-        
-        <div class="flex-grow">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-mono text-primary-300">
-              $${parseFloat(denomination.value).toFixed(2)}
-            </span>
-            <input type="number"
-                   name="player_results[${playerId}][chip_counts][${denomination.color}]"
-                   min="0"
-                   step="1"
-                   class="w-20 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-1 
-                          text-right font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
-                          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                   data-session-form-target="chipInput"
-                   data-value="${denomination.value}"
-                   data-action="input->session-form#updateTotals">
+        <div class="w-24">
+          <div class="flex items-center space-x-2">
+            <span class="w-4 h-4 rounded-full" style="background-color: ${denomination.color}"></span>
+            <span class="font-mono text-primary-400">$${denomination.value}</span>
           </div>
         </div>
+        <input type="number"
+               name="player_results[${playerId}][chip_counts][${denomination.color}]"
+               min="0"
+               step="1"
+               class="w-24 bg-primary-800/50 border-primary-700/50 rounded-lg px-3 py-2 
+                      font-mono text-primary-50 focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400"
+               data-session-form-target="chipInput"
+               data-value="${denomination.value}"
+               data-action="input->session-form#updateTotals">
       </div>
     `).join('')
 
     // Add player total
     html += `
-      <div class="flex items-center justify-between pt-3 border-t border-primary-700/50">
-        <span class="font-mono text-primary-300">Total</span>
-        <span class="font-mono text-primary-50"
+      <div class="mt-4 pt-4 border-t border-primary-700/50">
+        <span class="font-mono text-primary-400">Total:</span>
+        <span class="ml-2 font-mono text-primary-50"
               data-session-form-target="playerTotal"
               data-player-id="${playerId}">
           $0.00
@@ -141,16 +153,5 @@ export default class extends Controller {
     // Update visual feedback
     this.grandTotalTarget.classList.toggle("text-red-400", !isValid)
     this.grandTotalTarget.classList.toggle("text-primary-50", isValid)
-  }
-
-  getColorCode(color) {
-    const colors = {
-      white: '#FFFFFF',
-      red: '#EF4444',
-      blue: '#3B82F6',
-      green: '#10B981',
-      black: '#1F2937'
-    }
-    return colors[color] || '#FFFFFF'
   }
 } 
