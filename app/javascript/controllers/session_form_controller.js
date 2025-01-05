@@ -95,7 +95,7 @@ export default class extends Controller {
         ${denominations.map(denomination => `
           <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
-              <span class="w-2 h-2 rounded-full" style="background-color: ${denomination.color}"></span>
+              <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${denomination.color}"></span>
               <span class="font-mono text-primary-400 text-xs ml-1.5">$${denomination.value}</span>
             </div>
             <input type="number"
