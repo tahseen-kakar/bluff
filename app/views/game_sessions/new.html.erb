@@ -21,19 +21,17 @@
   <%# Players Accordion %>
   <div class="mt-6 space-y-2">
     <% @available_players.each do |player| %>
-      <div class="rounded-xl border-2 border-dashed border-primary-700/30 overflow-hidden transition-colors duration-200 group"
+      <div class="rounded-xl border-2 border-dashed border-primary-700/30 overflow-hidden transition-colors duration-200"
            data-session-form-target="playerCard">
         <%# Player Header %>
-        <div class="flex items-center p-4 transition-colors duration-200"
-             data-session-form-target="playerHeader"
-             data-action="click->session-form#handleHeaderClick">
+        <div class="flex items-center p-4">
           <div class="flex-grow flex items-center space-x-4">
             <%= check_box_tag "player_ids[]", player.id, false,
                 class: "rounded border-primary-700/50 bg-primary-800/50 text-secondary-400 
                        focus:ring-secondary-400 focus:ring-offset-0 focus:ring-1",
                 data: { 
                   session_form_target: "playerCheckbox",
-                  action: "change->session-form#togglePlayer click->session-form#stopPropagation"
+                  action: "change->session-form#togglePlayer"
                 } %>
             <span class="text-2xl"><%= player.emoji %></span>
             <div class="flex items-center space-x-3">
@@ -49,12 +47,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          
-          <%# Expand arrow (only shown when selected) %>
-          <div class="hidden text-primary-700/50 group-hover:text-primary-700 transition-colors duration-200"
-               data-session-form-target="expandButton">
-            <%= tabler_icon('chevron-right', size: 20) %>
           </div>
         </div>
 

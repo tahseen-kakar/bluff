@@ -5,8 +5,6 @@ export default class extends Controller {
   static targets = [
     "playerCard",
     "playerCheckbox",
-    "playerHeader",
-    "expandButton",
     "chipInputs",
     "chipInput",
     "playerTotal",
@@ -21,71 +19,50 @@ export default class extends Controller {
     this.updateFormat()
   }
 
-  // Prevent checkbox clicks from triggering header click
-  stopPropagation(event) {
-    event.stopPropagation()
-  }
-
-  handleHeaderClick(event) {
-    const header = event.currentTarget
-    const card = header.closest('[data-session-form-target="playerCard"]')
-    const checkbox = card.querySelector('[data-session-form-target="playerCheckbox"]')
-    
-    // Only handle click if player is selected
-    if (checkbox.checked) {
-      this.toggleExpand(card)
-    }
-  }
-
   togglePlayer(event) {
     const checkbox = event.target
     const card = checkbox.closest('[data-session-form-target="playerCard"]')
-    const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
     const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
-    const header = card.querySelector('[data-session-form-target="playerHeader"]')
     const totalChip = card.querySelector('[data-session-form-target="playerTotalChip"]')
 
     // Toggle selection visual state
     if (checkbox.checked) {
       card.classList.remove('border-dashed', 'border-primary-700/30')
       card.classList.add('border-secondary-400/70')
-      header.classList.add('cursor-pointer')
+      // Generate chip inputs for this player
+      const formatId = document.getElementById('game_format_id').value
+      const format = this.formats.find(f => f.id === parseInt(formatId))
+      if (format) {
+        const html = this.generateChipInputsHtml(format, checkbox.value)
+        chipInputs.querySelector('div').innerHTML = html
+      }
+      chipInputs.classList.remove('hidden')
       totalChip.classList.remove('hidden')
       totalChip.classList.add('flex')
     } else {
       card.classList.remove('border-secondary-400/70')
       card.classList.add('border-dashed', 'border-primary-700/30')
-      header.classList.remove('cursor-pointer')
+      chipInputs.classList.add('hidden')
       totalChip.classList.remove('flex')
       totalChip.classList.add('hidden')
-    }
-    
-    // Show/hide expand button
-    expandButton.classList.toggle('hidden', !checkbox.checked)
-    
-    // If unchecking, collapse and clear inputs
-    if (!checkbox.checked) {
-      chipInputs.classList.add('hidden')
+      // Clear inputs when unchecked
       chipInputs.querySelectorAll('input[type="number"]').forEach(input => {
         input.value = ''
       })
-      // Reset arrow rotation
-      expandButton.querySelector('svg').style.transform = ''
     }
 
-    this.updateFormat()
+    this.updateExpectedTotal()
+    this.updateTotals()
   }
 
-  toggleExpand(card) {
-    const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
-    const expandButton = card.querySelector('[data-session-form-target="expandButton"]')
-    
-    // Toggle expand/collapse
-    const isExpanded = !chipInputs.classList.contains('hidden')
-    chipInputs.classList.toggle('hidden')
-    
-    // Rotate arrow icon
-    expandButton.querySelector('svg').style.transform = isExpanded ? '' : 'rotate(90deg)'
+  updateExpectedTotal() {
+    const formatId = document.getElementById('game_format_id').value
+    const format = this.formats.find(f => f.id === parseInt(formatId))
+    if (!format) return
+
+    // Update expected total
+    const expectedTotal = format.buy_in * this.playerCheckboxTargets.filter(cb => cb.checked).length
+    this.expectedTotalTarget.textContent = `(Expected: $${expectedTotal.toFixed(2)})`
   }
 
   updateFormat() {
@@ -95,17 +72,16 @@ export default class extends Controller {
     if (!format) return
 
     // Update expected total
-    const expectedTotal = format.buy_in * this.playerCheckboxTargets.filter(cb => cb.checked).length
-    this.expectedTotalTarget.textContent = `(Expected: $${expectedTotal.toFixed(2)})`
+    this.updateExpectedTotal()
     
-    // Update chip inputs for each selected player
-    this.chipInputsTargets.forEach(chipInputs => {
-      const playerId = chipInputs.closest('[data-session-form-target="playerCard"]')
-                                .querySelector('[data-session-form-target="playerCheckbox"]').value
-      
-      // Generate chip inputs HTML
-      const html = this.generateChipInputsHtml(format, playerId)
-      chipInputs.querySelector('div').innerHTML = html
+    // Update chip inputs for checked players
+    this.playerCheckboxTargets.forEach(checkbox => {
+      if (checkbox.checked) {
+        const card = checkbox.closest('[data-session-form-target="playerCard"]')
+        const chipInputs = card.querySelector('[data-session-form-target="chipInputs"]')
+        const html = this.generateChipInputsHtml(format, checkbox.value)
+        chipInputs.querySelector('div').innerHTML = html
+      }
     })
     
     this.updateTotals()
