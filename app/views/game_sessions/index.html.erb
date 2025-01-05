@@ -7,6 +7,9 @@
 <%# Sessions list %>
 <div class="space-y-4">
   <% if @game_sessions.any? %>
+  <%= render 'shared/create_button',
+        path: new_table_game_session_path(@table),
+        text: 'Record new session' %>
     <% @game_sessions.each do |session| %>
       <%= render "shared/info_card",
           icon: "clock-play",
@@ -26,15 +29,12 @@
       <% end %>
     <% end %>
 
-    <%= render 'shared/create_button',
-        path: select_format_table_game_sessions_path(@table),
-        text: 'Record new session' %>
   <% else %>
     <%= render "shared/empty_state",
         icon: "clock-play",
         title: "No sessions recorded",
         description: "Start tracking your poker sessions to analyze player performance and trends.",
-        path: select_format_table_game_sessions_path(@table),
+        path: new_table_game_session_path(@table),
         action: "Record first session" %>
   <% end %>
 </div>
