@@ -46,22 +46,22 @@
 
   <%# Grand Total %>
   <div class="flex justify-between items-center mt-6">
-    <div class="flex items-center space-x-6">
+    <div>
+      <span class="font-mono text-primary-400">Grand Total:</span>
+      <span class="ml-2 font-mono text-primary-50" data-session-form-target="grandTotal">$0.00</span>
+      <span class="ml-2 font-mono text-primary-400" data-session-form-target="expectedTotal"></span>
+    </div>
+
+    <div class="flex items-center space-x-3">
       <%= link_to "Cancel", table_game_sessions_path(@table),
           class: "px-4 py-2 rounded-lg font-mono text-primary-400 hover:text-primary-50 hover:bg-primary-800/50" %>
       
-      <div>
-        <span class="font-mono text-primary-400">Grand Total:</span>
-        <span class="ml-2 font-mono text-primary-50" data-session-form-target="grandTotal">$0.00</span>
-        <span class="ml-2 font-mono text-primary-400" data-session-form-target="expectedTotal"></span>
-      </div>
+      <%= button_tag type: :submit,
+          class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
+                 hover:bg-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200",
+          data: { session_form_target: "submit" } do %>
+        Complete Session
+      <% end %>
     </div>
-    
-    <%= button_tag type: :submit,
-        class: "px-4 py-2 rounded-lg font-mono text-primary-900 bg-secondary-400 
-               hover:bg-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200",
-        data: { session_form_target: "submit" } do %>
-      Complete Session
-    <% end %>
   </div>
 <% end %> 
