@@ -129,7 +129,8 @@ export default class extends Controller {
                    placeholder="×0"
                    class="w-32 bg-primary-800/50 border-primary-700/50 rounded-lg pl-16 pr-2 py-1.5
                           font-mono text-primary-50 text-right placeholder:text-primary-700/30
-                          focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400"
+                          focus:border-secondary-400 focus:ring-1 focus:ring-secondary-400
+                          [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                    data-session-form-target="chipInput"
                    data-value="${denomination.value}"
                    data-action="input->session-form#updateTotals">
