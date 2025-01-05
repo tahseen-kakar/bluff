@@ -1,5 +1,5 @@
-<%# Only show bottom nav when we have a current table and not on the new table page %>
-<% if @table && !current_page?(new_table_path) %>
+<%# Only show bottom nav when we have a current table and not on any new page %>
+<% if @table && !current_page?(new_table_path) && action_name != 'new' && action_name != 'edit' %>
   <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-primary-800/90 backdrop-blur-sm border border-primary-700/50 rounded-full px-2 py-1 shadow-lg shadow-primary-900/50">
     <div class="flex items-center space-x-1">
       <%= link_to app_path, 
