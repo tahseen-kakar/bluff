@@ -6,7 +6,7 @@
 <%# Pass game formats data to JavaScript %>
 <%= content_tag :div, "", id: "game_formats_data", data: { formats: @game_formats_json }, style: "display: none;" %>
 
-<%= form_with model: [@table, @game_session], class: "pb-32", data: { controller: "session-form" } do %>
+<%= form_with model: [@table, @game_session], class: "pb-32", data: { controller: "session-form" }, authenticity_token: true do %>
   <%# Game Format Selection %>
   <%= render "shared/info_card",
       icon: "cards",

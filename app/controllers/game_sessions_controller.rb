@@ -43,19 +43,37 @@ class GameSessionsController < ApplicationController
     @game_session = @table.game_sessions.new(game_format_id: params[:game_format_id])
     @game_session.recording_chips = true
 
-    # Build player results with chip counts
-    params[:player_results]&.each do |player_id, data|
-      next if data[:chip_counts].values.all?(&:blank?) # Skip if all chip counts are blank
+    # Calculate total chips from player results
+    total_chips = 0
 
-      @game_session.player_results.build(
-        player_id: player_id,
-        chip_counts: data[:chip_counts].reject { |_, v| v.blank? } # Remove blank values
-      )
+    # Get permitted parameters for player results
+    permitted_results = params.require(:player_results).permit!.to_h
+
+    # Build player results with chip counts
+    if permitted_results.present?
+      permitted_results.each do |player_id, data|
+        next if data[:chip_counts].values.all?(&:blank?) # Skip if all chip counts are blank
+
+        chip_counts = data[:chip_counts].reject { |_, v| v.blank? }
+
+        # Calculate player total
+        player_total = calculate_player_total(chip_counts, @game_session.game_format)
+        total_chips += player_total
+
+        @game_session.player_results.build(
+          player_id: player_id,
+          chip_counts: chip_counts,
+          total_amount: player_total
+        )
+      end
     end
+
+    @game_session.total_chips = total_chips
 
     if @game_session.save
       redirect_to table_game_sessions_path(@table), notice: "Session was successfully created."
     else
+      Rails.logger.error "Failed to save game session: #{@game_session.errors.full_messages}"
       @game_formats = @table.game_formats
       @available_players = @table.players
       @game_formats_json = @game_formats.map { |format|
@@ -78,5 +96,22 @@ class GameSessionsController < ApplicationController
 
   def set_game_session
     @game_session = @table.game_sessions.find(params[:id])
+  end
+
+  def game_session_params
+    params.permit(
+      :game_format_id,
+      player_ids: [],
+      player_results: {}
+    )
+  end
+
+  def calculate_player_total(chip_counts, game_format)
+    chip_counts.sum do |color, count|
+      denomination = game_format.denominations.find { |d| d["color"] == color }
+      next 0 unless denomination
+
+      count.to_i * denomination["value"].to_f
+    end
   end
 end

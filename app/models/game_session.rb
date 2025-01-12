@@ -19,6 +19,7 @@ class GameSession < ApplicationRecord
 
   validates :total_chips, presence: true, if: :recording_chips?
   validate :validate_total_chips, if: :recording_chips?
+  validates :player_results, presence: true, if: :recording_chips?
 
   attr_accessor :recording_chips
 
@@ -27,16 +28,16 @@ class GameSession < ApplicationRecord
   end
 
   def expected_total_chips
-    game_format.buy_in * player_results.count
+    game_format.buy_in * player_results.size
   end
 
   private
 
   def validate_total_chips
-    return unless total_chips.present?
+    return unless total_chips.present? && player_results.any?
 
-    if total_chips != expected_total_chips
-      errors.add(:total_chips, "must equal #{expected_total_chips} (#{player_results.count} players × #{game_format.buy_in} buy-in)")
+    if (total_chips - expected_total_chips).abs > 0.01
+      errors.add(:total_chips, "must equal #{expected_total_chips} (#{player_results.size} players × #{game_format.buy_in} buy-in)")
     end
   end
 end
