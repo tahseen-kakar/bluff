@@ -40,40 +40,56 @@ class GameSessionsController < ApplicationController
   end
 
   def create
+    Rails.logger.info "Creating new game session with params: #{params.inspect}"
+
     @game_session = @table.game_sessions.new(game_format_id: params[:game_format_id])
     @game_session.recording_chips = true
+
+    Rails.logger.info "Created game session with format: #{@game_session.game_format.inspect}"
 
     # Calculate total chips from player results
     total_chips = 0
 
     # Get permitted parameters for player results
     permitted_results = params.require(:player_results).permit!.to_h
+    Rails.logger.info "Permitted player results: #{permitted_results.inspect}"
 
     # Build player results with chip counts
     if permitted_results.present?
       permitted_results.each do |player_id, data|
-        next if data[:chip_counts].values.all?(&:blank?) # Skip if all chip counts are blank
+        Rails.logger.info "Processing player #{player_id} with data: #{data.inspect}"
+
+        next if data[:chip_counts].values.all?(&:blank?)
+        Rails.logger.info "Player has valid chip counts"
 
         chip_counts = data[:chip_counts].reject { |_, v| v.blank? }
+        Rails.logger.info "Filtered chip counts: #{chip_counts.inspect}"
 
         # Calculate player total
         player_total = calculate_player_total(chip_counts, @game_session.game_format)
         total_chips += player_total
 
-        @game_session.player_results.build(
+        Rails.logger.info "Player total: $#{player_total}, Running total: $#{total_chips}"
+
+        result = @game_session.player_results.build(
           player_id: player_id,
           chip_counts: chip_counts,
           total_amount: player_total
         )
+        Rails.logger.info "Built player result: #{result.inspect}"
       end
     end
 
     @game_session.total_chips = total_chips
+    Rails.logger.info "Final game session total: $#{total_chips}"
 
     if @game_session.save
+      Rails.logger.info "Successfully saved game session #{@game_session.id}"
+      Rails.logger.info "Player results saved: #{@game_session.player_results.map { |pr| { player_id: pr.player_id, total: pr.total_amount, chips: pr.chip_counts } }.inspect}"
       redirect_to table_game_sessions_path(@table), notice: "Session was successfully created."
     else
       Rails.logger.error "Failed to save game session: #{@game_session.errors.full_messages}"
+      Rails.logger.error "Validation errors: #{@game_session.errors.details.inspect}"
       @game_formats = @table.game_formats
       @available_players = @table.players
       @game_formats_json = @game_formats.map { |format|
@@ -107,11 +123,20 @@ class GameSessionsController < ApplicationController
   end
 
   def calculate_player_total(chip_counts, game_format)
-    chip_counts.sum do |color, count|
-      denomination = game_format.denominations.find { |d| d["color"] == color }
-      next 0 unless denomination
+    Rails.logger.info "Calculating total for chip counts: #{chip_counts.inspect}"
+    Rails.logger.info "Using game format: #{game_format.inspect}"
 
-      count.to_i * denomination["value"].to_f
+    total = chip_counts.sum do |color, count|
+      denomination = game_format.denominations.find { |d| d["color"] == color }
+      Rails.logger.info "Found denomination for #{color}: #{denomination.inspect}"
+
+      next 0 unless denomination
+      value = count.to_i * denomination["value"].to_f
+      Rails.logger.info "Calculated value for #{color}: #{count} × #{denomination["value"]} = #{value}"
+      value
     end
+
+    Rails.logger.info "Total calculated: #{total}"
+    total
   end
 end
