@@ -66,17 +66,36 @@ class GameSessionsController < ApplicationController
         Rails.logger.info "Filtered chip counts: #{chip_counts.inspect}"
 
         # Calculate player total
-        player_total = calculate_player_total(chip_counts, @game_session.game_format)
-        total_chips += player_total
+        cash_out_amount = calculate_player_total(chip_counts, @game_session.game_format)
+        total_chips += cash_out_amount
 
-        Rails.logger.info "Player total: $#{player_total}, Running total: $#{total_chips}"
+        Rails.logger.info "Player cash out: $#{cash_out_amount}, Running total: $#{total_chips}"
+
+        # Get player and calculate loan needed
+        player = @table.players.find(player_id)
+        buy_in_amount = @game_session.game_format.buy_in
+        loan_taken = player.loan_needed_for_game(buy_in_amount)
 
         result = @game_session.player_results.build(
           player_id: player_id,
           chip_counts: chip_counts,
-          total_amount: player_total
+          cash_out_amount: cash_out_amount,
+          buy_in_amount: buy_in_amount,
+          loan_taken: loan_taken
         )
         Rails.logger.info "Built player result: #{result.inspect}"
+
+        # Update player's cash and loan
+        if loan_taken > 0
+          player.update!(
+            total_loan: player.total_loan + loan_taken,
+            wallet_balance: cash_out_amount # All cash was from loan
+          )
+        else
+          player.update!(
+            wallet_balance: player.wallet_balance - buy_in_amount + cash_out_amount
+          )
+        end
       end
     end
 
@@ -85,7 +104,7 @@ class GameSessionsController < ApplicationController
 
     if @game_session.save
       Rails.logger.info "Successfully saved game session #{@game_session.id}"
-      Rails.logger.info "Player results saved: #{@game_session.player_results.map { |pr| { player_id: pr.player_id, total: pr.total_amount, chips: pr.chip_counts } }.inspect}"
+      Rails.logger.info "Player results saved: #{@game_session.player_results.map { |pr| { player_id: pr.player_id, cash_out: pr.cash_out_amount, loan: pr.loan_taken, chips: pr.chip_counts } }.inspect}"
       redirect_to table_game_sessions_path(@table), notice: "Session was successfully created."
     else
       Rails.logger.error "Failed to save game session: #{@game_session.errors.full_messages}"

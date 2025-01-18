@@ -16,23 +16,28 @@ class PlayerResult < ApplicationRecord
   belongs_to :player
 
   validates :chip_counts, presence: true, if: -> { game_session.recording_chips? }
-  validates :total_amount, presence: true,
-                          numericality: true,
-                          if: -> { game_session.recording_chips? }
+  validates :cash_out_amount, presence: true,
+                             numericality: true,
+                             if: -> { game_session.recording_chips? }
   validates :buy_in_amount, presence: true,
                            numericality: { greater_than: 0 }
   validates :loan_taken, presence: true,
                         numericality: { greater_than_or_equal_to: 0 }
 
-  before_validation :calculate_total_amount
+  before_validation :calculate_cash_out_amount
   after_save :update_player_cash, if: -> { game_session.recording_chips? }
+
+  # Calculate profit/loss for this game
+  def profit_loss
+    cash_out_amount - buy_in_amount
+  end
 
   private
 
-  def calculate_total_amount
+  def calculate_cash_out_amount
     return if chip_counts.blank?
 
-    self.total_amount = chip_counts.sum do |color, count|
+    self.cash_out_amount = chip_counts.sum do |color, count|
       denomination = game_session.game_format.denominations.find { |d| d["color"] == color }
       next 0 unless denomination
 
@@ -42,7 +47,15 @@ class PlayerResult < ApplicationRecord
 
   def update_player_cash
     # Update player's cash in hand based on game result
-    new_cash = player.cash_in_hand + total_amount
-    player.update!(cash_in_hand: new_cash)
+    if loan_taken > 0
+      player.update!(
+        total_loan: player.total_loan + loan_taken,
+        wallet_balance: cash_out_amount # All cash was from loan
+      )
+    else
+      player.update!(
+        wallet_balance: player.wallet_balance - buy_in_amount + cash_out_amount
+      )
+    end
   end
 end

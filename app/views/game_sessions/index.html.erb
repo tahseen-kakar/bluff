@@ -22,7 +22,12 @@
             <div class="flex items-center space-x-2 text-sm">
               <span class="text-lg"><%= result.player.emoji %></span>
               <span class="text-primary-400 font-mono truncate"><%= result.player.name %></span>
-              <span class="text-primary-50 font-mono"><%= result.total_amount %></span>
+              <span class="text-primary-50 font-mono">
+                <%= number_to_currency(result.cash_out_amount, precision: 0) %>
+                <% if result.loan_taken > 0 %>
+                  <span class="text-red-400">(L: <%= number_to_currency(result.loan_taken, precision: 0) %>)</span>
+                <% end %>
+              </span>
             </div>
           <% end %>
         </div>
