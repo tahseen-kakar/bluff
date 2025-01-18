@@ -54,16 +54,22 @@ class GameSessionsController < ApplicationController
     permitted_results = params.require(:player_results).permit!.to_h
     Rails.logger.info "Permitted player results: #{permitted_results.inspect}"
 
+    # Track selected players for validation
+    selected_players = []
+
     # Build player results with chip counts
     if permitted_results.present?
       permitted_results.each do |player_id, data|
         Rails.logger.info "Processing player #{player_id} with data: #{data.inspect}"
 
-        next if data[:chip_counts].values.all?(&:blank?)
-        Rails.logger.info "Player has valid chip counts"
+        # Skip if player wasn't selected (no chip counts data)
+        next unless data[:chip_counts].present?
 
-        chip_counts = data[:chip_counts].reject { |_, v| v.blank? }
-        Rails.logger.info "Filtered chip counts: #{chip_counts.inspect}"
+        selected_players << player_id
+
+        # Convert blank values to "0"
+        chip_counts = data[:chip_counts].transform_values { |v| v.presence || "0" }
+        Rails.logger.info "Normalized chip counts: #{chip_counts.inspect}"
 
         # Calculate player total
         cash_out_amount = calculate_player_total(chip_counts, @game_session.game_format)
@@ -102,7 +108,7 @@ class GameSessionsController < ApplicationController
     @game_session.total_chips = total_chips
     Rails.logger.info "Final game session total: $#{total_chips}"
 
-    if @game_session.save
+    if selected_players.any? && @game_session.save
       Rails.logger.info "Successfully saved game session #{@game_session.id}"
       Rails.logger.info "Player results saved: #{@game_session.player_results.map { |pr| { player_id: pr.player_id, cash_out: pr.cash_out_amount, loan: pr.loan_taken, chips: pr.chip_counts } }.inspect}"
       redirect_to table_game_sessions_path(@table), notice: "Session was successfully created."
