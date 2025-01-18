@@ -25,11 +25,34 @@
           </div>
           
           <div class="flex items-center space-x-4">
-            <%# Wallet Amount %>
-            <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
-              <span class="<%= player.wallet_balance.negative? ? 'text-red-400' : 'text-secondary-400' %> font-mono font-medium">
-                $<%= number_with_precision(player.wallet_balance, precision: 2) %>
-              </span>
+            <%# Financial Info %>
+            <div class="flex items-center space-x-3">
+              <%# Profit/Loss %>
+              <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
+                <% profit = player.wallet_balance - player.total_loan %>
+                <span class="font-mono font-medium
+                  <%= case
+                      when profit > 0 then 'text-green-400'
+                      when profit < 0 then 'text-red-400'
+                      else 'text-gray-400'
+                      end %>">
+                  <%= number_with_precision(profit, precision: 0) %>
+                </span>
+              </div>
+
+              <%# Total Loan %>
+              <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
+                <span class="text-red-400 font-mono font-medium">
+                  L: <%= number_with_precision(player.total_loan, precision: 0) %>
+                </span>
+              </div>
+
+              <%# Cash in Hand %>
+              <div class="px-3 py-1.5 bg-primary-700/50 rounded-lg">
+                <span class="text-secondary-400 font-mono font-medium">
+                  C: <%= number_with_precision(player.wallet_balance, precision: 0) %>
+                </span>
+              </div>
             </div>
 
             <%# Actions %>
