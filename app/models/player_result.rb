@@ -16,9 +16,18 @@ class PlayerResult < ApplicationRecord
   belongs_to :player
 
   validates :chip_counts, presence: true, if: -> { game_session.recording_chips? }
-  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { game_session.recording_chips? }
+  validates :total_amount, presence: true,
+                          numericality: true,
+                          if: -> { game_session.recording_chips? }
+  validates :buy_in_amount, presence: true,
+                           numericality: { greater_than: 0 }
+  validates :loan_taken, presence: true,
+                        numericality: { greater_than_or_equal_to: 0 }
 
   before_validation :calculate_total_amount
+  after_save :update_player_cash, if: -> { game_session.recording_chips? }
+
+  private
 
   def calculate_total_amount
     return if chip_counts.blank?
@@ -29,5 +38,11 @@ class PlayerResult < ApplicationRecord
 
       count.to_i * denomination["value"].to_f
     end
+  end
+
+  def update_player_cash
+    # Update player's cash in hand based on game result
+    new_cash = player.cash_in_hand + total_amount
+    player.update!(cash_in_hand: new_cash)
   end
 end

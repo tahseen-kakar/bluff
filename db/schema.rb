@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_18_115914) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_122421) do
   create_table "game_formats", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
