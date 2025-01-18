@@ -4,6 +4,12 @@
     description: "Manage your poker players and track their performance" %>
 
 <% if @players.exists? %>
+  <div class="mb-4">
+    <%= render 'shared/create_button',
+        path: new_table_player_path(@table),
+        text: 'Add another player'%>
+  </div>
+
   <div class="space-y-4">
     <% @players.each do |player| %>
       <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-4">
@@ -74,10 +80,6 @@
       </div>
     <% end %>
   </div>
-
-  <%= render 'shared/create_button',
-      path: new_table_player_path(@table),
-      text: 'Add another player' %>
 <% else %>
   <%= render 'shared/empty_state',
       icon: 'users',
