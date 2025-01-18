@@ -1,7 +1,0 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# Initial game session
-first_session:
-  table: table_1
-  game_format: high_stakes
-  remarks: "First game of the season"
