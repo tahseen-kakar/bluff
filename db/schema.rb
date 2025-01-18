@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_04_152759) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_112634) do
   create_table "game_formats", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -75,6 +75,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_152759) do
     t.index ["user_id"], name: "index_tables_on_user_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "game_session_id"
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.decimal "balance_before", precision: 10, scale: 2, null: false
+    t.decimal "balance_after", precision: 10, scale: 2, null: false
+    t.string "transaction_type", null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_session_id"], name: "index_transactions_on_game_session_id"
+    t.index ["player_id", "created_at"], name: "index_transactions_on_player_id_and_created_at"
+    t.index ["player_id"], name: "index_transactions_on_player_id"
+    t.index ["transaction_type"], name: "index_transactions_on_transaction_type"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -94,4 +110,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_152759) do
   add_foreign_key "players", "tables"
   add_foreign_key "sessions", "users"
   add_foreign_key "tables", "users"
+  add_foreign_key "transactions", "game_sessions"
+  add_foreign_key "transactions", "players"
 end
