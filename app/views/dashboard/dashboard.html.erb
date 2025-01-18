@@ -49,7 +49,7 @@
           icon: "clock-play",
           title: "Record First Session",
           description: "Start tracking your first poker session.",
-          path: select_format_table_game_sessions_path(@table),
+          path: new_table_game_session_path(@table),
           completed: has_sessions,
           current: has_players && has_formats && !has_sessions,
           disabled: !has_players || !has_formats %>
