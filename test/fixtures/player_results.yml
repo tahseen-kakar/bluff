@@ -1,13 +1,36 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Results for first game session
+result_1:
+  game_session: first_session
+  player: table1_player1
+  buy_in_amount: 2000.00
+  loan_taken: 1000.00
+  cash_out_amount: 1800.00
+  chip_counts:
+    white: 20
+    red: 8
+    green: 2
+    black: 0
 
-one:
-  game_session: one
-  player: one
-  chip_counts: 
-  total_amount: 1
+result_2:
+  game_session: first_session
+  player: table1_player2
+  buy_in_amount: 2000.00
+  loan_taken: 500.00
+  cash_out_amount: 2200.00
+  chip_counts:
+    white: 40
+    red: 10
+    green: 2
+    black: 0
 
-two:
-  game_session: two
-  player: two
-  chip_counts: 
-  total_amount: 1
+result_3:
+  game_session: first_session
+  player: table1_player3
+  buy_in_amount: 2000.00
+  loan_taken: 1200.00
+  cash_out_amount: 2100.00
+  chip_counts:
+    white: 24
+    red: 12
+    green: 2
+    black: 0

@@ -1,0 +1,170 @@
+# Players for Table 1
+table1_player1:
+  name: "John"
+  emoji: "😎"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player2:
+  name: "Sarah"
+  emoji: "🤠"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player3:
+  name: "Mike"
+  emoji: "🎲"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player4:
+  name: "Emma"
+  emoji: "🦹"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player5:
+  name: "David"
+  emoji: "🧙"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player6:
+  name: "Lisa"
+  emoji: "🎭"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player7:
+  name: "Tom"
+  emoji: "🤡"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+table1_player8:
+  name: "Alex"
+  emoji: "🦸"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_1
+
+# Players for Table 2
+table2_player1:
+  name: "Peter"
+  emoji: "😎"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player2:
+  name: "Mary"
+  emoji: "🤠"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player3:
+  name: "James"
+  emoji: "🎲"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player4:
+  name: "Lucy"
+  emoji: "🦹"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player5:
+  name: "Steve"
+  emoji: "🧙"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player6:
+  name: "Anna"
+  emoji: "🎭"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player7:
+  name: "Bob"
+  emoji: "🤡"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+table2_player8:
+  name: "Kate"
+  emoji: "🦸"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_2
+
+# Players for Table 3
+table3_player1:
+  name: "Chris"
+  emoji: "😎"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player2:
+  name: "Diana"
+  emoji: "🤠"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player3:
+  name: "Frank"
+  emoji: "🎲"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player4:
+  name: "Grace"
+  emoji: "🦹"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player5:
+  name: "Henry"
+  emoji: "🧙"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player6:
+  name: "Ivy"
+  emoji: "🎭"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player7:
+  name: "Jack"
+  emoji: "🤡"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3
+
+table3_player8:
+  name: "Kelly"
+  emoji: "🦸"
+  wallet_balance: 0.00
+  total_loan: 0.00
+  table: table_3 

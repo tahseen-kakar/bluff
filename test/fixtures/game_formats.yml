@@ -1,0 +1,15 @@
+# Game format for the main table
+high_stakes:
+  name: "High Stakes NLH"
+  description: "No Limit Hold'em with 2000 buy-in"
+  buy_in: 2000.00
+  denominations:
+    - color: "white"
+      value: 25
+    - color: "red"
+      value: 100
+    - color: "green"
+      value: 500
+    - color: "black"
+      value: 1000
+  table: table_1 

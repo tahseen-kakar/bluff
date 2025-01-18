@@ -1,13 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  table: one
-  game_format: one
-  total_chips: 1
-  remarks: MyString
-
-two:
-  table: two
-  game_format: two
-  total_chips: 1
-  remarks: MyString
+# Initial game session
+first_session:
+  table: table_1
+  game_format: high_stakes
+  remarks: "First game of the season"

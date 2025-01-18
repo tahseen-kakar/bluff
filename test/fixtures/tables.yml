@@ -1,11 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyText
+# Three poker tables
+table_1:
+  name: "Friday Night Poker"
+  description: "Regular Friday night game with friends"
   user: one
 
-two:
-  name: MyString
-  description: MyText
-  user: two
+table_2:
+  name: "Saturday Specials"
+  description: "Weekend special games"
+  user: one
+
+table_3:
+  name: "Sunday Tournament"
+  description: "Weekly tournament table"
+  user: one
