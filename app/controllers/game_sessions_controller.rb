@@ -91,16 +91,18 @@ class GameSessionsController < ApplicationController
         )
         Rails.logger.info "Built player result: #{result.inspect}"
 
-        # Update player's cash and loan
-        if loan_taken > 0
-          player.update!(
-            total_loan: player.total_loan + loan_taken,
-            wallet_balance: cash_out_amount # All cash was from loan
-          )
-        else
-          player.update!(
-            wallet_balance: player.wallet_balance - buy_in_amount + cash_out_amount
-          )
+        # We don't need to update the player's loan here as it's handled by PlayerResult's after_save callback
+        player.with_lock do
+          if loan_taken > 0
+            # When taking a loan, just set wallet balance to 0 since loan handling is in PlayerResult
+            player.wallet_balance = 0
+          else
+            # No loan needed, deduct buy_in and add cash_out
+            new_balance = player.wallet_balance - buy_in_amount + cash_out_amount
+            raise ArgumentError, "Insufficient wallet balance" if new_balance < 0
+            player.wallet_balance = new_balance
+          end
+          player.save!
         end
       end
     end
