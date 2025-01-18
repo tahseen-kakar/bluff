@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_18_122421) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_124836) do
   create_table "game_formats", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -38,11 +38,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_122421) do
     t.integer "game_session_id", null: false
     t.integer "player_id", null: false
     t.json "chip_counts"
-    t.integer "total_amount"
+    t.decimal "cash_out_amount", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "buy_in_amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "loan_taken", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["game_session_id"], name: "index_player_results_on_game_session_id"
     t.index ["player_id"], name: "index_player_results_on_player_id"
+    t.check_constraint "buy_in_amount > 0", name: "check_buy_in_amount_positive"
+    t.check_constraint "loan_taken >= 0", name: "check_loan_taken_non_negative"
   end
 
   create_table "players", force: :cascade do |t|
