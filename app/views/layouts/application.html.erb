@@ -15,50 +15,52 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
 
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body class="bg-primary-900 text-center font-display">
-    <% if Current.user %>
-      <%# Authenticated layout %>
-      <div class="min-h-screen bg-primary-900">
-        <%# Page content %>
-        <main class="max-w-6xl mx-auto px-4 py-6">
-          <%# Header - show for all authenticated pages %>
-          <%= render 'shared/header' %>
-          
-          <%= yield %>
+    <div class="tailwind">
+      <% if Current.user %>
+        <%# Authenticated layout %>
+        <div class="min-h-screen bg-primary-900">
+          <%# Page content %>
+          <main class="max-w-6xl mx-auto px-4 py-6">
+            <%# Header - show for all authenticated pages %>
+            <%= render 'shared/header' %>
+            
+            <%= yield %>
 
-          <%# Bottom navigation - only show when we have a current table %>
-          <%= render 'shared/bottom_nav' if @table %>
-        </main>
-      </div>
-    <% else %>
-      <%# Unauthenticated layout %>
-      <div class="min-h-screen bg-primary-900">
-        <main class="max-w-6xl mx-auto px-4 py-6">
-          <%# Logo header for unauthenticated pages %>
-          <div class="flex items-center justify-between mb-8">
-            <div class="flex items-center space-x-3">
-              <%= link_to root_path, class: "flex items-center space-x-3" do %>
-                <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
-                <span class="text-xl font-medium text-primary-50 font-mono">Bluff</span>
+            <%# Bottom navigation - only show when we have a current table %>
+            <%= render 'shared/bottom_nav' if @table %>
+          </main>
+        </div>
+      <% else %>
+        <%# Unauthenticated layout %>
+        <div class="min-h-screen bg-primary-900">
+          <main class="max-w-6xl mx-auto px-4 py-6">
+            <%# Logo header for unauthenticated pages %>
+            <div class="flex items-center justify-between mb-8">
+              <div class="flex items-center space-x-3">
+                <%= link_to root_path, class: "flex items-center space-x-3" do %>
+                  <%= tabler_icon('cards', size: 24, class: 'text-secondary-400') %>
+                  <span class="text-xl font-medium text-primary-50 font-mono">Bluff</span>
+                <% end %>
+              </div>
+
+              <% unless current_page?(sign_in_path) %>
+                <%= link_to "Sign in",
+                    sign_in_path,
+                    class: "px-4 py-2 text-primary-50 rounded-lg bg-primary-700/30 
+                            hover:bg-primary-700/50 transition-colors duration-200 font-mono" %>
               <% end %>
             </div>
 
-            <% unless current_page?(sign_in_path) %>
-              <%= link_to "Sign in",
-                  sign_in_path,
-                  class: "px-4 py-2 text-primary-50 rounded-lg bg-primary-700/30 
-                          hover:bg-primary-700/50 transition-colors duration-200 font-mono" %>
-            <% end %>
-          </div>
-
-          <%= yield %>
-        </main>
-      </div>
-    <% end %>
+            <%= yield %>
+          </main>
+        </div>
+      <% end %>
+    </div>
   </body>
 </html>
