@@ -22,7 +22,7 @@
 
 ## **Tech Stack**
 - **Ruby on Rails 8.0.1**: The backbone of Bluff, leveraging Rails' latest features.
-- **SQLite**: Lightweight and easy-to-use database for storing data.
+- **PostgreSQL**: Robust, production-ready database with advanced features.
 - **Hotwire (Turbo + Stimulus)**: For fast and interactive updates without JavaScript overhead.
 - **Tailwind CSS 4.1.12**: Modern CSS-first utility framework with custom color system.
 - **Propshaft**: Fast asset pipeline for modern Rails applications.

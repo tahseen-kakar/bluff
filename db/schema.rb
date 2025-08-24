@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_01_18_144456) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "game_formats", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -45,8 +48,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_144456) do
     t.decimal "loan_taken", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["game_session_id"], name: "index_player_results_on_game_session_id"
     t.index ["player_id"], name: "index_player_results_on_player_id"
-    t.check_constraint "buy_in_amount > 0", name: "check_buy_in_amount_positive"
-    t.check_constraint "loan_taken >= 0", name: "check_loan_taken_non_negative"
+    t.check_constraint "buy_in_amount > 0::numeric", name: "check_buy_in_amount_positive"
+    t.check_constraint "loan_taken >= 0::numeric", name: "check_loan_taken_non_negative"
   end
 
   create_table "players", force: :cascade do |t|
@@ -60,7 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_144456) do
     t.decimal "total_loan", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["table_id", "name"], name: "index_players_on_table_id_and_name", unique: true
     t.index ["table_id"], name: "index_players_on_table_id"
-    t.check_constraint "total_loan >= 0", name: "check_total_loan_non_negative"
+    t.check_constraint "total_loan >= 0::numeric", name: "check_total_loan_non_negative"
   end
 
   create_table "sessions", force: :cascade do |t|
