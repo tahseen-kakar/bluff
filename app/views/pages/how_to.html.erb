@@ -1,0 +1,425 @@
+<div class="max-w-4xl mx-auto">
+  <%# Header %>
+  <div class="mb-16 text-center">
+    <h1 class="text-6xl font-extrabold tracking-tighter text-primary-50 mb-6">
+      How to Use Bluff
+    </h1>
+    <p class="text-xl text-primary-300 leading-relaxed">
+      Your complete guide to tracking poker games, managing player wallets, and analyzing performance
+    </p>
+  </div>
+
+  <%# Table of Contents %>
+  <div class="mb-12">
+    <h2 class="text-2xl font-medium text-primary-50 font-mono mb-6">Quick Start Guide</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <%= tabler_icon('picnic-table', size: 32, class: 'text-secondary-400') %>
+          </div>
+          <h3 class="text-lg font-medium text-primary-50 font-mono mb-2">1. Create a Table</h3>
+          <p class="text-primary-400 text-sm">Set up your poker table for a specific group or game type</p>
+        </div>
+      </div>
+
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <%= tabler_icon('users', size: 32, class: 'text-secondary-400') %>
+          </div>
+          <h3 class="text-lg font-medium text-primary-50 font-mono mb-2">2. Add Players</h3>
+          <p class="text-primary-400 text-sm">Add the players who will participate in your games</p>
+        </div>
+      </div>
+
+      <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-700/50 rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <%= tabler_icon('clock-play', size: 32, class: 'text-secondary-400') %>
+          </div>
+          <h3 class="text-lg font-medium text-primary-50 font-mono mb-2">3. Record Sessions</h3>
+          <p class="text-primary-400 text-sm">Track each poker session and player results</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Detailed Instructions %>
+  <div class="space-y-12">
+    <%# Step 1: Create a Table %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <div class="flex items-start space-x-4 mb-6">
+        <div class="w-12 h-12 bg-secondary-400 rounded-full flex items-center justify-center text-primary-900 font-bold text-lg">1</div>
+        <div>
+          <h3 class="text-2xl font-medium text-primary-50 font-mono mb-2">Create Your First Poker Table</h3>
+          <p class="text-primary-300">Tables help you organize different poker groups or game types. You can have multiple tables for different occasions.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">What You'll Need:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>A memorable name for your table (e.g., "Friday Night Poker")</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Optional description of when and how you play</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">How to Do It:</h4>
+          <ol class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">1.</span>
+              <span>Sign in to your account</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">2.</span>
+              <span>Click "Create Table" from the dashboard</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">3.</span>
+              <span>Enter your table name and description</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">4.</span>
+              <span>Click "Create Table"</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <%# Step 2: Add Players %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <div class="flex items-start space-x-4 mb-6">
+        <div class="w-12 h-12 bg-secondary-400 rounded-full flex items-center justify-center text-primary-900 font-bold text-lg">2</div>
+        <div>
+          <h3 class="text-2xl font-medium text-primary-50 font-mono mb-2">Add Players to Your Table</h3>
+          <p class="text-primary-300">Add all the players who will participate in your poker games. You can set their initial wallet balance and add personal notes.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">For Each Player, You'll Need:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Player's name</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Initial wallet balance (how much cash they start with)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Fun emoji avatar (choose from our selection)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Optional notes about playing style or preferences</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">How to Add Players:</h4>
+          <ol class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">1.</span>
+              <span>From your table dashboard, click "Players" in the bottom navigation</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">2.</span>
+              <span>Click "Add Player"</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">3.</span>
+              <span>Fill in the player's details</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">4.</span>
+              <span>Choose their emoji avatar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">5.</span>
+              <span>Set their starting wallet balance</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-primary-700/30 rounded-lg">
+        <h5 class="text-primary-50 font-mono font-medium mb-2">💡 Pro Tip:</h5>
+        <p class="text-primary-300 text-sm">Set realistic initial wallet balances. If a player starts with $200, enter $200.00. You can always adjust this later if needed.</p>
+      </div>
+    </div>
+
+    <%# Step 3: Create Game Format %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <div class="flex items-start space-x-4 mb-6">
+        <div class="w-12 h-12 bg-secondary-400 rounded-full flex items-center justify-center text-primary-900 font-bold text-lg">3</div>
+        <div>
+          <h3 class="text-2xl font-medium text-primary-50 font-mono mb-2">Set Up Your Game Format</h3>
+          <p class="text-primary-300">Define the rules of your poker game, including buy-in amount and chip denominations. This ensures everyone knows the stakes.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Game Format Details:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Format name (e.g., "Friday Night $1/$2")</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Buy-in amount (how much each player pays to join)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Chip denominations (what each colored chip is worth)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Optional description of game rules or limits</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Setting Up Chip Values:</h4>
+          <div class="space-y-3 text-primary-300">
+            <p class="text-sm">Common chip denominations:</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="flex items-center space-x-2">
+                <div class="w-4 h-4 bg-white rounded-full border border-primary-600"></div>
+                <span>White = $1</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-4 h-4 bg-red-500 rounded-full border border-primary-600"></div>
+                <span>Red = $5</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-4 h-4 bg-blue-500 rounded-full border border-primary-600"></div>
+                <span>Blue = $10</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <div class="w-4 h-4 bg-green-500 rounded-full border border-primary-600"></div>
+                <span>Green = $25</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-primary-700/30 rounded-lg">
+        <h5 class="text-primary-50 font-mono font-medium mb-2">🎯 Example:</h5>
+        <p class="text-primary-300 text-sm">For a $20 buy-in game, you might set: White chips = $1, Red chips = $5, Blue chips = $10. This gives players flexibility in betting.</p>
+      </div>
+    </div>
+
+    <%# Step 4: Record a Game Session %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <div class="flex items-start space-x-4 mb-6">
+        <div class="w-12 h-12 bg-secondary-400 rounded-full flex items-center justify-center text-primary-900 font-bold text-lg">4</div>
+        <div>
+          <h3 class="text-2xl font-medium text-primary-50 font-mono mb-2">Record Your Poker Session</h3>
+          <p class="text-primary-300">After each game, record who played, how many chips they ended with, and track their financial results.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Before Recording:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Make sure all players have been added to your table</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Have your game format set up with correct chip values</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Count each player's chips at the end of the game</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Recording Process:</h4>
+          <ol class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">1.</span>
+              <span>Click "Sessions" in the bottom navigation</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">2.</span>
+              <span>Click "Record new session"</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">3.</span>
+              <span>Select your game format</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">4.</span>
+              <span>Check off which players participated</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">5.</span>
+              <span>Enter chip counts for each player</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-primary-700/30 rounded-lg">
+        <h5 class="text-primary-50 font-mono font-medium mb-2">🔢 Chip Counting:</h5>
+        <p class="text-primary-300 text-sm">Count each color separately: "5 white chips, 3 red chips, 1 blue chip." The app automatically calculates the total value based on your game format.</p>
+      </div>
+    </div>
+
+    <%# Step 5: Understanding Results %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <div class="flex items-start space-x-2 mb-6">
+        <div class="w-12 h-12 bg-secondary-400 rounded-full flex items-center justify-center text-primary-900 font-bold text-lg">5</div>
+        <div>
+          <h3 class="text-2xl font-medium text-primary-50 font-mono mb-2">Understanding Player Results</h3>
+          <p class="text-primary-300">Learn how the app calculates profits, losses, and tracks player performance over time.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">What Gets Calculated:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Cash-out amount (total value of chips)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Profit/Loss (cash-out minus buy-in)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Updated wallet balance</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Loan tracking (if player needed money)</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Player Statistics:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Total games played</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Win rate percentage</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Biggest wins and losses</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Current winning/losing streak</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-primary-700/30 rounded-lg">
+        <h5 class="text-primary-50 font-mono font-medium mb-2">📊 Example Session:</h5>
+        <p class="text-primary-300 text-sm">Player buys in for $20, ends with chips worth $35. Result: +$15 profit, wallet balance increases by $15.</p>
+      </div>
+    </div>
+
+    <%# Tips and Best Practices %>
+    <div class="bg-primary-800/50 backdrop-blur-sm rounded-xl border border-primary-700/50 p-8">
+      <h3 class="text-2xl font-medium text-primary-50 font-mono mb-6">💡 Tips for Success</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">During the Game:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Count chips before cashing out</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Record results immediately after the game</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Double-check chip counts with players</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-medium text-primary-50 font-mono mb-3">Managing Wallets:</h4>
+          <ul class="space-y-2 text-primary-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Update wallet balances regularly</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Track loans and repayments</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-secondary-400 mt-1">•</span>
+              <span>Review player statistics monthly</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-secondary-400/10 border border-secondary-400/20 rounded-lg">
+        <h5 class="text-secondary-400 font-mono font-medium mb-2">🚀 Pro Tips:</h5>
+        <ul class="space-y-1 text-primary-300 text-sm">
+          <li>• Use consistent chip denominations across all your games</li>
+          <li>• Take photos of chip stacks if you need to verify later</li>
+          <li>• Set up multiple tables for different groups or stakes</li>
+          <li>• Review your game history to spot trends and improve</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <%# Call to Action %>
+  <div class="mt-16 text-center">
+    <h2 class="text-2xl font-medium text-primary-50 font-mono mb-4">Ready to Start Tracking?</h2>
+    <p class="text-primary-300 mb-8">Create your first table and start managing your poker games like a pro!</p>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <% if authenticated? %>
+        <%= link_to "Go to Dashboard", app_path, 
+            class: "px-8 py-4 bg-secondary-400 hover:bg-secondary-300 text-primary-900 rounded-lg font-medium font-mono transition-colors duration-200" %>
+      <% else %>
+        <%= link_to "Sign In", sign_in_path, 
+            class: "px-8 py-4 bg-secondary-400 hover:bg-secondary-300 text-primary-900 rounded-lg font-medium font-mono transition-colors duration-200" %>
+        <%= link_to "Create Account", sign_up_path, 
+            class: "px-8 py-4 border border-primary-600 text-primary-300 hover:bg-primary-700/30 rounded-lg font-medium font-mono transition-colors duration-200" %>
+      <% end %>
+    </div>
+  </div>
+</div>

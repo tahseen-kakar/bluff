@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "pages#home"
+  get "how-to", to: "pages#how_to"
 
   # Authentication routes for Rails 8
   get  "sign_in", to: "sessions#new"
